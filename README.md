@@ -227,4 +227,4 @@ See [LIMITATIONS.md](LIMITATIONS.md) and [docs/LIMITATIONS.md](docs/LIMITATIONS.
 
 Released under the [MIT License](LICENSE). The reference publication
 ([`Base_Paper.pdf`](Base_Paper.pdf)) and the CICIDS2017 dataset remain under their original terms and
-are **not** covered by the MIT license.
+are **not** covered by the MIT license — see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

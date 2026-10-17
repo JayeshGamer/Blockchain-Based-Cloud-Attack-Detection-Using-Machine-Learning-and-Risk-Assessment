@@ -19,12 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Third-party notice: Base_Paper.pdf and base_paper_extracted.txt are the
-reference publication the project builds upon. They are included for
-academic citation and analysis only and remain the property of their
-original authors and publisher. The MIT license above does not apply to
-them, nor to the CICIDS2017 dataset (see dataset/README.md), which is
-distributed by the Canadian Institute for Cybersecurity under its own terms.
