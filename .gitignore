@@ -1,0 +1,92 @@
+# ============================================================
+# Adaptive ML-DST V6 — Git Ignore Rules
+# ============================================================
+
+# ------------------------------------------------------------
+# Raw dataset (CICIDS2017 CSVs, ~843 MB / ~1.0 GB uncompressed)
+# Not redistributable through Git. See data/README.md and the
+# "Dataset" section of README.md for download instructions.
+# ------------------------------------------------------------
+/dataset/*.csv
+/dataset/*.pcap
+/dataset/*.pcapng
+/data/raw/*
+!/data/raw/.gitkeep
+
+# ------------------------------------------------------------
+# Release / review packaging archives (build artifacts)
+# ------------------------------------------------------------
+*.zip
+*.tar
+*.tar.gz
+*.7z
+FINAL_PROJECT.zip
+*_REVIEW.zip
+
+# ------------------------------------------------------------
+# Python bytecode & caches
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# ------------------------------------------------------------
+# Test & tooling caches
+# ------------------------------------------------------------
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# ------------------------------------------------------------
+# Virtual environments
+# ------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# ------------------------------------------------------------
+# Secrets & local configuration
+# ------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# ------------------------------------------------------------
+# Local runtime artifacts & scratch state
+# ------------------------------------------------------------
+*.db
+*.sqlite
+*.sqlite3
+*.log
+!reports/**/*.log
+.ipynb_checkpoints/
+*.h5
+*.pkl.tmp
+.pytest_tmp/
+
+# ------------------------------------------------------------
+# Editors & operating system files
+# ------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini

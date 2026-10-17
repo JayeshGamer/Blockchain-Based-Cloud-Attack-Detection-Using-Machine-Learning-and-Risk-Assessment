@@ -1,0 +1,74 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.12.7, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\dhyey\AppData\Local\Programs\Python\Python312\python.exe
+cachedir: .pytest_cache
+rootdir: D:\CNS_Project_And_Paper
+configfile: pyproject.toml
+plugins: anyio-4.15.1
+collecting ... collected 54 items
+
+tests/test_adwin_rigor.py::test_adwin_stationary_stream_no_false_alarms PASSED [  1%]
+tests/test_adwin_rigor.py::test_adwin_sudden_drift_detection PASSED      [  3%]
+tests/test_adwin_rigor.py::test_adwin_gradual_drift_detection PASSED     [  5%]
+tests/test_adwin_rigor.py::test_multi_signal_drift_coordinator PASSED    [  7%]
+tests/test_adwin_rigor.py::test_river_adwin_parity PASSED                [  9%]
+tests/test_api.py::test_api_health PASSED                                [ 11%]
+tests/test_api.py::test_api_dataset_audit PASSED                         [ 12%]
+tests/test_api.py::test_api_train_and_predict PASSED                     [ 14%]
+tests/test_api.py::test_api_hierarchical_risk_endpoints PASSED           [ 16%]
+tests/test_api.py::test_api_alerts_and_stream_status PASSED              [ 18%]
+tests/test_blockchain.py::test_evidence_hash_deterministic PASSED        [ 20%]
+tests/test_blockchain.py::test_mock_ledger_logging_and_tamper_verification PASSED [ 22%]
+tests/test_data_cleaning.py::test_normalize_benign PASSED                [ 24%]
+tests/test_data_cleaning.py::test_normalize_web_attack_unicode PASSED    [ 25%]
+tests/test_data_cleaning.py::test_normalize_whitespace_and_cases PASSED  [ 27%]
+tests/test_data_cleaning.py::test_attack_family_mapping PASSED           [ 29%]
+tests/test_defense.py::test_staged_defense_activation_levels PASSED      [ 31%]
+tests/test_defense.py::test_global_defense_trigger PASSED                [ 33%]
+tests/test_dst.py::test_bpa_mass_conservation PASSED                     [ 35%]
+tests/test_dst.py::test_dempster_combination_commutativity PASSED        [ 37%]
+tests/test_dst.py::test_belief_plausibility_ordering PASSED              [ 38%]
+tests/test_dst.py::test_extreme_conflict_stabilization PASSED            [ 40%]
+tests/test_dst_rigor.py::test_dst_mass_conservation PASSED               [ 42%]
+tests/test_dst_rigor.py::test_dst_shafer_reliability_discounting PASSED  [ 44%]
+tests/test_dst_rigor.py::test_dst_commutativity PASSED                   [ 46%]
+tests/test_dst_rigor.py::test_dst_associativity PASSED                   [ 48%]
+tests/test_dst_rigor.py::test_dst_near_total_conflict_yager PASSED       [ 50%]
+tests/test_dst_rigor.py::test_dst_nan_rejection PASSED                   [ 51%]
+tests/test_hierarchy.py::test_hierarchical_structure_initialization PASSED [ 53%]
+tests/test_hierarchy.py::test_hierarchical_risk_aggregation_propagation PASSED [ 55%]
+tests/test_integration.py::test_end_to_end_streaming_pipeline PASSED     [ 57%]
+tests/test_leakage_and_splits.py::test_label_normalization PASSED        [ 59%]
+tests/test_leakage_and_splits.py::test_global_deduplication_hashing PASSED [ 61%]
+tests/test_leakage_and_splits.py::test_hash_disjoint_split_isolation PASSED [ 62%]
+tests/test_leakage_and_splits.py::test_zero_leakage_feature_extraction PASSED [ 64%]
+tests/test_leakage_and_splits.py::test_training_only_scaler_and_imputer PASSED [ 66%]
+tests/test_preprocessor.py::test_preprocessor_zero_leakage_and_scaling PASSED [ 68%]
+tests/test_temporal_rigor.py::test_temporal_past_only_computation PASSED [ 70%]
+tests/test_temporal_rigor.py::test_temporal_protected_benign_baseline PASSED [ 72%]
+tests/test_temporal_rigor.py::test_temporal_extreme_deviation_approaches_one PASSED [ 74%]
+tests/test_threshold.py::test_threshold_bounds_invariants PASSED         [ 75%]
+tests/test_threshold.py::test_threshold_drift_relaxation PASSED          [ 77%]
+tests/test_threshold_rigor.py::test_threshold_recall_constrained_optimization PASSED [ 79%]
+tests/test_threshold_rigor.py::test_threshold_f2_optimization PASSED     [ 81%]
+tests/test_threshold_rigor.py::test_protected_benign_buffer_excludes_attack_scores PASSED [ 83%]
+tests/test_threshold_rigor.py::test_attack_burst_freezes_threshold PASSED [ 85%]
+tests/test_threshold_rigor.py::test_drift_relaxation_lowers_threshold PASSED [ 87%]
+tests/test_v3_scientific_validity.py::test_independent_ablation_state PASSED [ 88%]
+tests/test_v3_scientific_validity.py::test_classifier_anomaly_threshold_separation PASSED [ 90%]
+tests/test_v3_scientific_validity.py::test_one_to_one_drift_matching PASSED [ 92%]
+tests/test_v3_scientific_validity.py::test_report_to_json_numeric_consistency PASSED [ 94%]
+tests/test_v3_scientific_validity.py::test_chronological_ordering PASSED [ 96%]
+tests/test_v3_scientific_validity.py::test_zero_hash_overlap PASSED      [ 98%]
+tests/test_v3_scientific_validity.py::test_full_mode_configuration_routing PASSED [100%]
+
+============================== warnings summary ===============================
+C:\Users\dhyey\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\dhyey\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+C:\Users\dhyey\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\testclient.py:53
+  C:\Users\dhyey\AppData\Local\Programs\Python\Python312\Lib\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 54 passed, 2 warnings in 2.72s ========================

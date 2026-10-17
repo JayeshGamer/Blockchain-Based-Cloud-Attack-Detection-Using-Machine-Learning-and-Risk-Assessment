@@ -1,0 +1,38 @@
+{
+  "report_name": "Split Integrity and Anti-Leakage Verification Report",
+  "timestamp": "2026-09-18T10:17:39.415273",
+  "hash_isolation": {
+    "train_unique_hashes": 32500,
+    "val_unique_hashes": 7500,
+    "test_unique_hashes": 10000,
+    "overlap_train_val": 0,
+    "overlap_train_test": 0,
+    "overlap_val_test": 0,
+    "is_strictly_disjoint": true
+  },
+  "feature_leakage_checks": {
+    "model_feature_count": 69,
+    "label_in_features": false,
+    "metadata_in_features": false,
+    "constant_columns_pruned": [
+      "Bwd Avg Bulk Rate",
+      "Bwd Avg Bytes/Bulk",
+      "Bwd Avg Packets/Bulk",
+      "Bwd PSH Flags",
+      "Bwd URG Flags",
+      "Fwd Avg Bulk Rate",
+      "Fwd Avg Bytes/Bulk",
+      "Fwd Avg Packets/Bulk"
+    ],
+    "duplicate_fwd_header_pruned": true
+  },
+  "preprocessing_isolation": {
+    "scaler_fitted_only_on_training": true,
+    "imputer_values_derived_from_training": true,
+    "outlier_bounds": [
+      -50.0,
+      50.0
+    ]
+  },
+  "verdict": "PASSED"
+}

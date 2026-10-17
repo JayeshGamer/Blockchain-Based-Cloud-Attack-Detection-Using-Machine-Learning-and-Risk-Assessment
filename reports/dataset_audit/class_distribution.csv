@@ -1,0 +1,16 @@
+Class,Attack_Family,Raw_Count,Deduped_Count,Duplicates_Removed,Retention_Rate_Pct
+BENIGN,BENIGN,2273097,2096391,176706,92.23
+DoS Hulk,DoS,231073,172811,58262,74.79
+DDoS,DDoS,128027,128013,14,99.99
+PortScan,PortScan,158930,90255,68675,56.79
+DoS GoldenEye,DoS,10293,10286,7,99.93
+FTP-Patator,Brute Force,7938,5933,2005,74.74
+DoS slowloris,DoS,5796,5385,411,92.91
+DoS Slowhttptest,DoS,5499,5228,271,95.07
+SSH-Patator,Brute Force,5897,3219,2678,54.59
+Bot,Botnet,1966,1953,13,99.34
+Web Attack - Brute Force,Web Attack,1507,1470,37,97.54
+Web Attack - XSS,Web Attack,652,652,0,100.0
+Infiltration,Infiltration,36,36,0,100.0
+Web Attack - Sql Injection,Web Attack,21,21,0,100.0
+Heartbleed,Exploit/Heartbleed,11,11,0,100.0

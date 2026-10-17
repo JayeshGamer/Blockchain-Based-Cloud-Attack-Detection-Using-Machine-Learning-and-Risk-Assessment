@@ -1,0 +1,10 @@
+Attack Family,Support (Test Flows),Online Precision,Online Recall,Online F1,Static RF Precision,Static RF Recall,Static RF F1
+BENIGN,8750,0.8847,0.9047,0.8946,0.9965,0.9989,0.9977
+Botnet,492,0.4829,0.2012,0.2841,0.9898,0.9878,0.9888
+Brute Force,1794,0.8656,0.8868,0.8761,1.0,1.0,1.0
+DDoS,60,0.45,0.15,0.225,1.0,1.0,1.0
+DoS,3424,0.87,0.87,0.87,0.9977,0.9974,0.9975
+Exploit/Heartbleed,3,0.0,0.0,0.0,1.0,1.0,1.0
+Infiltration,9,0.0,0.0,0.0,1.0,0.4444,0.6154
+PortScan,706,0.7012,0.7479,0.7238,0.9943,0.9901,0.9922
+Web Attack,545,0.8279,0.8917,0.8587,0.9981,0.978,0.988

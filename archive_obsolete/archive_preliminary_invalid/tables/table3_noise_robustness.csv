@@ -1,0 +1,5 @@
+NoiseLevel,Metrics
+noise_0pct,"{'macro_f1': 0.6406, 'recall': 0.3421, 'fpr': 0.0206, 'fnr': 0.6579}"
+noise_5pct,"{'macro_f1': 0.6752, 'recall': 0.4079, 'fpr': 0.0374, 'fnr': 0.5921}"
+noise_10pct,"{'macro_f1': 0.6898, 'recall': 0.4594, 'fpr': 0.0711, 'fnr': 0.5406}"
+noise_20pct,"{'macro_f1': 0.7251, 'recall': 0.607, 'fpr': 0.1611, 'fnr': 0.393}"

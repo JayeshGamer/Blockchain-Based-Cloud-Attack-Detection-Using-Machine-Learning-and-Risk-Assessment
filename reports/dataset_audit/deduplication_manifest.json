@@ -1,0 +1,283 @@
+{
+  "dataset_name": "CICIDS2017",
+  "audit_timestamp": "2026-09-18T10:15:34.705451",
+  "total_raw_rows": 2830743,
+  "total_deduped_rows": 2521664,
+  "total_duplicates_removed": 309079,
+  "global_duplicate_rate_pct": 10.92,
+  "total_missing_values": 5734,
+  "total_infinite_values": 4376,
+  "canonical_feature_count": 77,
+  "constant_feature_count": 8,
+  "constant_columns": [
+    "Bwd Avg Bulk Rate",
+    "Bwd Avg Bytes/Bulk",
+    "Bwd Avg Packets/Bulk",
+    "Bwd PSH Flags",
+    "Bwd URG Flags",
+    "Fwd Avg Bulk Rate",
+    "Fwd Avg Bytes/Bulk",
+    "Fwd Avg Packets/Bulk"
+  ],
+  "per_file_breakdown": [
+    {
+      "filename": "Monday-WorkingHours.pcap_ISCX.csv",
+      "source_day": "Monday",
+      "raw_rows": 529918,
+      "deduped_rows": 502983,
+      "duplicates_removed": 26935,
+      "duplicate_rate_pct": 5.08,
+      "missing_values": 874,
+      "infinite_values": 810,
+      "classes_raw": {
+        "BENIGN": 529918
+      },
+      "classes_deduped": {
+        "BENIGN": 502983
+      }
+    },
+    {
+      "filename": "Tuesday-WorkingHours.pcap_ISCX.csv",
+      "source_day": "Tuesday",
+      "raw_rows": 445909,
+      "deduped_rows": 421791,
+      "duplicates_removed": 24118,
+      "duplicate_rate_pct": 5.41,
+      "missing_values": 528,
+      "infinite_values": 327,
+      "classes_raw": {
+        "BENIGN": 432074,
+        "FTP-Patator": 7938,
+        "SSH-Patator": 5897
+      },
+      "classes_deduped": {
+        "BENIGN": 412639,
+        "FTP-Patator": 5933,
+        "SSH-Patator": 3219
+      }
+    },
+    {
+      "filename": "Wednesday-workingHours.pcap_ISCX.csv",
+      "source_day": "Wednesday",
+      "raw_rows": 692703,
+      "deduped_rows": 602490,
+      "duplicates_removed": 90213,
+      "duplicate_rate_pct": 13.02,
+      "missing_values": 2594,
+      "infinite_values": 1586,
+      "classes_raw": {
+        "BENIGN": 440031,
+        "DoS slowloris": 5796,
+        "DoS Slowhttptest": 5499,
+        "DoS Hulk": 231073,
+        "DoS GoldenEye": 10293,
+        "Heartbleed": 11
+      },
+      "classes_deduped": {
+        "BENIGN": 408769,
+        "DoS slowloris": 5385,
+        "DoS Slowhttptest": 5228,
+        "DoS Hulk": 172811,
+        "DoS GoldenEye": 10286,
+        "Heartbleed": 11
+      }
+    },
+    {
+      "filename": "Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv",
+      "source_day": "Thursday-Morning",
+      "raw_rows": 170366,
+      "deduped_rows": 156252,
+      "duplicates_removed": 14114,
+      "duplicate_rate_pct": 8.28,
+      "missing_values": 270,
+      "infinite_values": 250,
+      "classes_raw": {
+        "BENIGN": 168186,
+        "Web Attack - Brute Force": 1507,
+        "Web Attack - XSS": 652,
+        "Web Attack - Sql Injection": 21
+      },
+      "classes_deduped": {
+        "BENIGN": 154109,
+        "Web Attack - Brute Force": 1470,
+        "Web Attack - XSS": 652,
+        "Web Attack - Sql Injection": 21
+      }
+    },
+    {
+      "filename": "Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv",
+      "source_day": "Thursday-Afternoon",
+      "raw_rows": 288602,
+      "deduped_rows": 242424,
+      "duplicates_removed": 46178,
+      "duplicate_rate_pct": 16.0,
+      "missing_values": 414,
+      "infinite_values": 396,
+      "classes_raw": {
+        "BENIGN": 288566,
+        "Infiltration": 36
+      },
+      "classes_deduped": {
+        "BENIGN": 242388,
+        "Infiltration": 36
+      }
+    },
+    {
+      "filename": "Friday-WorkingHours-Morning.pcap_ISCX.csv",
+      "source_day": "Friday-Morning",
+      "raw_rows": 191033,
+      "deduped_rows": 173036,
+      "duplicates_removed": 17997,
+      "duplicate_rate_pct": 9.42,
+      "missing_values": 244,
+      "infinite_values": 216,
+      "classes_raw": {
+        "BENIGN": 189067,
+        "Bot": 1966
+      },
+      "classes_deduped": {
+        "BENIGN": 171083,
+        "Bot": 1953
+      }
+    },
+    {
+      "filename": "Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv",
+      "source_day": "Friday-PortScan",
+      "raw_rows": 286467,
+      "deduped_rows": 204927,
+      "duplicates_removed": 81540,
+      "duplicate_rate_pct": 28.46,
+      "missing_values": 742,
+      "infinite_values": 727,
+      "classes_raw": {
+        "BENIGN": 127537,
+        "PortScan": 158930
+      },
+      "classes_deduped": {
+        "BENIGN": 114672,
+        "PortScan": 90255
+      }
+    },
+    {
+      "filename": "Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv",
+      "source_day": "Friday-DDoS",
+      "raw_rows": 225745,
+      "deduped_rows": 217761,
+      "duplicates_removed": 7984,
+      "duplicate_rate_pct": 3.54,
+      "missing_values": 68,
+      "infinite_values": 64,
+      "classes_raw": {
+        "BENIGN": 97718,
+        "DDoS": 128027
+      },
+      "classes_deduped": {
+        "BENIGN": 89748,
+        "DDoS": 128013
+      }
+    }
+  ],
+  "per_class_summary": {
+    "BENIGN": {
+      "raw_count": 2273097,
+      "deduped_count": 2096391,
+      "removed_duplicates": 176706,
+      "retention_rate_pct": 92.23
+    },
+    "Bot": {
+      "raw_count": 1966,
+      "deduped_count": 1953,
+      "removed_duplicates": 13,
+      "retention_rate_pct": 99.34
+    },
+    "DDoS": {
+      "raw_count": 128027,
+      "deduped_count": 128013,
+      "removed_duplicates": 14,
+      "retention_rate_pct": 99.99
+    },
+    "DoS GoldenEye": {
+      "raw_count": 10293,
+      "deduped_count": 10286,
+      "removed_duplicates": 7,
+      "retention_rate_pct": 99.93
+    },
+    "DoS Hulk": {
+      "raw_count": 231073,
+      "deduped_count": 172811,
+      "removed_duplicates": 58262,
+      "retention_rate_pct": 74.79
+    },
+    "DoS Slowhttptest": {
+      "raw_count": 5499,
+      "deduped_count": 5228,
+      "removed_duplicates": 271,
+      "retention_rate_pct": 95.07
+    },
+    "DoS slowloris": {
+      "raw_count": 5796,
+      "deduped_count": 5385,
+      "removed_duplicates": 411,
+      "retention_rate_pct": 92.91
+    },
+    "FTP-Patator": {
+      "raw_count": 7938,
+      "deduped_count": 5933,
+      "removed_duplicates": 2005,
+      "retention_rate_pct": 74.74
+    },
+    "Heartbleed": {
+      "raw_count": 11,
+      "deduped_count": 11,
+      "removed_duplicates": 0,
+      "retention_rate_pct": 100.0
+    },
+    "Infiltration": {
+      "raw_count": 36,
+      "deduped_count": 36,
+      "removed_duplicates": 0,
+      "retention_rate_pct": 100.0
+    },
+    "PortScan": {
+      "raw_count": 158930,
+      "deduped_count": 90255,
+      "removed_duplicates": 68675,
+      "retention_rate_pct": 56.79
+    },
+    "SSH-Patator": {
+      "raw_count": 5897,
+      "deduped_count": 3219,
+      "removed_duplicates": 2678,
+      "retention_rate_pct": 54.59
+    },
+    "Web Attack - Brute Force": {
+      "raw_count": 1507,
+      "deduped_count": 1470,
+      "removed_duplicates": 37,
+      "retention_rate_pct": 97.54
+    },
+    "Web Attack - Sql Injection": {
+      "raw_count": 21,
+      "deduped_count": 21,
+      "removed_duplicates": 0,
+      "retention_rate_pct": 100.0
+    },
+    "Web Attack - XSS": {
+      "raw_count": 652,
+      "deduped_count": 652,
+      "removed_duplicates": 0,
+      "retention_rate_pct": 100.0
+    }
+  },
+  "per_family_summary": {
+    "BENIGN": 2096391,
+    "Brute Force": 9152,
+    "DoS": 193710,
+    "Exploit/Heartbleed": 11,
+    "Web Attack": 2143,
+    "Infiltration": 36,
+    "Botnet": 1953,
+    "PortScan": 90255,
+    "DDoS": 128013
+  }
+}

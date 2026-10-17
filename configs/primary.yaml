@@ -1,0 +1,32 @@
+# Primary Streaming Detector Configuration
+# Model: Online Stochastic Gradient Descent (SGD) Classifier
+# Role: Primary Production Streaming Model
+
+model_name: "online_sgd"
+display_name: "Online SGD Classifier (Primary Streaming Detector)"
+version: "6.0.0-frozen"
+random_seed: 42
+
+classifier:
+  algorithm: "sgd_classifier"
+  loss: "log_loss"
+  penalty: "l2"
+  alpha: 0.0001
+  learning_rate: "optimal"
+  warm_start: true
+
+preprocessing:
+  scaler: "robust"
+  imputer_strategy: "training_median"
+  drop_constant_columns: true
+  drop_duplicate_fwd_header: true
+  outlier_clip: [-50.0, 50.0]
+
+thresholds:
+  default_decision_threshold: 0.50
+  target_calibration_fprs: [0.01, 0.02, 0.05]
+
+input_schema:
+  flow_identifier_column: "flow_id"
+  requires_precomputed_features: true
+  expected_feature_count: 76

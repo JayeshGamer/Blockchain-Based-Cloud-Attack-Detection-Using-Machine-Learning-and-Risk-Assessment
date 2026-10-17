@@ -1,0 +1,10 @@
+{
+  "stream_length": 5000,
+  "stream_fingerprint": "b8623dad8ff7a540c1dde78fbad839dfc9ff303f0314d9f98f72c5a9f025393b",
+  "per_day_counts": {
+    "Tuesday": 1989,
+    "Monday": 1948,
+    "Wednesday": 1063
+  },
+  "ordering_convention": "declared_file_day_and_original_row_index"
+}

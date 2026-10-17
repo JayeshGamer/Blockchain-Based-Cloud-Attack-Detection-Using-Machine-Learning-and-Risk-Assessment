@@ -1,0 +1,10 @@
+Day,Model,Recall (ADR),FNR,FPR,Attack_F1,Macro_F1,F2_Score,PR_AUC
+Tuesday,1_Frozen_Static,1.0,0.0,1.0,0.1322,0.0661,0.2757,
+Tuesday,2_Online_SGD_NoDrift,0.0,1.0,0.0,0.0,0.4817,0.0,
+Tuesday,8_Full_Adaptive_ML_DST,0.0,1.0,0.0,0.0,0.4817,0.0,
+Wednesday,1_Frozen_Static,1.0,0.0,1.0,0.1862,0.0931,0.3639,
+Wednesday,2_Online_SGD_NoDrift,0.0,1.0,0.0305,0.0,0.4652,0.0,
+Wednesday,8_Full_Adaptive_ML_DST,0.0,1.0,0.0022,0.0,0.4724,0.0,
+Friday-PortScan,1_Frozen_Static,1.0,0.0,1.0,0.0815,0.0408,0.1816,
+Friday-PortScan,2_Online_SGD_NoDrift,0.0,1.0,0.0343,0.0,0.4804,0.0,
+Friday-PortScan,8_Full_Adaptive_ML_DST,0.0,1.0,0.0058,0.0,0.4877,0.0,

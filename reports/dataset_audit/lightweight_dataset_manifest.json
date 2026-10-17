@@ -1,0 +1,81 @@
+﻿{
+  "manifest_type": "Lightweight Dataset Manifest (Metadata Only)",
+  "dataset_source": "CICIDS2017 (Canadian Institute for Cybersecurity)",
+  "generation_mode": "lightweight",
+  "hash_algorithm": "SHA-256 (row-level deduplication and disjoint split verification)",
+  "chronological_files": [
+    "Monday-WorkingHours.pcap_ISCX.csv",
+    "Tuesday-WorkingHours.pcap_ISCX.csv",
+    "Wednesday-workingHours.pcap_ISCX.csv",
+    "Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv",
+    "Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv",
+    "Friday-WorkingHours-Morning.pcap_ISCX.csv",
+    "Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv",
+    "Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv"
+  ],
+  "sample_counts": {
+    "total_deduplicated_flows": 50000,
+    "per_day_composition": {
+      "Monday": 10000,
+      "Tuesday": 8000,
+      "Wednesday": 12000,
+      "Thursday": 10000,
+      "Friday": 10000
+    },
+    "splits": {
+      "train": {
+        "count": 32500,
+        "percentage": 65.0,
+        "unique_hashes": 32500
+      },
+      "validation": {
+        "count": 7500,
+        "percentage": 15.0,
+        "unique_hashes": 7500
+      },
+      "test": {
+        "count": 10000,
+        "percentage": 20.0,
+        "unique_hashes": 10000
+      }
+    },
+    "cross_split_hash_overlap": {
+      "train_val": 0,
+      "train_test": 0,
+      "val_test": 0,
+      "strictly_disjoint": true
+    }
+  },
+  "feature_engineering": {
+    "raw_features_extracted": 78,
+    "canonical_features_retained": 77,
+    "constant_columns_pruned": [
+      "Bwd Avg Bulk Rate",
+      "Bwd Avg Bytes/Bulk",
+      "Bwd Avg Packets/Bulk",
+      "Bwd PSH Flags",
+      "Bwd URG Flags",
+      "Fwd Avg Bulk Rate",
+      "Fwd Avg Bytes/Bulk",
+      "Fwd Avg Packets/Bulk"
+    ],
+    "duplicate_column_pruned": "Fwd Header Length.1",
+    "final_model_features": 69,
+    "leakage_protection": {
+      "scaler_scope": "Fitted strictly on training partition (train_df)",
+      "imputer_scope": "Derived strictly from training medians",
+      "outlier_clipping_bounds": [-50.0, 50.0]
+    }
+  },
+  "attack_families": [
+    "BENIGN",
+    "Brute Force",
+    "DoS",
+    "Web Attack",
+    "Infiltration",
+    "Botnet",
+    "PortScan",
+    "DDoS"
+  ],
+  "raw_data_storage": "Excluded by design. Raw flow records and feature arrays are never stored in this manifest."
+}

@@ -1,0 +1,15 @@
+{
+  "stream_length": 1000,
+  "stream_fingerprint": "25ca12fda8c042d71e81e6afb0f190a8514de0230cbbf1ef88059e927f401028",
+  "per_day_counts": {
+    "Wednesday": 254,
+    "Monday": 162,
+    "Tuesday": 125,
+    "Thursday-Morning": 98,
+    "Thursday-Afternoon": 93,
+    "Friday-Morning": 91,
+    "Friday-DDoS": 91,
+    "Friday-PortScan": 86
+  },
+  "ordering_convention": "declared_file_day_and_original_row_index"
+}

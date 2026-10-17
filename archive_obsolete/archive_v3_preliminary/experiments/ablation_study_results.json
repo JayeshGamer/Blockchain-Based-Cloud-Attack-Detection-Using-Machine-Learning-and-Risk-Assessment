@@ -1,0 +1,313 @@
+{
+  "study": "Phase 17: Fair Ablation Study (Variants A through I)",
+  "timestamp": "2026-09-18T11:22:17.023980",
+  "stream_flows": 41555,
+  "variants": {
+    "Variant A: Frozen Static Model": {
+      "accuracy": 0.6350138370833834,
+      "balanced_accuracy": 0.49879918408334906,
+      "precision": 0.3080459770114943,
+      "recall": 0.008933333333333333,
+      "detection_rate": 0.008933333333333333,
+      "specificity": 0.9886650348333648,
+      "false_positive_rate": 0.011334965166635286,
+      "false_negative_rate": 0.9910666666666667,
+      "f1": 0.01736313573048267,
+      "f2": 0.011086291056506992,
+      "f1_score": 0.39662393949435104,
+      "f2_score": 0.011086291056506992,
+      "macro_f1": 0.39662393949435104,
+      "weighted_f1": 0.5020831763489173,
+      "matthews_corrcoef": -0.011333238607030059,
+      "true_positives": 134,
+      "false_positives": 301,
+      "true_negatives": 26254,
+      "false_negatives": 14866,
+      "confusion_matrix": [
+        [
+          26254,
+          301
+        ],
+        [
+          14866,
+          134
+        ]
+      ],
+      "roc_auc": 0.38835248101424724,
+      "pr_auc": 0.33926475014547586,
+      "brier_score": 0.36099145177095643
+    },
+    "Variant B: Online Model No Drift": {
+      "accuracy": 0.8525327878714956,
+      "balanced_accuracy": 0.8395223812213645,
+      "precision": 0.7975184439973172,
+      "recall": 0.7927333333333333,
+      "detection_rate": 0.7927333333333333,
+      "specificity": 0.8863114291093956,
+      "false_positive_rate": 0.11368857089060441,
+      "false_negative_rate": 0.20726666666666665,
+      "f1": 0.795118689401538,
+      "f2": 0.7936857562408223,
+      "f1_score": 0.839965359738363,
+      "f2_score": 0.7936857562408223,
+      "macro_f1": 0.839965359738363,
+      "weighted_f1": 0.8524356587575427,
+      "matthews_corrcoef": 0.6799398610863263,
+      "true_positives": 11891,
+      "false_positives": 3019,
+      "true_negatives": 23536,
+      "false_negatives": 3109,
+      "confusion_matrix": [
+        [
+          23536,
+          3019
+        ],
+        [
+          3109,
+          11891
+        ]
+      ],
+      "roc_auc": 0.8956473269315257,
+      "pr_auc": 0.8119693921168984,
+      "brier_score": 0.13876102401936
+    },
+    "Variant C: Online Model + Drift (Passive)": {
+      "accuracy": 0.8525327878714956,
+      "balanced_accuracy": 0.8395223812213645,
+      "precision": 0.7975184439973172,
+      "recall": 0.7927333333333333,
+      "detection_rate": 0.7927333333333333,
+      "specificity": 0.8863114291093956,
+      "false_positive_rate": 0.11368857089060441,
+      "false_negative_rate": 0.20726666666666665,
+      "f1": 0.795118689401538,
+      "f2": 0.7936857562408223,
+      "f1_score": 0.839965359738363,
+      "f2_score": 0.7936857562408223,
+      "macro_f1": 0.839965359738363,
+      "weighted_f1": 0.8524356587575427,
+      "matthews_corrcoef": 0.6799398610863263,
+      "true_positives": 11891,
+      "false_positives": 3019,
+      "true_negatives": 23536,
+      "false_negatives": 3109,
+      "confusion_matrix": [
+        [
+          23536,
+          3019
+        ],
+        [
+          3109,
+          11891
+        ]
+      ],
+      "roc_auc": 0.8956473269315257,
+      "pr_auc": 0.8119693921168984,
+      "brier_score": 0.13876102401936
+    },
+    "Variant D: Online Model + Drift (Active Response)": {
+      "accuracy": 0.850415112501504,
+      "balanced_accuracy": 0.8367485972509885,
+      "precision": 0.795877122069523,
+      "recall": 0.7876,
+      "detection_rate": 0.7876,
+      "specificity": 0.885897194501977,
+      "false_positive_rate": 0.11410280549802297,
+      "false_negative_rate": 0.2124,
+      "f1": 0.7917169280257338,
+      "f2": 0.7892416225749559,
+      "f1_score": 0.8375097988230648,
+      "f2_score": 0.7892416225749559,
+      "macro_f1": 0.8375097988230648,
+      "weighted_f1": 0.8502432032765158,
+      "matthews_corrcoef": 0.6750470238368392,
+      "true_positives": 11814,
+      "false_positives": 3030,
+      "true_negatives": 23525,
+      "false_negatives": 3186,
+      "confusion_matrix": [
+        [
+          23525,
+          3030
+        ],
+        [
+          3186,
+          11814
+        ]
+      ],
+      "roc_auc": 0.8891212226197202,
+      "pr_auc": 0.7970096571818532,
+      "brier_score": 0.14318680356335803
+    },
+    "Variant E: Online Model + Anomaly Evidence": {
+      "accuracy": 0.8531584646853567,
+      "balanced_accuracy": 0.836835448440344,
+      "precision": 0.8079745258202963,
+      "recall": 0.7781333333333333,
+      "detection_rate": 0.7781333333333333,
+      "specificity": 0.8955375635473546,
+      "false_positive_rate": 0.10446243645264545,
+      "false_negative_rate": 0.22186666666666666,
+      "f1": 0.7927732119812538,
+      "f2": 0.7839239180076835,
+      "f1_score": 0.839532849282219,
+      "f2_score": 0.7839239180076835,
+      "macro_f1": 0.839532849282219,
+      "weighted_f1": 0.852535077871141,
+      "matthews_corrcoef": 0.6794163819001109,
+      "true_positives": 11672,
+      "false_positives": 2774,
+      "true_negatives": 23781,
+      "false_negatives": 3328,
+      "confusion_matrix": [
+        [
+          23781,
+          2774
+        ],
+        [
+          3328,
+          11672
+        ]
+      ],
+      "roc_auc": 0.8967636590723654,
+      "pr_auc": 0.8558082356152731,
+      "brier_score": 0.11830451443505809
+    },
+    "Variant F: Online Model + Temporal Evidence": {
+      "accuracy": 0.852219949464565,
+      "balanced_accuracy": 0.835187340739346,
+      "precision": 0.8084824848527056,
+      "recall": 0.7739333333333334,
+      "detection_rate": 0.7739333333333334,
+      "specificity": 0.8964413481453587,
+      "false_positive_rate": 0.1035586518546413,
+      "false_negative_rate": 0.22606666666666667,
+      "f1": 0.7908307503661569,
+      "f2": 0.7806049032396886,
+      "f1_score": 0.8382908565694713,
+      "f2_score": 0.7806049032396886,
+      "macro_f1": 0.8382908565694713,
+      "weighted_f1": 0.8514878611941686,
+      "matthews_corrcoef": 0.677051605108171,
+      "true_positives": 11609,
+      "false_positives": 2750,
+      "true_negatives": 23805,
+      "false_negatives": 3391,
+      "confusion_matrix": [
+        [
+          23805,
+          2750
+        ],
+        [
+          3391,
+          11609
+        ]
+      ],
+      "roc_auc": 0.8549575899077387,
+      "pr_auc": 0.7781793106591848,
+      "brier_score": 0.13462311522849005
+    },
+    "Variant G: Online Model + Discounted DST": {
+      "accuracy": 0.7800745999278065,
+      "balanced_accuracy": 0.704794583568694,
+      "precision": 0.9092305543918447,
+      "recall": 0.43406666666666666,
+      "detection_rate": 0.43406666666666666,
+      "specificity": 0.9755225004707212,
+      "false_positive_rate": 0.024477499529278857,
+      "false_negative_rate": 0.5659333333333333,
+      "f1": 0.587608862415956,
+      "f2": 0.48473072169860487,
+      "f1_score": 0.7188319132011198,
+      "f2_score": 0.48473072169860487,
+      "macro_f1": 0.7188319132011198,
+      "weighted_f1": 0.7553204790012057,
+      "matthews_corrcoef": 0.5208816570382524,
+      "true_positives": 6511,
+      "false_positives": 650,
+      "true_negatives": 25905,
+      "false_negatives": 8489,
+      "confusion_matrix": [
+        [
+          25905,
+          650
+        ],
+        [
+          8489,
+          6511
+        ]
+      ],
+      "roc_auc": 0.877505715182326,
+      "pr_auc": 0.8119635673094405,
+      "brier_score": 0.14682280847608564
+    },
+    "Variant H: Full Model + Adaptive Threshold": {
+      "accuracy": 0.7864998195163037,
+      "balanced_accuracy": 0.7189597125462875,
+      "precision": 0.8757664949717929,
+      "recall": 0.4760666666666667,
+      "detection_rate": 0.4760666666666667,
+      "specificity": 0.9618527584259084,
+      "false_positive_rate": 0.03814724157409151,
+      "false_negative_rate": 0.5239333333333334,
+      "f1": 0.6168264662693271,
+      "f2": 0.5238870792616721,
+      "f1_score": 0.7344256422346702,
+      "f2_score": 0.5238870792616721,
+      "macro_f1": 0.7344256422346702,
+      "weighted_f1": 0.7671258823569068,
+      "matthews_corrcoef": 0.5295999117249777,
+      "true_positives": 7141,
+      "false_positives": 1013,
+      "true_negatives": 25542,
+      "false_negatives": 7859,
+      "confusion_matrix": [
+        [
+          25542,
+          1013
+        ],
+        [
+          7859,
+          7141
+        ]
+      ],
+      "roc_auc": 0.8755785200527207,
+      "pr_auc": 0.8146298930522378,
+      "brier_score": 0.1366700443526684
+    },
+    "Variant I: Full System + Hierarchy & Defense": {
+      "accuracy": 0.7864998195163037,
+      "balanced_accuracy": 0.7189597125462875,
+      "precision": 0.8757664949717929,
+      "recall": 0.4760666666666667,
+      "detection_rate": 0.4760666666666667,
+      "specificity": 0.9618527584259084,
+      "false_positive_rate": 0.03814724157409151,
+      "false_negative_rate": 0.5239333333333334,
+      "f1": 0.6168264662693271,
+      "f2": 0.5238870792616721,
+      "f1_score": 0.7344256422346702,
+      "f2_score": 0.5238870792616721,
+      "macro_f1": 0.7344256422346702,
+      "weighted_f1": 0.7671258823569068,
+      "matthews_corrcoef": 0.5295999117249777,
+      "true_positives": 7141,
+      "false_positives": 1013,
+      "true_negatives": 25542,
+      "false_negatives": 7859,
+      "confusion_matrix": [
+        [
+          25542,
+          1013
+        ],
+        [
+          7859,
+          7141
+        ]
+      ],
+      "roc_auc": 0.8755785200527207,
+      "pr_auc": 0.8146298930522378,
+      "brier_score": 0.1366700443526684
+    }
+  }
+}

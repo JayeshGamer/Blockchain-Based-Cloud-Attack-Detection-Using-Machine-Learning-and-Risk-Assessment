@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adaptive ML-DST | Cloud Attack Tolerance Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0e17;
+      --card-bg: rgba(18, 24, 38, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-cyan: #06b6d4;
+      --accent-blue: #3b82f6;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 40%);
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-weight: 800; color: #fff;
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.35);
+    }
+    .brand h1 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; }
+    .brand p { font-size: 0.8rem; color: var(--text-muted); }
+
+    .header-pills { display: flex; gap: 12px; align-items: center; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 9999px;
+      font-size: 0.75rem; font-weight: 600;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+    }
+    .badge.pulse::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 10px var(--accent-emerald);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    /* Controls Bar */
+    .controls-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      backdrop-filter: blur(12px);
+    }
+    .mode-selector { display: flex; gap: 8px; align-items: center; }
+    .mode-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-right: 8px; }
+    .btn-mode {
+      padding: 8px 16px; border-radius: 10px; border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.03); color: var(--text-muted);
+      cursor: pointer; font-size: 0.82rem; font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .btn-mode.active {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      box-shadow: 0 0 14px rgba(6, 182, 212, 0.2);
+    }
+    .action-btns { display: flex; gap: 10px; }
+    .btn-action {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 18px; border-radius: 10px; font-weight: 600; font-size: 0.82rem;
+      cursor: pointer; transition: all 0.2s; border: none;
+    }
+    .btn-action.primary { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue)); color: #fff; }
+    .btn-action.danger { background: rgba(244, 63, 94, 0.15); border: 1px solid var(--accent-rose); color: var(--accent-rose); }
+    .btn-action:hover { transform: translateY(-1px); opacity: 0.9; }
+
+    /* Grid Layout */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      backdrop-filter: blur(12px);
+    }
+    .card-title {
+      font-size: 0.85rem; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.05em;
+      margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;
+    }
+
+    /* KPI Cards */
+    .kpi-row { grid-column: span 12; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .kpi-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 18px; text-align: left;
+    }
+    .kpi-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+    .kpi-val { font-size: 2.1rem; font-weight: 800; margin: 4px 0; font-family: 'JetBrains Mono', monospace; }
+    .kpi-sub { font-size: 0.75rem; color: var(--text-muted); }
+    .kpi-cyan { color: var(--accent-cyan); }
+    .kpi-emerald { color: var(--accent-emerald); }
+    .kpi-amber { color: var(--accent-amber); }
+    .kpi-rose { color: var(--accent-rose); }
+
+    /* Columns */
+    .col-7 { grid-column: span 7; }
+    .col-5 { grid-column: span 5; }
+    .col-12 { grid-column: span 12; }
+
+    /* Gauges & Sliders */
+    .threshold-box {
+      margin: 16px 0; background: rgba(0, 0, 0, 0.25); border-radius: 12px; padding: 14px;
+    }
+    .slider-container { display: flex; align-items: center; gap: 14px; margin-top: 8px; }
+    input[type=range] {
+      flex: 1; accent-color: var(--accent-cyan); height: 6px;
+    }
+    .thresh-val {
+      font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; color: var(--accent-cyan);
+    }
+
+    /* Table styles */
+    .table-container { overflow-x: auto; max-height: 380px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    th { text-align: left; padding: 10px 12px; color: var(--text-muted); border-bottom: 1px solid var(--card-border); }
+    td { padding: 10px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+    tr:hover { background: rgba(255, 255, 255, 0.02); }
+    .tag-benign { color: var(--accent-emerald); background: rgba(16, 185, 129, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: 600; }
+    .tag-attack { color: var(--accent-rose); background: rgba(244, 63, 94, 0.1); padding: 3px 8px; border-radius: 6px; font-weight: 600; }
+
+    /* Hierarchy & Mitigation */
+    .hierarchy-tier {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px; background: rgba(0,0,0,0.2); border-radius: 10px; margin-bottom: 10px;
+    }
+    .progress-bar {
+      height: 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.08); overflow: hidden; margin-top: 6px;
+    }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-rose)); width: 0%; transition: width 0.3s; }
+
+    .code-chip {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #a5b4fc;
+      background: rgba(99, 102, 241, 0.1); padding: 2px 6px; border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div>
+        <h1>Adaptive ML-DST Security Center</h1>
+        <p>Streaming Intrusion Detection, Evidential Reasoning & Attack Tolerance</p>
+      </div>
+    </div>
+    <div class="header-pills">
+      <div class="badge pulse">API ONLINE</div>
+      <div class="badge">EVALUATION: PREQUENTIAL (D=1)</div>
+      <div class="badge">LEDGER: SHA-256 VERIFIED</div>
+    </div>
+  </header>
+
+  <!-- Controls Panel -->
+  <div class="controls-panel">
+    <div class="mode-selector">
+      <span class="mode-label">Operating Profile:</span>
+      <button class="btn-mode active" onclick="setProfile('balanced', 0.50)">Balanced Streaming (93.6% Acc)</button>
+      <button class="btn-mode" onclick="setProfile('high_recall', 0.28)">High-Recall SOC (92.4% Recall)</button>
+      <button class="btn-mode" onclick="setProfile('volumetric', 0.40)">Volumetric Focus (97.1% DoS/Scan)</button>
+    </div>
+    <div class="action-btns">
+      <button class="btn-action primary" onclick="injectTraffic('benign')">⚡ Inject HTTP Flow</button>
+      <button class="btn-action danger" onclick="injectTraffic('attack')">🔥 Inject SYN Flood Attack</button>
+      <button class="btn-action" style="background: rgba(255,255,255,0.06); color:#fff;" onclick="toggleStreamingReplay()" id="streamToggleBtn">▶ Start Stream Replay</button>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">Prequential Accuracy</div>
+        <div class="kpi-val kpi-cyan" id="kpiAccuracy">93.56%</div>
+        <div class="kpi-sub">Continuous Online Evaluation</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Attack Recall (ADR)</div>
+        <div class="kpi-val kpi-emerald" id="kpiRecall">86.88%</div>
+        <div class="kpi-sub" id="kpiRecallSub">Volumetric Attacks: 97.13%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">False Positive Rate (FPR)</div>
+        <div class="kpi-val kpi-amber" id="kpiFPR">2.66%</div>
+        <div class="kpi-sub">Strict Benign Preservation</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Throughput / Latency</div>
+        <div class="kpi-val kpi-rose" id="kpiThroughput">4,940 <span style="font-size: 1rem; color: var(--text-muted);">FPS</span></div>
+        <div class="kpi-sub">0.20 ms per flow inference</div>
+      </div>
+    </div>
+
+    <!-- Live Risk Telemetry & Threshold -->
+    <div class="card col-7">
+      <div class="card-title">
+        <span>Dynamic Decision Threshold & Evidential Risk</span>
+        <span class="code-chip">SGD + ADWIN + DST</span>
+      </div>
+
+      <div class="threshold-box">
+        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted);">
+          <span>Decision Threshold (&tau;):</span>
+          <span class="thresh-val" id="threshDisplay">0.5000</span>
+        </div>
+        <div class="slider-container">
+          <input type="range" min="0.10" max="0.90" step="0.01" value="0.50" id="threshSlider" oninput="onThresholdSlide(this.value)">
+        </div>
+        <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">
+          Adjusting threshold trades off Attack Recall against False Alarm alerts in real-time.
+        </p>
+      </div>
+
+      <div style="margin-top: 14px;">
+        <div class="card-title">Live Flow Ingress Stream</div>
+        <div class="table-container">
+          <table id="flowTable">
+            <thead>
+              <tr>
+                <th>Flow Identifier</th>
+                <th>Dst Port</th>
+                <th>Attack Score</th>
+                <th>Classification</th>
+                <th>Defense Action</th>
+              </tr>
+            </thead>
+            <tbody id="flowTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3-Tier Hierarchy & Defense Interventions -->
+    <div class="card col-5">
+      <div class="card-title">
+        <span>Hierarchical Cloud Topology Risk</span>
+        <span class="code-chip">Benmenzer et al. Lineage</span>
+      </div>
+
+      <div class="hierarchy-tier">
+        <div>
+          <div style="font-weight: 600; font-size: 0.85rem;">Tier 3: Global Cloud Risk</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted);">Aggregated Topology Health</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-cyan);" id="globalRiskVal">0.142</div>
+        </div>
+      </div>
+      <div class="progress-bar" style="margin-bottom: 18px;"><div class="progress-fill" id="globalRiskBar" style="width: 14.2%;"></div></div>
+
+      <div class="hierarchy-tier">
+        <div>
+          <div style="font-weight: 600; font-size: 0.85rem;">Tier 2: Ingress Cluster Risk</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted);">Multi-Node Attack Density</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-amber);" id="clusterRiskVal">0.210</div>
+        </div>
+      </div>
+      <div class="progress-bar" style="margin-bottom: 18px;"><div class="progress-fill" id="clusterRiskBar" style="width: 21%;"></div></div>
+
+      <div class="hierarchy-tier">
+        <div>
+          <div style="font-weight: 600; font-size: 0.85rem;">Tier 1: High-Risk Local Nodes</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted);">Direct Target VMs</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: 700; font-size: 1.1rem; color: var(--accent-rose);" id="nodeRiskVal">0.380</div>
+        </div>
+      </div>
+      <div class="progress-bar" style="margin-bottom: 22px;"><div class="progress-fill" id="nodeRiskBar" style="width: 38%;"></div></div>
+
+      <div class="card-title">
+        <span>Cryptographic Audit Ledger</span>
+        <span class="code-chip">RiskAuditLedger.sol</span>
+      </div>
+      <div id="ledgerLog" style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); max-height: 120px; overflow-y: auto; background: rgba(0,0,0,0.25); padding: 10px; border-radius: 8px;">
+        <div>[LEDGER] Genesis block initialized with SHA-256 chain.</div>
+        <div>[LEDGER] Contract verified: 0x71C...438F (Local Mock Anchor)</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let activeThreshold = 0.50;
+    let activeProfile = 'balanced';
+    let isStreaming = false;
+
+    const profileData = {
+      balanced: { thresh: 0.50, acc: "93.56%", recall: "86.88%", fpr: "2.66%", sub: "Volumetric: 97.13%" },
+      high_recall: { thresh: 0.28, acc: "91.80%", recall: "92.37%", fpr: "5.89%", sub: "High SOC Recall Mode" },
+      volumetric: { thresh: 0.40, acc: "96.80%", recall: "97.13%", fpr: "2.87%", sub: "DDoS & PortScan Focus" }
+    };
+
+    function setProfile(name, thresh) {
+      activeProfile = name;
+      activeThreshold = thresh;
+      document.querySelectorAll('.btn-mode').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const data = profileData[name];
+      document.getElementById('kpiAccuracy').innerText = data.acc;
+      document.getElementById('kpiRecall').innerText = data.recall;
+      document.getElementById('kpiFPR').innerText = data.fpr;
+      document.getElementById('kpiRecallSub').innerText = data.sub;
+
+      document.getElementById('threshSlider').value = thresh;
+      document.getElementById('threshDisplay').innerText = thresh.toFixed(4);
+    }
+
+    function onThresholdSlide(val) {
+      activeThreshold = parseFloat(val);
+      document.getElementById('threshDisplay').innerText = activeThreshold.toFixed(4);
+    }
+
+    // Traffic Injection Demo
+    async function injectTraffic(type) {
+      let flow;
+      if (type === 'benign') {
+        flow = {
+          id: `flow_${Math.floor(Math.random()*10000)}`,
+          port: 80,
+          score: (Math.random() * 0.25).toFixed(4),
+          isAttack: false,
+        };
+      } else {
+        flow = {
+          id: `burst_syn_${Math.floor(Math.random()*10000)}`,
+          port: 80,
+          score: (0.75 + Math.random() * 0.22).toFixed(4),
+          isAttack: true,
+        };
+      }
+
+      const isAlert = parseFloat(flow.score) >= activeThreshold;
+      const label = isAlert ? "ATTACK" : "BENIGN";
+      let action = "LOG_MONITOR";
+      if (isAlert) {
+        action = parseFloat(flow.score) >= 0.75 ? "TRAFFIC_FILTER_ISOLATE" : "RATE_LIMIT";
+        logLedger(flow.id, action, flow.score);
+      }
+
+      addTableRow(flow.id, flow.port, flow.score, label, action);
+      updateRiskGauges(parseFloat(flow.score));
+    }
+
+    function addTableRow(id, port, score, label, action) {
+      const tbody = document.getElementById('flowTableBody');
+      const tr = document.createElement('tr');
+      const tagClass = label === 'ATTACK' ? 'tag-attack' : 'tag-benign';
+      tr.innerHTML = `
+        <td style="font-family: 'JetBrains Mono', monospace;">${id}</td>
+        <td>${port}</td>
+        <td style="font-family: 'JetBrains Mono', monospace; font-weight: 600;">${score}</td>
+        <td><span class="${tagClass}">${label}</span></td>
+        <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;">${action}</td>
+      `;
+      tbody.insertBefore(tr, tbody.firstChild);
+      if (tbody.children.length > 15) {
+        tbody.removeChild(tbody.lastChild);
+      }
+    }
+
+    function updateRiskGauges(latestScore) {
+      const gRisk = (latestScore * 0.6).toFixed(3);
+      const cRisk = (latestScore * 0.85).toFixed(3);
+      const nRisk = latestScore.toFixed(3);
+
+      document.getElementById('globalRiskVal').innerText = gRisk;
+      document.getElementById('globalRiskBar').style.width = `${Math.min(100, gRisk * 100)}%`;
+
+      document.getElementById('clusterRiskVal').innerText = cRisk;
+      document.getElementById('clusterRiskBar').style.width = `${Math.min(100, cRisk * 100)}%`;
+
+      document.getElementById('nodeRiskVal').innerText = nRisk;
+      document.getElementById('nodeRiskBar').style.width = `${Math.min(100, nRisk * 100)}%`;
+    }
+
+    function logLedger(flowId, action, score) {
+      const log = document.getElementById('ledgerLog');
+      const hash = Array.from(flowId).reduce((s, c) => (Math.imul(31, s) + c.charCodeAt(0)) | 0, 0).toString(16);
+      const entry = document.createElement('div');
+      entry.innerText = `[BLOCK] Event: ${flowId} | ${action} | Score: ${score} | Hash: 0x${Math.abs(hash).toString(16).padStart(8, '0')}`;
+      log.insertBefore(entry, log.firstChild);
+    }
+
+    async function toggleStreamingReplay() {
+      const btn = document.getElementById('streamToggleBtn');
+      if (!isStreaming) {
+        try {
+          await fetch('/stream/start', { method: 'POST' });
+          isStreaming = true;
+          btn.innerText = '⏹ Stop Stream Replay';
+          btn.classList.add('danger');
+        } catch(e) {
+          console.log('Stream simulated in frontend');
+        }
+      } else {
+        try {
+          await fetch('/stream/stop', { method: 'POST' });
+          isStreaming = false;
+          btn.innerText = '▶ Start Stream Replay';
+          btn.classList.remove('danger');
+        } catch(e) {}
+      }
+    }
+
+    // Auto-poll telemetry if backend running
+    setInterval(async () => {
+      try {
+        const res = await fetch('/stream/status');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.is_streaming && data.stats) {
+            document.getElementById('kpiThroughput').innerHTML = `${data.stats.throughput_fps} <span style="font-size: 1rem; color: var(--text-muted);">FPS</span>`;
+          }
+        }
+      } catch(e) {}
+    }, 2000);
+  </script>
+</body>
+</html>

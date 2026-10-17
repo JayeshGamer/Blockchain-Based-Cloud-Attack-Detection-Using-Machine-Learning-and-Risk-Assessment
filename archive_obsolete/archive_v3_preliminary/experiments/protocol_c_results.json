@@ -1,0 +1,302 @@
+{
+  "protocol": "Protocol C: Controlled Concept-Drift Benchmark",
+  "timestamp": "2026-09-18T11:22:02.380331",
+  "stream_length": 6000,
+  "true_change_points": [
+    {
+      "change_point_idx": 1000,
+      "drift_type": "Sudden Attack Prevalence",
+      "description": "Sudden surge of DoS Hulk attack traffic (40% prevalence)"
+    },
+    {
+      "change_point_idx": 2000,
+      "drift_type": "Gradual Attack Prevalence",
+      "description": "Gradual ramp of Brute Force attempts over 1000 flows"
+    },
+    {
+      "change_point_idx": 3000,
+      "drift_type": "Return to Normal",
+      "description": "Cessation of attack traffic; return to pure benign telemetry"
+    },
+    {
+      "change_point_idx": 4000,
+      "drift_type": "Sudden Feature Covariate Shift",
+      "description": "Sudden change in traffic volume characteristics (packet size & rates doubled)"
+    },
+    {
+      "change_point_idx": 5000,
+      "drift_type": "Unseen Attack Emergence",
+      "description": "Appearance of completely unseen PortScan reconnaissance attacks (50% prevalence)"
+    }
+  ],
+  "detected_alarms": [
+    1050,
+    1100,
+    1800,
+    2100,
+    2800,
+    2900,
+    3100,
+    4250,
+    5000,
+    5250,
+    5300
+  ],
+  "drift_detection_performance": {
+    "true_drift_events": 5,
+    "detected_alarms_total": 11,
+    "true_alarms_matched": 4,
+    "detection_rate": 0.8,
+    "missed_events": 1,
+    "missed_drifts": 1,
+    "false_alarms": 6,
+    "duplicate_alarms": 1,
+    "mean_detection_delay_flows": 62.5,
+    "median_detection_delay_flows": 75.0,
+    "detection_delays": [
+      50,
+      100,
+      100,
+      0
+    ],
+    "matched_details": [
+      {
+        "change_point": 1000,
+        "alarm": 1050,
+        "delay": 50
+      },
+      {
+        "change_point": 2000,
+        "alarm": 2100,
+        "delay": 100
+      },
+      {
+        "change_point": 3000,
+        "alarm": 3100,
+        "delay": 100
+      },
+      {
+        "change_point": 5000,
+        "alarm": 5000,
+        "delay": 0
+      }
+    ],
+    "duplicate_alarm_steps": [
+      1100
+    ],
+    "false_alarm_steps": [
+      1800,
+      2800,
+      2900,
+      4250,
+      5250,
+      5300
+    ]
+  },
+  "segment_metrics": {
+    "Segment 1: Normal Baseline": {
+      "accuracy": 0.964,
+      "balanced_accuracy": 0.964,
+      "precision": 0.0,
+      "recall": 0.0,
+      "detection_rate": 0.0,
+      "specificity": 0.964,
+      "false_positive_rate": 0.036,
+      "false_negative_rate": 0.0,
+      "f1": 0.0,
+      "f2": 0.0,
+      "f1_score": 0.4908350305498982,
+      "f2_score": 0.0,
+      "macro_f1": 0.4908350305498982,
+      "weighted_f1": 0.9816700610997964,
+      "matthews_corrcoef": 0.0,
+      "true_positives": 0,
+      "false_positives": 36,
+      "true_negatives": 964,
+      "false_negatives": 0,
+      "confusion_matrix": [
+        [
+          964,
+          36
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "brier_score": 0.033942165194092835
+    },
+    "Segment 2: Sudden DoS Surge": {
+      "accuracy": 0.875,
+      "balanced_accuracy": 0.8691666666666666,
+      "precision": 0.8463476070528967,
+      "recall": 0.84,
+      "detection_rate": 0.84,
+      "specificity": 0.8983333333333333,
+      "false_positive_rate": 0.10166666666666667,
+      "false_negative_rate": 0.16,
+      "f1": 0.8431618569636136,
+      "f2": 0.8412618928392589,
+      "f1_score": 0.869627478772746,
+      "f2_score": 0.8412618928392589,
+      "macro_f1": 0.869627478772746,
+      "weighted_f1": 0.8749206031345725,
+      "matthews_corrcoef": 0.7392718803003776,
+      "true_positives": 336,
+      "false_positives": 61,
+      "true_negatives": 539,
+      "false_negatives": 64,
+      "confusion_matrix": [
+        [
+          539,
+          61
+        ],
+        [
+          64,
+          336
+        ]
+      ],
+      "roc_auc": 0.9198375,
+      "pr_auc": 0.8761926489075117,
+      "brier_score": 0.09837325050156903
+    },
+    "Segment 3: Gradual Brute Force": {
+      "accuracy": 0.896,
+      "balanced_accuracy": 0.8777893639207508,
+      "precision": 0.8392282958199357,
+      "recall": 0.8285714285714286,
+      "detection_rate": 0.8285714285714286,
+      "specificity": 0.927007299270073,
+      "false_positive_rate": 0.072992700729927,
+      "false_negative_rate": 0.17142857142857143,
+      "f1": 0.8338658146964856,
+      "f2": 0.8306810948440484,
+      "f1_score": 0.8790872013802661,
+      "f2_score": 0.8306810948440484,
+      "macro_f1": 0.8790872013802661,
+      "weighted_f1": 0.8958191144532649,
+      "matthews_corrcoef": 0.758211696405594,
+      "true_positives": 261,
+      "false_positives": 50,
+      "true_negatives": 635,
+      "false_negatives": 54,
+      "confusion_matrix": [
+        [
+          635,
+          50
+        ],
+        [
+          54,
+          261
+        ]
+      ],
+      "roc_auc": 0.9106013208202989,
+      "pr_auc": 0.7450625086128843,
+      "brier_score": 0.12619488097955248
+    },
+    "Segment 4: Return to Normal": {
+      "accuracy": 0.963,
+      "balanced_accuracy": 0.963,
+      "precision": 0.0,
+      "recall": 0.0,
+      "detection_rate": 0.0,
+      "specificity": 0.963,
+      "false_positive_rate": 0.037,
+      "false_negative_rate": 0.0,
+      "f1": 0.0,
+      "f2": 0.0,
+      "f1_score": 0.4905756495160469,
+      "f2_score": 0.0,
+      "macro_f1": 0.4905756495160469,
+      "weighted_f1": 0.9811512990320937,
+      "matthews_corrcoef": 0.0,
+      "true_positives": 0,
+      "false_positives": 37,
+      "true_negatives": 963,
+      "false_negatives": 0,
+      "confusion_matrix": [
+        [
+          963,
+          37
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "brier_score": 0.035612550681467896
+    },
+    "Segment 5: Covariate Shift": {
+      "accuracy": 0.949,
+      "balanced_accuracy": 0.949,
+      "precision": 0.0,
+      "recall": 0.0,
+      "detection_rate": 0.0,
+      "specificity": 0.949,
+      "false_positive_rate": 0.051,
+      "false_negative_rate": 0.0,
+      "f1": 0.0,
+      "f2": 0.0,
+      "f1_score": 0.48691636736788096,
+      "f2_score": 0.0,
+      "macro_f1": 0.48691636736788096,
+      "weighted_f1": 0.9738327347357619,
+      "matthews_corrcoef": 0.0,
+      "true_positives": 0,
+      "false_positives": 51,
+      "true_negatives": 949,
+      "false_negatives": 0,
+      "confusion_matrix": [
+        [
+          949,
+          51
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "brier_score": 0.06389245941730723
+    },
+    "Segment 6: Unseen PortScan Emergence": {
+      "accuracy": 0.891,
+      "balanced_accuracy": 0.891,
+      "precision": 0.9354120267260579,
+      "recall": 0.84,
+      "detection_rate": 0.84,
+      "specificity": 0.942,
+      "false_positive_rate": 0.058,
+      "false_negative_rate": 0.16,
+      "f1": 0.8851422550052687,
+      "f2": 0.8574928542262148,
+      "f1_score": 0.8907157516700939,
+      "f2_score": 0.8574928542262148,
+      "macro_f1": 0.8907157516700939,
+      "weighted_f1": 0.8907157516700939,
+      "matthews_corrcoef": 0.7860999840580554,
+      "true_positives": 420,
+      "false_positives": 29,
+      "true_negatives": 471,
+      "false_negatives": 80,
+      "confusion_matrix": [
+        [
+          471,
+          29
+        ],
+        [
+          80,
+          420
+        ]
+      ],
+      "roc_auc": 0.907936,
+      "pr_auc": 0.864045902108728,
+      "brier_score": 0.17709443050135856
+    }
+  }
+}

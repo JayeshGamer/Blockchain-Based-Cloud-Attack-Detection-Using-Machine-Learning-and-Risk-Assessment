@@ -1,0 +1,28 @@
+{
+  "status": "SMOKE_TESTED",
+  "dataset_mode": "full_streaming_smoke",
+  "unique_rows_indexed": 5000,
+  "evaluated_rows": 5000,
+  "warmup_rows": 500,
+  "batch_size": 250,
+  "elapsed_streaming_seconds": 0.247,
+  "elapsed_evaluation_seconds": 18.022,
+  "total_elapsed_seconds": 18.27,
+  "peak_memory_mb": 0.0,
+  "disk_backed_deduplication": true,
+  "sha256_length_verified": 64,
+  "all_rows_unique": true,
+  "evaluated_variants": [
+    "1_Frozen_Static",
+    "2_Online_SGD_NoDrift",
+    "3_Online_SGD_ADWIN",
+    "4_River_HATC_NoDrift",
+    "5_River_HATC_ADWIN",
+    "6_Online_Anomaly_Evidence",
+    "7_Online_DST_FixedThresh",
+    "8_Full_Adaptive_ML_DST"
+  ],
+  "protocol_b_recall_full_dst": 0.0,
+  "protocol_b_fpr_full_dst": 0.016710353866317168,
+  "note": "This is a smoke test verifying bounded memory and streaming mechanics, NOT the full 2.83M dataset run."
+}

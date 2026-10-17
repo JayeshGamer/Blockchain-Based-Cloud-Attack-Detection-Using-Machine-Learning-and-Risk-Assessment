@@ -1,0 +1,131 @@
+# Adaptive ML-DST: Lightweight Development Configuration
+# Label: lightweight development results
+# Purpose: Rapid development, testing, demonstration, and CI verification
+
+mode: "lightweight"
+label: "lightweight development results"
+description: "Duplicate-safe, minority-aware sample for rapid development and demonstration"
+
+project:
+  name: "Adaptive ML-DST"
+  version: "2.0.0-audited"
+  random_seed: 42
+  seeds: [42, 123, 456, 789, 1024]
+
+data:
+  raw_dir: "dataset"
+  processed_dir: "data/processed"
+  sample_size: 50000
+  rare_threshold: 2500
+  test_size: 0.20
+  val_size: 0.15
+  deduplication: "global_sha256"
+  drop_constant_columns: true
+  drop_duplicate_fwd_header: true
+  imputer_strategy: "training_median"
+  scaler: "robust" # robust / standard
+  outlier_clip: [-50.0, 50.0]
+
+stream:
+  batch_size: 200
+  label_delay_batches: 1 # 1-batch delayed label feedback for prequential evaluation
+  monday_initial_baseline: true
+
+online_models:
+  linear:
+    algorithm: "sgd_classifier"
+    loss: "log_loss"
+    penalty: "l2"
+    alpha: 0.0001
+    learning_rate: "optimal"
+  nonlinear:
+    algorithm: "river_hoeffding_adaptive_tree"
+    grace_period: 100
+    split_criterion: "info_gain"
+    split_confidence: 0.00001
+
+anomaly_detector:
+  algorithm: "isolation_forest"
+  n_estimators: 50
+  contamination: 0.05
+  max_samples: 5000
+  train_on_benign_only: true
+  percentile_min: 2.0
+  percentile_max: 98.0
+
+drift_detector:
+  algorithm: "adwin" # river_adwin or custom_adwin
+  delta: 0.002
+  clock: 32
+  min_window_length: 10
+  grace_period: 100
+  monitored_signals:
+    - "delayed_loss"
+    - "attack_score"
+    - "packet_rate"
+
+drift_response:
+  strategy: "plasticity_boost" # none / plasticity_boost / partial_reset / full_reset / background_promotion
+  boost_factor: 2.0
+  cooldown_batches: 20
+
+temporal_deviation:
+  window_size: 200
+  protected_benign_baseline: true
+  benign_confidence_threshold: 0.35
+  metrics:
+    flow_bytes_per_s: 0.25
+    flow_packets_per_s: 0.25
+    flow_duration: 0.15
+    flow_iat_mean: 0.15
+    pkt_ratio: 0.10
+    attack_score_dev: 0.10
+
+dst_fusion:
+  frame_of_discernment: ["Benign", "Attack"]
+  uncertainty_budget: 0.15
+  reliability_discounting: "shafer" # classical shafer reliability discounting
+  tuning_status: "fixed_validation_tuned_hyperparameters"
+  tuning_grid:
+    ml_attack_score: [0.70, 0.75, 0.80, 0.85, 0.90]
+    anomaly_score: [0.60, 0.65, 0.70, 0.75, 0.80]
+    temporal_deviation: [0.50, 0.60, 0.70, 0.75, 0.80]
+  source_reliabilities:
+    ml_attack_score: 0.85
+    anomaly_score: 0.75
+    temporal_deviation: 0.70
+  conflict_threshold: 0.90
+  conflict_rule: "yager" # dempster or yager
+
+adaptive_threshold:
+  mode: "recall_constrained" # recall_constrained / f_beta_optimization
+  min_target_recall: 0.90
+  f_beta: 2.0
+  initial_threshold: 0.50
+  target_fpr: 0.02
+  rolling_window_size: 500
+  min_threshold: 0.15
+  max_threshold: 0.85
+  drift_relaxation_factor: 0.85
+  smoothing_alpha: 0.05
+  freeze_during_burst: true
+
+hierarchical_risk:
+  num_nodes: 20
+  num_clusters: 4
+  node_window_size: 50
+  aggregation_operator: "percentile_90" # mean / max / percentile_90 / dst
+
+simulated_defense:
+  enabled_actions:
+    - "LOG"
+    - "INCREASED_MONITORING"
+    - "RATE_LIMITING"
+    - "TRAFFIC_FILTERING"
+    - "TEMPORARY_NODE_ISOLATION"
+    - "CLUSTER_REROUTING"
+    - "GLOBAL_ALERT"
+
+blockchain:
+  enabled: true
+  use_mock: true

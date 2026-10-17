@@ -1,0 +1,3012 @@
+--- PAGE 1 ---
+IET Blockchain
+ORIGINALRESEARCH
+ReinforcingCloudAttackToleranceonaLargeScale:
+AdvancedBlockchainTechnologiesWithHierarchical
+RiskandSmartContracts
+FaizaBenmenzer1,2 RachidBeghdad1,2 AlaaEddineKhalfoune 1,2
+1UniversitédeBejaia,FacultédesSciencesExactes,Départementd’informatique,Bejaia,Algeria 2UniversitédeBatna2,FacultédesMathématiqueset
+d’Informatique,LaboratoireLAMIE,Batna,Algeria
+Correspondence:RachidBeghdad( rachid.beghdad@univ-bejaia.dz)
+Received:10March2025 Revised:10July2025 Accepted:15September2025
+Funding:Theauthorsreceivednospecificfundingforthiswork.
+ABSTRACT
+The distributed denial of service (DDoS) attacks represent a real danger on cloud computing systems, the existing security
+approaches have notable limitations such as centralization, lack of adaptability and scalability, and focusing on detection over
+mitigation.Inthispaper,wepresentanovelblockchain-basedsystemtoenhanceattacktoleranceofcloudsystemsagainstDDoS
+attacksbyintegratingahierarchicalrisk-basedcloudattacktolerancemechanismwithsmartcontracts,Theproposedapproach
+ensurescomprehensivethreatdetectionandmitigationbyestimatingrisksatallthreelayers:local,cluster,andglobaldynamically
+using Dempster–Shafer theory. Simulations validated the superiority of our approach compared to similar systems in terms of
+availability,attackdetectionrate,andpacketlossmetricsinlarge-scalecloudsimulationof10,000nodes.Theresultsdemonstrate
+thatoursystemnotonlyimprovessecuritybutalsomaintainsservicequalityunderhigh-intensityattackscenarios.Additionally,
+theimplementationofourblockchainarchitectureshowssignificantscalabilityandcost-efficiency,thus,confirmingitssuitability
+for large cloud deployments. Furthermore, the reliability of the smart contracts against potential threats were confirmed by a
+formalsecurityanalysisusingtheEchidnatool.
+1 Introduction
+By providing various and continuous services, the cloud com-
+puting become an essential part of the modern digital infras-
+tructure. However, many security concerns have surfaced due
+to this increasing reliance, particularly about DDoS attacks.
+Theseattacks,arebecomingmoresophisticatedandmayposea
+significantrisktothecloudsystemsavailability[ 1].Therefore,itis
+crucialtoestablishrobustmechanismsforcloudattacktolerance
+toguarantydesigningresilientsystemsthatcanwithstandthese
+threats[2].
+Mostofconventionalcloudsecuritysystemsusesintrusiondetec-
+tionsystems(IDS)thatbaseonsignaturesandanomalydetection.
+Although they may be effective against static challenges, their
+effectiveness degrades in case of emerging or changing threats.
+For example, the famous used signature-based IDS Snort failed
+todetectaround58%ofzero-dayDDoSattacksin2023duetoits
+relianceonstaticpatterns[ 3].
+Themajorityofthesemethodsconcentrateoncentralizeddetec-
+tion, overlooking the distributed nature of cloud computing,
+leading to the easy identification of vulnerabilities during an
+attack.Toaddresstheselimitations,AI-based(intelligenceartifi-
+cial)techniques,particularlydeeplearning,havebeendeveloped
+toimproveattackidentification;however,real-timedetectionstill
+presents challenges, including high false alarm rates and long
+trainingtimesfordeeplearningmodels[ 4],whichrequiressteady
+Thisisanopenaccessarticleunderthetermsofthe CreativeCommonsAttribution-NonCommercial-NoDerivs License,whichpermitsuseanddistributioninanymedium,providedtheoriginalwork
+isproperlycited,theuseisnon-commercialandnomodificationsoradaptationsaremade.
+©2025TheAuthor(s). IETBlockchain publishedbyJohnWiley&SonsLtdonbehalfofTheInstitutionofEngineeringandTechnology.
+IETBlockchain,2025;5:e70023
+https://doi.org/10.1049/blc2.70023
+1of33
+
+
+--- PAGE 2 ---
+solutions between accuracy and timely response in dynamic
+environments.
+Isolation-basedstrategiesofferanalternativebecausetheyfocus
+on containing attacks after detection. Resource and network
+isolation can mitigate the impact of attacks, but these strategies
+require significant resource allocation and may not be practical
+in all scenarios [5]. Formal methods employing mathematical
+modellingtodefinesecuritypoliciesandprotocolsofferastruc-
+tured approach. These methods, while theoretically robust, can
+becomplextoimplementandmaynotfullyadapttothedynamic
+natureofcloudenvironments.
+Hybrid approaches combine various methods for broader sce-
+nario coverage; however, these combined strategies still prove
+ineffectiveagainstsophisticated,large-scalecloudattacks.
+Blockchain technology, known for its decentralized nature, is
+being explored to enhance security and resilience in such con-
+texts [6]. The problem of single point of failure is avoided
+with blockchain by distributing data across multiple nodes. Its
+effectivenessinDDoSmitigationandsecuredstorageisnotable.
+Blockchain-based systems have proved high detection accuracy
+thatrangesbetween72.49%and99.78%mitigatingDDoSattacks
+by leveraging decentralized authentication and real-time attack
+detectionmechanisms[ 7,8].However,thesuccessofblockchain
+in large cloud environments depends on the consensus mecha-
+nismused.Keymechanismslikeproofofwork(PoW),practical
+Byzantine fault tolerance (PBFT), and proof of stake (PoS) face
+challengesinscalability,energyefficiency,andattackresistance.
+Notably, PoW’s high energy consumption, PoS’s centralization
+issues,andPBFT’sscalabilityproblems,alongwithvulnerabilities
+like the 51% attack, highlight the limitations concerning energy,
+scalability, attack tolerance, and security in large-scale cloud
+systems[9,10].Thisleadstotheidentificationofacriticalneed:
+a new consensus mechanism that is not only decentralized but
+also risk-aware and adaptive to cloud-specific threats. Such a
+mechanism should be adaptable at scale, energy-efficient, and,
+most importantly, offer a high level of resilience against a wide
+rangeofsecuritythreats.
+In addition to these weaknesses, a number of other drawbacks
+are apparent. Most of the current solutions are only limited to
+meredetectionwithoutadequatemitigation;manyarebasedon
+centralizedsystemsthatmaybesubjecttosinglepointsoffailure.
+Many methods also struggle with adapting to evolving threats
+and often lack scalability and comprehensive security analysis.
+Thishighlightstheneedfornewdynamic,hierarchicalapproach
+that integrates effective detection and mitigation, decentraliza-
+tion, adaptive and scalable algorithms, and thorough security
+analysis.
+Toovercometheabove-mentionedchallenges,thispaperpresents
+an innovative, multi-layered blockchain-based system designed
+to enhance attack tolerance in large-scale environments, the
+proposed scheme represents a significant advancement over
+traditional blockchain, it is capable to handle complex chal-
+lenges of cloud security ensuring resilience across a wide range
+of attacks. Thus, we integrated the blockchain decentraliza-
+tion benefits with automation and adaptability abilities offered
+by smart contracts to address both detection and mitigation
+challenges.
+TheproposedsystemoffersdetectionandmitigationthroughSCs
+toensurearobustresponsetopotentialthreats.Itestimatesrisk
+at different levels including node, cluster, and global levels and
+adapts security measures based on real-time risk evaluations.
+This comprehensive approach not only detects threats but also
+dynamically adjusts security protocols to mitigate these threats
+effectively. In order to evaluate risks in a decentralized and
+efficientmanner,theproposedsystemusetheDSTbyassigning
+belief values to node attributes and generates normalized risk
+scoresforeachnode.Thesescoresarecollectedintocluster-level
+scoresandfurtherintoaglobalriskscoreinparallel.Ifriskscores
+exceed predefined thresholds, appropriate defence mechanisms
+are triggered. The system dynamically regulates thresholds and
+security protocols based on these detailed risk assessments and
+records all data on the blockchain. Our enhanced blockchain
+ensures transparency and decentralization, while our SCs auto-
+mate risk assessment, threshold adjustments, and consensus
+nodeselection.
+The key contribution of this paper lies in the development of
+a novel blockchain framework that merges SCs with a multi-
+layered, hierarchical risk-based attack tolerance mechanism.
+Unlike existing hybrid blockchain-IDS systems, our approach
+introduces several distinct innovations. First, we perform risk
+evaluation using DST at three levels: node, cluster, and global
+enabling granular, scalable, and parallel threat assessment that
+adaptsinreal-time.Second,thesystememploysdynamicthresh-
+oldregulationandadaptiveweightadjustmentsbasedonevolving
+risklevels,improvingaccuracy,andresponsivenessundervarying
+attack conditions. Third, and most significantly, we propose a
+novelrisk-awareconsensusmechanism.Byfocusingondynamic
+risk assessment and decentralized control, it overcomes tradi-
+tionalconsensusstrategies,enhancingbothattacktoleranceand
+scalability. Additionally, this consensus design improves energy
+efficiencyandsupportslarge-scaledeployment.Theseintegrated
+components collectively contribute to a resilient, decentralized,
+and adaptive defence framework capable of handling a broad
+spectrumofattacktypes,goingbeyondtypicalDDoSmitigation
+toincludeSybilattacks,insiderthreats,datapoisoning,andAPTs.
+Our methodology addresses scalability by evaluating system
+performance across a growing cloud environment from 1000 to
+10,000 nodes using tailored metrics to assess attack tolerance,
+communication overhead, and resource efficiency. Performance
+evaluationisconductedinalargecloud,consideringfalsepositive
+rate, false negative rate, detection rate, availability, and packet
+lossrate.Gasconsumption,transactioncost,andexecutioncost
+are also considered for practicality and efficiency. The security
+analysisofthesmartcontractoftheproposedmodelisperformed
+and evaluated using the Echidna security tool, focusing on key
+functionalitiesandresilience.
+Therestofthepaperisstructuredasfollows:Section 2providesan
+overviewofrelatedwork.Section 3introducestheconceptsused
+in the work. Section4 presents the proposed system. Section5
+includes a quantitative analysis. Finally, Section6 outlines the
+conclusionandfuturedirectionsfortheresearch.
+2of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 3 ---
+2 RelatedWorks
+Various attack tolerance mechanisms have been proposed in
+the literature to address security issues in cloud environments,
+particularly those targeting servers. This review covers current
+and cloud-relevant insights from recent research and varied
+techniques. This literature review section is organized into five
+subsections: begin with IDS-based approaches, employing both
+signature-basedandanomaly-basedintrusiondetectionsystems.
+FollowwithAI-basedapproaches,emphasizinghowdeeplearn-
+ing and other advanced AI techniques have been developed to
+overcome some of the limitations of traditional IDS, such as
+detectingunknownattacksandimprovingaccuracy.Next,discuss
+isolation-based approaches that provide solutions to the limita-
+tions of detection by preventing the spread of attacks once they
+aredetected,showcasinghowresourceandnetworkisolationcan
+mitigatetheimpactofattacksthatbypassdetectionmechanisms.
+Then,exploreformalmethodsthatusemathematicalmodelling.
+Concludewithhybridapproaches,whichcombinethesignificant
+strengthsofotherapproachesandbridgethegapsthatindividual
+methodshave.
+✓ IDS-basedapproaches
+Hezavehi et al. [11] introduced an interactive anomaly-based
+DDoS attack detection method in cloud computing, integrating
+athird-partyauditor(TPA)withdatacentrestoenhancesecurity.
+The method uses a threshold anomaly-based detection strategy
+and simulations for validation. It improves attack detection and
+reducesfilteringstages.However,thismethodfaceschallengesin
+detectinglow-rateDDoSattacks,lacksadaptabilitytonewattack
+types, and sets fixed resource limits without proper evaluation.
+Thestudyalsolackscomprehensivetestingagainstvariousattack
+types, and the claim of the system being host-independent
+remainsunverified.
+David et al. [12] proposed a dynamic threshold and entropy
+measurementstatisticalmethodforeffectivelydetectingflooding
+DDoS attacks in network traffic. They applied this method to
+a virtual network using both DARPA and CAIDA datasets, and
+it detected packets with high efficiency and low false positives.
+However, the study has some limitations. It does not detect
+application-layerDoSattacks,lackstechniquesforidentifyingor
+mitigatingtheattackflows,anditsadaptabilityandscalabilityare
+stillundefined.
+Tsobdjou et al. [13] proposed a method to detect flooded DDoS
+attacksusingdynamicthresholdsbasedonpacketcharacteristics.
+The study targets (Internet control message protocol) ICMP
+and SYN flood attacks, using various performance metrics for
+evaluation. The system was tested through the GNS3 simula-
+tor in combination with the CICIDS2017 dataset and returned
+promising results in both real and simulated attack scenarios.
+However, this approach faced challenges detecting low-DDoS
+attacks;moreover,itneedsspecialfine-tuningofsomeparameters
+foroptimalperformance.
+Kautish et al. [14] introduced a scattered denial-of-service mit-
+igation tree architecture, which aims to detect and mitigate
+DDoS attacks in hybrid cloud environments. This framework
+consists of three phases: filtering, attack detection, and attack
+mitigation. The proposed model was tested on a hybrid-cloud
+environment that combines Amazon Web Service EC2 with a
+simulatedprivatecloud,usingtheKDD-99datasetforevaluation.
+While the system shows high efficiency compared to current
+models, it has limitations in terms of addressing dataset shift
+issues. Furthermore, it does not investigate the architecture’s
+practicalityincloudenvironmentsoritscompatibilitywithother
+defencemechanisms.
+Elmasryetal.[ 15]introducedanadvancedcloud-basedstrategyto
+safeguardcloudenvironmentsfromnumerousmaliciousthreats.
+It is composed of five main modules: monitoring, processing,
+analysis, prediction, and response. For added protection, a
+third-party intrusion detection system is employed. The sys-
+tem combines signature-based methods and anomaly detection
+techniques. Its performance surpasses empirical test results on
+NSL-KDD and CICIDS2017 datasets. However, the system has
+some limitations such as possible misclassification by outdated
+signature-basedrulesandcomputationalresourcerequirements.
+Vashishthaetal.[ 16]proposedahybridintrusiondetectionmodel
+for cloud systems. The model combines signature-based and
+anomaly-based models. It outperformed existing techniques in
+the tests that were done using three datasets. Nevertheless, it
+has limitations, like difficulty of scalability and adaptability to
+differentcloudarchitectures,notrelevanttonewtypesofattacks,
+anditlacksrealisticvalidationandanalysisoffalsepositivesand
+falsenegatives.
+Maheswari et al. [17] proposed an effective IDS to secure web
+and cloud computing. The system uses multi-verse and chaotic
+atom search optimization for data pre-processing, and uses
+chaotic manta-ray foraging optimization for clustering. It also
+incorporates modified teacher learning for attack labelling. The
+systemoutperformspreviousstudiesusingKDDCup’99andNSL-
+KDDdatasets.However,theauthorsdidnotexaminethesystem’s
+scalabilityorattackresistance.
+Elbakri et al. [18] presented a novel framework utilizing a
+supportvectormachinetheprunedexactlineartimealgorithmto
+enhancedaccuracyandefficiency.Itisformedoffourkeycompo-
+nents:featureselection,surveillance,trainingset,andtestingset.
+Ahybridharmonysearchalgorithmandthesymmetricaluncer-
+tainty filter are used in the framework to distinguish between
+normalandabnormalnetworktrafficinthecloudenvironment.
+The proposed scheme identifies change points within network
+trafficdata,enablingtheidentificationofanomaliesandpotential
+security threats with improved precision. The system has been
+assessed using the NSL-KDD and ISOT-CID datasets in terms
+of accuracy, precision, and recall where it outperforms existing
+detectiontechniques.
+✓ AI-basedapproaches
+Kushwahetal.[ 19]describedaDDoSdetectionsolutionforcloud
+computing. They used a modified self-adaptive evolutionary
+extreme learning machine, SaE-ELM, with cross-over adapta-
+tion. This improved model automatically modifies its mutation
+approachandotherparametersandistestedonfourprominent
+datasets, including NSL-KDD and CICIDS 2017. Performance
+3of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 4 ---
+measurements show that the system outperforms the original
+SaE-ELM and other machine learning models such as artificial
+neural networks (ANN) and support vector machines (SVM)
+in terms of detection efficiency. However, the model requires
+longertrainingtimes,posingalimitationforscenariosrequiring
+frequentretraining.
+Asoftwaredefinednetworking(SDN)-basedDDoSdetectionand
+mitigation architecture was introduced by Ribeiro et al. [20]. It
+protected the primary server by rerouting hostile floods to low-
+capacityserversusingthemovingtargetdefencetechnique.The
+sensor classified flows using machine learning methods. The
+stackingclassifieralgorithmwasfoundtobeparticularlyeffective
+in rapid attack detection, with the random forest algorithm
+achieving maximum precision. However, the study lacked vari-
+ability in attack scenarios, making it less adaptable to different
+cloudenvironments.
+Pasha et al. [21] presented a hybrid mechanism for low-rate
+AI-based DDoS. In the proposed architecture, deep learning
+approaches comprising sparse autoencoders and CNNs are
+benchmarked with traditional techniques comprising K-means
+and incremental SVMs. In simulated network conditions, the
+performance of the proposed system was evaluated based on
+packetlossratio.However,thistestwasperformedonlywithinan
+attack-scalescenario,including10attackers.Itthereforerequires
+further tests to determine the level of its effectiveness when
+operatingwithinrealityinacloudenvironment.
+A multilayer approach to identifying and preventing DDoS
+assaults in cloud systems was carried out by Arunkumar et al.
+[22]. Traffic is captured and extracted, then grouped using K-
+means clustering, and attacks are identified using rule-based
+techniques.Supervisedandunsupervisedmachinelearningtech-
+niquesarecombinedinthismethod.UsingtheKDD99dataset,
+the system was evaluated on a virtual cloud network and
+showedexcellentaccuracyandlowfalse-positiveratesforICMP,
+transmissioncontrolprotocol(TCP),anduserdatagramprotocol
+(UDP) traffic. However, further scalability testing must be done
+inreal-worldcloudenvironments.
+Addressing economic denial of service (EDoS) attacks, Suguna
+et al. [23] introduced a detection methodology based on stack
+deeppolynomialnetworktechniques.Themethodologyconsists
+of multiple key components, including a dynamic threshold
+andcontinuousmonitoringsystem.Initsoperationalphase,the
+system constantly scrutinizes multivariate time-series data to
+identify anomalous traffic patterns indicative of EDoS attacks.
+While generally effective, the methodology has limitations,
+particularlyindetectingYoYoandSlowlorisattacks.
+Shukla et al. [24] proposed a DDoS detection technique for
+cloud environments that operates at the hypervisor level. The
+approach combines particle swarm optimization and the radial
+basisfunctiontoachieveaccurateidentificationofDDoSattacks.
+The system is evaluated using the NSL-KDD and KDD CUP99
+datasets,whicharenotspecificallydesignedforcloud-basedflood
+attacks.ThestudyfocusesonperformancemetricsforUDPflood,
+normal,andTCPSYNfloodattacks.However,thepaperdoesn’t
+discuss the method’s adaptability or ability to scale. The lack of
+a cloud-based flood assault dataset casts doubt on its efficacy in
+real-worldcloudenvironments.
+Mudassir et al. [25] emphasized the importance of protect-
+ing Industrial Internet of Things devices. They introduced an
+advanced deep learning model that classifies malicious packets
+and botnet attacks based on ANN, gated recurrent units (GRU),
+and long short-term memory (LSTM) models. According to the
+teststhatweredoneusingaBot-IoTdataset,thesemodelsclassify
+malwaredataaccuratelywithgoodprecisionandrecall.However,
+thecomplexityandresource-intensivenatureofthemodelmake
+itdifficulttobeusedinresource-constrainedIoTenvironments.
+A l S a l e he ta l .[26] introduced an innovative method to detect
+cloud computing DDoS attacks, by combining convolutional
+neuralnetworkswithBayesianmachinelearningtodesignanew
+model called BaysCNN, the latter helps managing uncertainties
+and understanding complex network traffic patterns. BaysCNN
+includesseveralsteps:mergingdatasources,preprocessing,and
+using principal component analysis for feature extraction. The
+authors targeted issues such as class imbalance and cleaned
+the data by removing irrelevant features. The BaysCNN model
+wastestedusingtheCICDDOS2019dataset.Theoutcomesshow
+a notable accuracy rate; nevertheless, the proposed method is
+complicated, highly dependent to dataset, focuses only specific
+attacks,andthereislackofrealistictesting.
+To address the challenges posed by low-rate DDoS attacks
+in cloud computing networks, Yin et al. [27] introduced a
+modelcalledMSCBL-ANDtoamelioratedetectionaccuracyand
+time efficiency. The model uses convolutional neural networks
+(CNNs) for spatial feature extraction, bidirectional long short-
+term memory (Bi-LSTM) for temporal analysis, an arbitration
+network for feature importance prioritization, and a 2-block
+denseconnectionnetworkforclassification.Experimentalresults
+on the ISCX-2016-SlowDos dataset demonstrated that MSCBL-
+ADN significantly outperforms existing methods in detection
+accuracy and time performance. However, the model emphases
+exclusivelyonlow-rateDDoSassaults,andneededrequirements
+forvalidationacrossvariousdatasets.
+Kauhsik et al. [28] proposed an intelligent intrusion detection
+and prevention mechanism to improve the security of IoT
+environments; it merges machine learning and deep learning
+techniques by integrating detection and prevention functional-
+ities to protect IoT devices from unauthorized activities. The
+approach is designed with scalability and can be used across
+large-scale IoT datasets and leverages an intrusion detection
+and prevention system topology to check and detect network
+intrusionsefficiently.
+Addressing the challenge of designing an accurate detection
+system in resource-constrained IoT environments, Nandanwar
+and Katarya [29] presented a hybrid deep learning model based
+onCNNandBi-LSTMnamedTL-BILSTM,supportedbytransfer
+learning. This model contains attention mechanisms to point
+on critical temporal features and employs transfer learning
+decreasing dependence on large labelled datasets. TL-BILSTM
+was assessed using a benchmark dataset where it demonstrated
+low error rates and high accuracy, outperforming existing
+4of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 5 ---
+solutions. Particularly it is more effective with imbalanced
+data and heterogeneous devices, which suits real-world IoT
+deployments.
+Extending their research to Industrial IoT systems, the same
+authorsintroducedAttackNet[ 30],adevelopedintrusiondetec-
+tionsystemtodealwithmoredynamicanddiverseenvironments,
+theauthorscombinedgatedrecurrentunitswithCNN,AttackNet
+captureseffectivelyspatialandtemporalpatternsofmulti-variant
+botnet attacks. It showed notable performance in experimental
+evaluations, showcasing its robustness in identifying sophisti-
+cated attack patterns. This work is considered a notable step
+towardssecuringcriticalIIoTinfrastructuresbyensuringreliable
+anomalydetection.
+✓ Isolation-basedapproaches
+Kumar et al. [31] proposed resource isolation techniques to
+address service unavailability and resource contention during
+DDoSattacks.Thesetechniquesoperateatthephysicalmachine,
+virtual machine, container, and page levels to reserve or iso-
+late resources for authenticated users. The study’s experiments
+showedthatisolatingresourcesatthevirtualmachine(VM)level
+is most effective in reducing response time and failed requests.
+However, the strategy is limited against low-rate DDoS assaults
+andsomevarietiesthatuseInternetprotocol(IP)spoofing,aswell
+asrequiringmorephysicalresources.Furtherresearchisrequired
+to investigate the scalability and practical implementation of
+theseseparationstrategies.
+Gurjar et al. [32] focused on mitigating amplification and
+reflectioninDDoSattacks.Theyintroducedthreestrategies:sepa-
+ratingresourcesatthecontainerlevel,combiningcontainer-level
+separationwithpacketlimiting,andusingseparatenetworkhard-
+ware.Thesemethodsaimtoimprovetheperformanceofvictim
+web services by isolating resources. Experimental results show
+significant improvements in test and response times. However,
+each approach has its drawbacks; for example, packet limiting
+at the container level could lead to the loss of important UDP
+packets.Whilethestudyiscomprehensive,itlacksdiscussionon
+real-worlddeploymentchallengesandtheeffectivenessofthese
+methodsagainstothertypesofDDoSattacks.
+Akbarian et al. [33] proposed a framework for detecting and
+mitigatingcyberattacksincloudcontrolsystems.Theyevaluated
+the framework using a real-world testbed and chaos mesh for
+network delay simulation. The study found that an observer-
+based method was more effective in detecting attacks quickly
+comparedtoanARR-basedmethod.Theauthorsalsointroduced
+anewisolationtechniquethatimproveduponthelimitationsof
+existing ARR-based methods in terms of robustness and accu-
+racy. However, the study did not fully explore the framework’s
+adaptabilityandscalability.
+Kumar et al. [34] conducted an experiment to determine the
+optimal timing of resource isolation as a mitigation strategy
+for DDoS attacks in cloud systems. The study examined five
+timing techniques and four categories of resource isolation
+for comparison. The researchers found that the “always ON”
+technique proved to be highly effective in reducing response
+timeandminimizingrequestfailures.Althoughthetechniqueis
+highly reliable, the studysuggested conducting further research
+toinvestigateitsresourceoverhead.
+Kumaretal.[ 35]proposedanapproachtominimizetheeffectof
+DDoS attacks on victims’ service in clouds. Their solution used
+container-basedrequestseparationandadoptedthescale-inside-
+outstrategyforsuspiciousrequests.Thestudydemonstratedthe
+potential to reduce response time for legitimate users during a
+DDoSattackcomparedtocurrentsolutions.However,ithassome
+limitations;itfailstoconsideradaptabilityorscalabilityconcerns.
+Additionally, the simulations used in this study lack realistic
+testingdata.
+Patidar et al. [36] examined multiple strategies for countering
+DDoS attacks in cloud settings, using metrics such as test
+completion time, response times, and the number of failed
+requests. Various strategies were tested at different levels of
+attack concurrency, including combinations of page separation,
+resource allocation to white-listed users, and DDoS mitigation
+techniques. The study found that this combination performed
+bestathigherconcurrencylevels.However,thepaperdidn’tdelve
+intotheeffectsofundetectedattacks,leavinganopenquestionon
+howtoservewhite-listedusersinthosescenarios.
+Kumar et al. [37] proposed a dual-layer defence system that
+integratesrequestfilteringandcontainerizationtomitigateDDoS
+effects.Thefirstlayerfiltersrequestsbasedonconnectionvolume
+and forwards them to the second layer where bandwidth is
+restricted for intermediate machines. A load balancer directs
+traffic to various containers, serves benign users and maintain-
+ing near-normal response times. The system maintains service
+availabilityupto98%ofbenignrequestsevenundersevereDDoS
+attacks. However, it requires additional machines, less effective
+against low-rate attacks below the threshold, and bandwidth
+restrictionsmayincreaseresponsetime.
+✓ Formalapproaches
+Hasanetal.[ 38]proposedCAMPgame,agame-theoreticmodel
+for addressing co-resident attacks in cloud computing. The
+model uses Nash equilibrium to capture interactions between
+the virtual machine manager and VM, considering them as
+potential attackers or benign entities. The effectiveness of the
+modelisdemonstratedthroughCloudSimsimulations,consider-
+ing factors such as the number of virtual machines and defence
+preferences. However, the study is limited to standard cloud
+serversanddoesnotexploreadaptabilitytodifferentarchitectures
+or compatibility with other defence mechanisms. Real-world
+testingforscalabilityisalsolacking.
+Liuetal.[ 39]introducedaframeworkforevaluatingthesurviv-
+ability and vulnerability of cloud redundant array of indepen-
+dent disks (RAID) storage systems. Using the continuous-time
+Markovchainandmulti-valueddecisiondiagram,theframework
+assessedbothdisk-andsystem-levelbehaviour.Whiletheframe-
+work effectively evaluates the survivability and vulnerability of
+cloudRAIDstoragesystems,theauthorsdonotdelveintomore
+comprehensivemodels.Italsofocusesmainlyondiscandsystem-
+level behaviour, potentially overlooking other factors that could
+affectcloudstoragesurvivability.
+5of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 6 ---
+Zhouetal.[ 40]proposedaframeworkforenhancingattacktoler-
+anceincloud-basedmedicalinformationstorageusingcoloured
+petrinets(CPN)formodelling.Theframeworkaddressedsecurity
+vulnerabilitiessuchasblocking,leakage,stealing,andinjection.
+The authors extended a simpler model to include multiple
+users and replaced fault tolerance mechanisms with an attack
+tolerance framework. They used CPN Tools for simulation and
+conductedacasestudytovalidatetheframework’seffectiveness
+indetectingandmitigatingcomplexattacks.However,thestudy
+haslimitations,suchasthemanualdeploymentofdetectorsand
+tolerance solutions, which are currently only applicable at the
+designstage.
+Ouffouéetal.[ 41]developedarisk-basedmonitoringframework
+for securing cloud-based applications, focusing on web services
+andchoreographedmicroservices.TheframeworkusestheMont
+image monitoring tool and the SChorA conformance tool to
+detect security incidents in real-time and perform formal verifi-
+cation.Theeffectivenessoftheframeworkisvalidatedthrougha
+case study on an electronic voting system, where it successfully
+identifies and counters insider attacks and unauthorized code
+changes. However, the framework is limited to programming
+languagesthatsupportadvancedreflectionapplicationprogram-
+minginterfaces.
+Tavori et al. [42] conducted a study on optimizing attack
+strategies on distributed resource systems, specifically target-
+ing capacity and DDoS flow attacks. They used M/M/1 and
+M/M/1/K queuing models to determine optimal attacks under
+a variety of conditions, including migration costs and system
+parameters. The study highlights the importance of queuing
+modelsanddelaymetricsinshapingtheoptimalattackstrategy
+and proposes algorithms to identify these strategies. However,
+the study is primarily theoretical and lacks real-world data
+for validation. The focus on specific queuing models may also
+limit the findings’ applicability to other types of distributed
+systems.
+W e l s he ta l .[43] proposed a new method for evaluating
+resilience in decentralized service-oriented architectures using
+a bio-inspired embryonic fog service delivery platform. They
+introducedassortativityasametricforassessingservicestability
+over time and found a strong correlation between assortativity
+andsystemperformance.However,thestudydidnotinvestigate
+theadaptabilityorscalabilityoftheembryonicplatform,andthe
+focus on assortativity may not fully capture the complexity of
+resilienceinthesesystems.
+✓ Hybridapproaches
+Kumar et al. [44] proposed a genetic deep belief network
+model driven by Dragonfly for securing virtual machines in the
+cloud from malware. The model consists of four stages: data
+collectionandpre-processing,featureextraction,attackdetection
+and classification, and cluster-based authentication. The model
+demonstratesgoodperformanceintermsofreconfigurationtime
+and data overhead. However, the study highlights the fact that
+theattackdetectionprocessistime-consuming.Additionally,the
+paper does not investigate the adaptability or scalability of the
+model,raisingconcernsaboutitspracticalapplicability.
+GSR et al. [45] suggested a deep learning solution for recogniz-
+ing the DDoS attacks on cloud environments. The framework
+merges attributes of convolutional neural networks and vari-
+ational autoencoders to enhance detection. It demonstrates a
+higher detection rate and fewer false positives than traditional
+approachessuchasdecisiontreesandrandomforests.However,
+the study has limitations, such as using datasets that may not
+fullyrepresentreal-worldscenarios.Theframework’sscalability
+and real-time applicability are untested, and its computational
+complexity could introduce overhead. The study also doesn’t
+addressdeploymentchallenges.
+Krishnan et al. [46] presented OpenStackDP, a security frame-
+work designed for SDN-managed OpenStack cloud infrastruc-
+tures. The framework utilizes SDN, network function virtual-
+ization, and machine learning to enhance the security of the
+data plane and networking fabric. The authors demonstrated
+that OpenStackDP outperforms five other security solutions in
+termsofdetectionrate,latency,andcentralprocessingunit(CPU)
+utilization. However, the framework does have limitations in
+terms of data generalization, offline training, and addressing
+zero-dayvulnerabilitiesandinternalthreats.
+Shah et al. [47] proposed a model called EDOS-TSM to address
+TCP SYN flooding attacks in cloud environments. The model
+utilizesSDNandaPOXSDNcontrollertodifferentiatebetween
+attacks and legitimate flows using parameters such as payload
+size and time to live. The model demonstrates superior per-
+formance in terms of false negatives and resource utilization.
+However, it has not been tested in realistic, enterprise-level
+environments.
+Manoj [48] proposed an optimal load distribution framework
+fordetectingDDoSattacksincloudenvironments.Usingmech-
+anisms such as bat algorithms and fuzzy extreme learning
+machine classifiers, the study aims to improve cloud security.
+The framework is tested on CloudSim and uses metrics like
+attack detection rate and resource usage for evaluation. While
+the proposed classifier effectively reduces resource usage under
+DDoS conditions, the study has several limitations. It doesn’t
+address adaptability or scalability, and it relies on a dataset that
+may not cover all types of DDoS attacks. The study is also
+simulation-based, lacking real-world testing, and focuses solely
+onVM-relatedDDoSattacks.
+Hei et al. [49] proposed a cloud intrusion detection system that
+combines blockchain and federated learning, using hyperledger
+fabric for enhanced data security in cloud computing. The
+system outperformed Ethereum in terms of data upload and
+retrieval efficiency, as demonstrated through experiments using
+theKDDCup99dataset.Itfocusedonrobustintrusiondetection,
+privacyprotection,computationaloffloading,andefficientfeed-
+back mechanisms. However, the study lacked real-world testing
+andfacedchallengesinmanagingbandwidthduetofalsealarms.
+Using deep learning techniques, Ouhssini et al. [50] developed
+a real-time detection framework called DeepDefend to prevent
+cloudenvironmentsagainstDDoSattacks.Theframeworkbases
+specifically on CNN-LSTM-transformer networks to forecast
+network traffic entropy and identify potential attacks. A genetic
+algorithmisusedforfeatureselection.Thesystemhasbeentested
+6of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 7 ---
+ontheCIDDS-001dataset,andshowedhighaccuracyinentropy
+predictionandDDoSattackdetection.However,itseffectiveness
+againstawiderangeofattacktypesandscalesneedsdeepertests
+withmorerealisticscenarios.
+Pandithurai et al. [51] introduced a new method for predicting
+DDoS attacks, they relied on honey badger optimization for
+feature selection along with a Bi-LSTM classifier. The authors
+demonstrated the superiority of this model over traditional
+techniques,achievinghigheraccuracyonpublicdatasetssuchas
+CICIDS2018-AWS,CICIDS2017,andCICDoS2016.Thishighlights
+the importance of advanced preprocessing and optimization
+methods improving detection performance. However, factors
+such as detection speed and false positives need additional
+researchtoimprove.
+Songa et al. [52] introduced an integrated SDN framework
+for early detection of DDoS traffic patterns within SDN-based
+cloud environments. They employed machine learning meth-
+ods for data preprocessing, recursive feature elimination for
+dynamic DDoS attack patterns, density-based spatial clustering
+forlargetrafficdata,andseveraltimeseriestechniques,including
+auto-regressive integrated moving average, Lyapunov exponent,
+exponential smoothing filter, dynamic threshold, and a rule-
+basedclassifiertopredictchaoticbehaviour.Theyassessedtheir
+model on the CICDDoS 2019 dataset where it achieved better
+accuracylevelsandfasterdetectiontimes,outperformingexisting
+methods. Nevertheless, the system lacks real-world tests in
+differentscenarios.
+BlockchaintechnologywasthoroughlyexaminedbyNandanwar
+and Katarya [53] in order to develop a decentralized and intelli-
+gentsecuritysystem.Theirstudylookedatthedecentralizedpeer-
+to-peerarchitectureofblockchainanditscoresecurityprinciples:
+authorization, confidentiality, integrity, and authentication. It
+also identified common weaknesses, real attack paths, and
+existingmitigationstrategies.Theevaluationalsoemphasizedthe
+abilityofcombiningblockchainwithstate-of-the-arttechnologies
+such as internet of things and deep learning, particularly to
+increase the effectiveness of decentralized intrusion detection
+systems.
+Basedonconcludedresults,theauthorssubsequentlycreatedan
+explainable hybrid deep learning model especially intended for
+safeguarding Industry 5.0 cyber-physical systems. In their 2025
+study, they introduced Cyber-Sentinet, an intrusion detection
+system that enhances model interpretability and transparency
+by combining Shapley additive explanations with a residual
+neuralnetwork [54].When Cyber-Sentinet was evaluated on the
+Edge-IIoT-2022dataset,whichcontainsavarietyofsophisticated
+attackslikeDDoS,SQLinjection,andMITM,itshowedgoodper-
+formance represented including factors like accuracy, precision,
+andrecall.Becauseofitsinterpretableoutputs,themodelispar-
+ticularlywell-suitedfordynamic,hyper-connectedCPSscenarios
+where trustworthy threat detection and human–machine trust
+areessential.
+Table1summarizesthissectionbycomparingourapproachwith
+related works. As comparison criteria, we consider the method
+employed,thetechniquesusedforattacktolerance,andwhether
+the approach is decentralized. We also highlight adaptability as
+themethod’sflexibilityinrespondingtodiverseattackscenarios,
+as well as scalability as its ability to scale to cloud demands.
+Furthermore, the table takes into account whether the security
+is analysed, advantages, and any identified limitations of each
+method.
+A critical analysis reveals several trends and gaps in current
+researchthatnecessitatefurtherdiscussion.
+- Some approaches prioritize detection rather than mitigation;
+thishighlightstheneedforintegratedsystemsthatcandetect
+andsuccessfullyresistunderthreats.Weaddressedthisgapby
+integratingamulti-layered,blockchain-basedriskassessment
+strategy.Thisintegrationenablesbothdetectionandproactive
+mitigation of attacks, providing a more holistic approach to
+cloudsecurity.
+- The majority of methods focus on centralized detection,
+neglecting the distributed nature of cloud environments.
+Unfortunately, centralized systems may suffer from single
+points of failure and lack resilience during attacks. To
+addressthisissue,weproposedecentralizedarchitecture,with
+enhancedblockchaintechnologyandaninnovativeconsensus
+algorithm, the risk assessment and mitigation processes are
+distributed across multiple nodes, thus, central points of
+failureareavoidedandresilienceagainstattacksisincreased.
+- Many approaches fail to address their capacity for adapting
+against evolving attack vectors, leaving a gap in their long-
+term robustness. While some systems address this, they
+still insufficient for cloud complexity. Our proposed system
+addressesthislimitationbyincorporatingadaptivealgorithms
+and dynamic risk assessments that evolve with emerging
+threats. This enables dynamic adjustment to different attack
+conditions and tolerates diverse attack vectors, enhancing
+cloudresilience.
+- The scalability of these methods is often not addressed,
+posing concerns about their suitability for large cloud envi-
+ronments.Oursystemovercomesthislimitationbyemploying
+dynamic and multilayered defence mechanisms over nodes,
+clusters, and globally, ensuring that the system will remain
+efficient when the cloud scales up. Moreover, the enhanced
+blockchainarchitecturealsoimprovesscalabilitybyenabling
+fasterconsensusandreal-time,securityadjustments.
+- Lack of comprehensive security analysis in most of existing
+schemes.Toaddressthis,weconductedasecurityanalysisof
+aproposedsmartcontractusingEchidnatoolandvalidatedits
+effectivenessformanagingsecurityrequirements.
+Our approach aims to address these weaknesses and provide a
+morerobustandpracticalsolutionforcloudsecurity.Itintegrates
+a multi-layered, blockchain-based risk assessment strategy to
+detectandmitigateattacksinlargecloudenvironments.
+3 TheoreticalReference
+Inthissection,weintroducetheconceptsusedinthispaper.
+∙ DDoSattack
+7of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 8 ---
+TABLE 1 Relatedworkscomparison.
+Works
+Tolerance
+techniques Decentralized?Adaptability? Scalability?
+Security
+analysis? Advantages Drawbacks
+[11] Filteringmethod × ✓ ∼ × Improvedattack
+detection,reduced
+filtering
+Struggleswith
+low-rateDDoS,high
+falsenegative
+[12] Threshold-based
+algorithm
+×× × × Enhanceddetection
+accuracy,low
+processingtime
+Ignore
+application-layer
+DDoS,nomitigation
+strategy
+[13] Information
+entropy,dynamic
+thresholding
+×× × × Thresholdadaptation Needfine-tuning
+parameters,
+struggleswith
+low-rateDDoS
+[14] Graphanomaly
+detection,Firewall
+✓ ×× × Reducesthreats,
+quickDDoSdetection
+Datasetshiftissues,
+lacksvalidationin
+diversescenarios
+[15]
+[16] Signatureand
+anomaly-based
+detection
+×× × × Identify
+known/unknown
+attacks
+Misclassification
+risk,high
+computational
+overhead,poorfalse
+positives/negatives
+analysis
+[17] Clusteringand
+attackclassification
+×× × × Improvedclustering
+anddetection
+accuracy
+Lacksfalse
+positive/negative
+analysis
+[18] Hybridharmony
+search,symmetrical
+uncertaintyfilter
+×× × × Improvedaccuracy,
+changepoint
+detection
+Increasedfalse
+positive
+[19] Detection-focused
+approach
+×× × × Highdetection
+accuracy
+Extendedtraining
+time,non-specific
+attackdetection
+[20] Movingtarget
+defence
+×× × × Fastattackdetection Highcomputational
+overhead
+[21] Sparseautoencoder,
+CNN
+×× × × Effectivenessof
+rigoroustesting
+Unrealistic
+evaluation
+[22] Trafficcaptureand
+extraction,grouping
+×× × × Improveddetection
+rateswithminimal
+falsealarms
+Unrealistic
+evaluation
+[23] Stackdeep
+polynomialnetwork
+×× × × DetectEDoSoutliers Challengesdetecting
+YoYo and Slowloris
+attacks
+[24] Swarmoptimization
+ithradialbasis
+function
+×× × × Enhanced
+classificationaccuracy
+Lackscloud-specific
+dataset
+[25] Dataprocessingand
+botnetclassification
+×× × × Highaccuracy,learn
+fromlargedatasets
+Complexityand
+resource-intensive
+[26] CombineBayesian
+methodswithCNNs
+×× × × Highaccuracy,
+Improved
+performancewith
+datafusion
+Datasetdependency,
+Modelcomplexity,
+lacksrealistictesting
+(Continues)
+8of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 9 ---
+TABLE 1 (Continued)
+Works
+Tolerance
+techniques Decentralized?Adaptability? Scalability?
+Security
+analysis? Advantages Drawbacks
+[27] CNNandBI-LSTM ×× × × Improvedaccuracy Focusesonlyon
+LDDoS,requires
+multi-dataset
+validation
+[31] BlocksourceIP × ∼ ×× Reducedrequest
+failures,improved
+responsetimes
+Ineffectiveagainst
+low-rateDDoS
+requiresfine-grain
+separationsstudy
+[32] Resourceseparation ×× × × Near-no-attack
+performance
+Requiresadditional
+hardwareresources
+Potentiallossof
+importantUDP
+packets
+[33] ARR-basedmethods × x ×× Fastattackdetection Complexityin
+selectingthreshold
+[34] “AlwaysON”
+strategy
+×× × × Reducedresponse
+time
+Higherresource
+overhead
+[35] Firewall,load
+balancing
+×× × × Reducedresponse
+time
+Focusonspecific
+DDoStype
+[36] Pageseparation
+MaxRWMinRW
+ERWS
+× ∼ ×× Enhancedresponse
+time,reducedfailed
+requests
+Lackofdiscussion
+ontheimpactof
+undetectedattacks
+[37] Bandwidthlimits
+containerization
+× ∼ ×× Improvedavailability Requiresadditional
+machines
+Lesseffectiveagainst
+low-rateattacks
+[38]N a s h
+equilibrium-based
+strategies
+×× × ✓ Optimalmalicious
+VMdetection,limits
+impactonbenign
+VMs.
+Limitedtostandard
+cloudservers,
+seriousdelay
+[39] Markovchains,
+multi-valued
+decisiondiagrams
+×× × ✓ Enhanced
+survivabilityanalysis
+Focusedonlyondisk
+andsystem-level,
+missvariables
+affecting
+survivability
+[40] Attack-specific
+detectorswith
+tolerancesolutions
+×× × ✓ Low-costmodelling
+framework
+Notautodeployed,
+limitedtodesign
+stage
+[41] Real-timedetection ×× × ✓ Risk-based
+Monitoring
+Limitedtospecific
+languages
+[42] Attackoptimization ×× × ✓ Newtheoretical
+insights
+lacksempirical
+validation,limitedto
+specificqueuing
+models
+[43] Self-healing,
+self-organization
+✓ ×× × Assortativitymetric Maymissallaspects
+ofresilience
+[44] Cluster-based
+authentication
+×× × × Improvedaccuracy Time-consuming
+attackdetection
+[45] Anomalydetection,
+filtering
+×× × × Improvedaccuracy computational
+complexity
+(Continues)
+9of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 10 ---
+TABLE 1 (Continued)
+Works
+Tolerance
+techniques Decentralized?Adaptability? Scalability?
+Security
+analysis? Advantages Drawbacks
+[46] ML-basedIDS ×× × ✓ Improved
+accuracy/response
+time
+Limitedto
+non-encrypted
+payloads,unableto
+resistadversarialML
+attacks
+[47] SDNandbinomial
+probability
+×× × × ReducedEDoSattacks Nocomputational
+timeanalysisfor
+controller
+[48] Ratelimiting,traffic
+analysis
+×× × × Cost-effective Computational
+complexity,limited
+dataset
+[49] Decentralizeddata
+analysis
+✓ ×× × Improvedaccuracy
+andclassification
+Potentialbandwidth
+issueswithfalse
+alarms
+[50] CNN-LSTM ×× × × Improvedaccuracy,
+andreducedfalse
+positives
+Lackofrealistic
+evaluation
+[51] Honeybadger
+optimization,
+Bi-LSTM
+×× × × Highaccuracy,
+advanced
+preprocessing
+Detectionspeed,
+falsepositives
+[52] Recursivefeature
+elimination,spatial
+clustering,time
+seriesanalysis
+×× × × Improvedaccuracy Diversereal-world
+scenarios
+✓:Y es×:No ∼:Limited.
+ADDoSattackisamaliciousattempttodisruptaserver’snormal
+functioning, making it unable to provide services to legitimate
+users. In this type of attack, the attacker controls multiple
+computers to launch a coordinated assault on the server. DDoS
+attacksareasignificantthreattocloudresourcesastheygenerate
+large amounts of traffic, depleting critical computing resources
+like CPU, network bandwidth, and storage space. These attacks
+mayalsoinvolvealteringordestroyingserverconfigurationinfor-
+mation and compromising network infrastructure equipment
+[55]. In fact, DDoS attacks have grown in terms of their scale
+andsophisticationduring2018–2023.Concretely,suchanattack
+againstGitHubin2018reachedarecordof1.35Tbps,whereasin
+2020,AWSofAmazonexperiencedanattackthattouchedashigh
+as 2.3 Tbps. Finally, in 2023, this volume has reached 800 Gbps
+and8.7millionrequestspersecond,underscoringtheincreasing
+challengeforcybersecuritydefences[ 56].
+These attacks can cause service disruption, financial losses,
+reputational damage, operational costs, and legal implications
+for individuals and businesses if they fail to protect user data
+and ensure service availability. Cloud DDoS mitigation requires
+scalable and adaptable security solutions to address changing
+threattrends.
+∙ Blockchainandsmartcontract
+TheappearanceofBlockchaintechnologywasaresponsetothe
+centralizedsystemslimitations,ensuringtrust,transparency,and
+resilience. It was introduced in 2008 by Satoshi Nakamoto as
+thefoundationalinfrastructureforBitcoin,providingadecentral-
+ized framework for recording and verifying digital transactions
+without any need of intermediaries [57]. The great features of
+immutability, transparency, and distributed trust facilitated its
+swift integration across various sectors such as finance, energy,
+healthcare,smartcityinfrastructures,andcloudenvironments.
+A blockchain is fundamentally a distributed wallet composed
+of a sequence of blocks, each block contains a list of validated
+transactions, a timestamp, a cryptographic hash of the previous
+block, a Merkle root for efficient transaction verification, a
+nonce (number used once), and other metadata [57, 58]. All
+participating devices have a replicated version of this chain;
+whichallowseliminatinganysinglepointoffailureandensuring
+fault tolerance. Hence, altering historical data would require
+modifying all subsequent blocks across the majority of nodes,
+which is computationally impossible under standard consensus
+mechanisms. The blockchain systems consist of layers. The
+data layer organizes and secures transactions using hash chains
+andMerkletrees.Thecommunicationsandtransactionsamong
+peers are guaranty by the network layer. The consensus layer
+ensures agreement on a single valid version of the chain, even
+in the presence of malicious or failing nodes. The execution of
+SCs, enabling automated and self-enforcing operations, are all
+supported by the contract layer. Finally, the application layer
+offers end-user interfaces and services such as decentralized
+finance,identityverification,anddistributedstorage[ 58].
+10of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 11 ---
+Theoperationalflowofablockchainnetworkischaracterizedby
+aseriesofwell-definedstepsthatoffersecureanddecentralized
+transactionprocessing[ 57]:
+- Transactioncreation:auserinitiatesthetransactionandsigns
+itdigitallywithitsprivatekeyensuringauthenticityandnon-
+repudiation.
+- Broadcasting:Thesignedtransactionissentthroughthepeer-
+to-peernetworktoneighbouringnodes.
+- Validation:Thetransactionischeckedineachreceivingnode
+independently using predefined protocol methods, such as
+verifyingthedigitalsignatureandcheckingaccountbalances.
+- Blockformation:Eachvalidatedtransactionisaggregatedinto
+anewblockbyaminerorvalidatornode.
+- Consensusexecution:Thenetworklaunchesconsensusalgo-
+rithmstodeterminewhethertheproposedblockisaccepted.
+- Ledgerupdate:Onceconsensusisachieved,thenewblockis
+addedtotheexistingblockchain.
+- Replication:Attheend.Allnodesofthenetworkreceivethe
+updatedledger,ensuringconsistencyandsynchronization.
+This decentralized, consensus-based workflow guaranty high
+levels of security, integrity, and auditability, even on unreliable
+riskyenvironments.
+The consensus mechanisms are the fundamental backbone of
+secureanddecentralizedoperationofblockchainnetworks,they
+enable distributed nodes to agree on a single, valid ledger state
+[59]. These protocols determine how new blocks are appended
+and are critical for maintaining trust in decentralized systems.
+Overtime,severalmechanismshaveemergedaddressingthelim-
+itationsofpreviousmethodswhileamelioratingdecentralization,
+efficiency,andscalability.
+Nakamoto introduced PoW, the first consensus model designed
+to protect blockchain networks without a centralized authority.
+To ensure data integrity and impenetrability, miners should
+solve cryptographic puzzles. Nevertheless, PoW’s high energy
+consumption, slowness, and increasing centralization due to
+mining pool dominance limit its applicability for large-scale or
+energy-sensitiveapplications[ 57].
+Tomitigatesomeoftheseproblems,PoSselectsvalidatorsbased
+onhowmuchcryptocurrencytheyarewillingtolockascollateral.
+Thisapproachshiftsthenecessaryinvestmentfromcomputation
+toeconomicstake.Italsoimprovesscalabilityandreducesenergy
+consumption. Still, PoS has issues of concentration of wealth,
+the “nothing-at-stake” problem, and other concerns over its
+sustainabilityinthelongrun[ 57].
+Forpermissionedenvironments,PBFTwascreatedtoofferdeter-
+ministicandquickerconsensus.Throughavotingprocedurethat
+accepts up to one-third of malevolent actors, it allows nodes to
+cometoanagreement.Becauseofitscommunicationoverhead,
+PBFTislesspracticalinlargenetworksdespitehavinglowlatency
+andhighthroughput[ 58].
+Allthingsconsidered,thedevelopmentofconsensusmechanisms
+shows an ongoing attempt to strike a balance between perfor-
+mance,decentralization,andtrustpresumptions.Thecontextof
+thesystem,includingitsgovernancestructure,threatmodel,and
+scalabilityrequirements,greatlyinfluencestheprotocolselection
+[57,58].
+Inablockchainsystem,blocksrecordtransactioninformationto
+ensurereliabilityandsafety.SCsareself-verifying,self-executing,
+and tamper-resistant, serving as voting mechanisms for arbi-
+tration committee decisions, industrial standards approval, and
+memberaddition.
+SCs, introduced by Nick Szabo, enforce contract terms and
+reduce reliance on centralized trust agencies. SCs benefit from
+decentralization,openness,transparency,andtamper-resistance,
+allowing participants to trade and collaborate without trust [60,
+61].
+Integrating blockchain and SCs into cloud computing can
+improve interactions and transactions, enhancing security and
+efficiency while mitigating vulnerabilities associated with cen-
+tralizedattacksandmisinformation.
+Based on their control structures and authentication models,
+blockchainsystemscanbebroadlydividedintothreecategories:
+consortium, private, and public [59]. Public blockchains are
+accessible to all users and are completely decentralized. Trans-
+actions can be read, written, and validated by any node; PoW
+isusuallyusedforconsensus.Publicblockchainsarevulnerable
+to 51% attacks, have scalability problems, and consume a lot of
+energy,despitetheirabilitytoguarantytransparencyandtamper
+resistance[58].
+Ontheotherhand,privateblockchainslimitaccesstoaspecific
+setofusers.Trustedentitiesoverseetransactionvalidation,which
+frequently uses practical Byzantine fault tolerance (PBFT) for
+effective consensus. This model, which is typically used in
+institutional or enterprise settings, decreases decentralization
+eventhoughitprovidesbetterperformanceandprivacy[ 58].
+Consortium blockchains operate as a hybrid model and are
+managed by a collection of organizations. Consensus decisions
+are typically shared using multi-signature mechanisms. This
+structure improves scalability and operational efficiency, but
+it also increases the risk of validator collusion, which could
+compromiseimmutability[ 58].
+This classification allows blockchain systems to be deployed in
+awiderangeofscenarios,fromfullydecentralizedpublicinfras-
+tructurestotightlycontrolledenterpriseecosystems,supporting
+awiderangeofdistributedandcloud-nativeapplications.
+In large-scale cloud computing environments, blockchain
+enhancesattacktoleranceandresilience,especiallyagainstDDoS
+threats. Smart contracts automate resource governance, access
+control, and adaptive threat responses, and its decentralized
+architecture eliminates the need for central control points.
+When combined with hierarchical risk models, blockchain
+providesdynamic,scalablesecurityfeaturessuitableformodern
+distributedarchitectures[ 58].
+11of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 12 ---
+∙ Dempster–Shafertheory
+DST, introduced by Arthur P. Dempster and Glenn Shafer in
+the 1970s, is a mathematical theory of evidence that allows for
+the representation and combination of uncertain and imprecise
+information[62].Itistypicallyusedinsituationswherethereisa
+degreeofuncertainty,integratinginformationfedfrommultiple
+sources,andmakingdecisionsusinginformationofanunknown
+nature.Thistheorywasestablishedforaspecificnumberofitems
+intheuniversalsets.Itisbasedontheconceptofbelieffunctions,
+which quantify the degree of belief in a given proposition or
+set of propositions. In DST, key concepts crucial for managing
+uncertaintyinclude:
+- Belieffunction (Bel)
+Thisfunctionassignsvaluesfrom0to1toeachsubsetofaframe
+of discernment, quantifying the degree of belief that the true
+outcomelieswithinthatsubsetbasedontheavailableevidence.
+The belief assigned to a subsetA is calculated by summing the
+massesassignedtoallfocalelementsthataresubsetsof A.F ora
+subset
+A,thebeliefiscalculatedas:
+Bel(𝐴) =
+∑
+𝐵⊆𝐴
+𝑚(𝐵) (1)
+Where𝑚(𝐵)representsthebasicprobabilityassignmentgivento
+focalelements 𝐵thataresubsetsof A.
+- Plausibilityfunction (Pl)
+This function complements the belief function by assigning
+valuestosubsets,reflectingthebeliefthatthetrueoutcomeisnot
+in their complements. It ranges from 0 to 1, with higher values
+indicating a greater degree of potential for the outcome to be
+withinthesubset.Forasubset A,theplausibilityiscalculatedas:
+𝑃𝑙(𝐴) =1 −Bel(𝐴𝑐) (2)
+WhereAc representstheprobabilitythatthetrueoutcomeisnot
+outsideof A.
+- Focal element: represents subsets with non-zero belief,
+denoting propositions considered most plausible based on
+evidence. These focal elements allow for the computation of
+belief and plausibility functions and concentrate the uncer-
+tainty study on subsets that are more basic in the frame of
+discernment.
+These concepts form the foundation of DST, enabling struc-
+tured reasoning in uncertain and ambiguous decision-making
+scenarios[63,64].
+We chose DST for this work, instead of alternative methods
+like Bayesian inference or fuzzy logic because of its specific
+advantagesindealingwiththecomplexitiesofmulti-levelDDoS
+risk assessment in dynamic cloud environments. Firstly, DST’s
+ability to explicitly represent epistemic uncertainty is crucial
+when node data is sparse, incomplete, or missing, avoiding the
+need for potentially inaccurate prior probability assignments
+required by Bayesian methods. Secondly, Dempster’s rule of
+combinationprovidesaflexibleandrobustmechanismforaggre-
+gatingevidencefromdiverse,potentiallyconflictingsources(e.g.
+CPU load, network patterns, node reputation) across the local,
+cluster, and global layers, aligning well with our hierarchical,
+multi-indicator risk assessment. While fuzzy logic excels at
+handlinglinguisticimprecision,DSTprovidesamorestructured
+framework to quantify belief and plausibility based on evidence
+subsets, which is more suitable for combining the varied risk
+indicators within our system. Preliminary modelling confirmed
+DST’s effectiveness in handling the inherent uncertainty and
+heterogeneityofriskdatainthiscontext.
+In our proposition, we apply the DST to SCs for dynamic
+risk assessment and threshold adjustment. These self-executing
+contracts use DST concepts to assess and respond to risks in
+real-time. By aggregating data from cloud nodes, the contracts
+calculatebeliefvaluesusingthebelieffunction,estimatepotential
+risksusingtheplausibilityfunction,andusefocalelementsand
+themassfunctionforaccurateriskassessment.Thisintegration
+enhances the system’s responsiveness and resilience against
+cloudattacks,ensuringeffectiveandreliableriskmanagement.
+4 Proposition
+The main objective of our model is presented in this section.
+We propose a novel blockchain framework that merges SCs
+with a hierarchical risk-based attack tolerance mechanism to
+improve the cloud security via dynamic DST risk assessment
+and adaptive thresholds. The proposed model aims to provide a
+comprehensiveandadaptivedefencemechanismagainstvarious
+typesofattacksinacloudenvironment.Themodelincorporates
+aformalapproach,assessingbothuseractivitiesandserverstates
+to generate a detailed risk profile. This risk profile dynamically
+adaptstoongoingconditionswithinthecloudenvironmentandis
+assessedinadistributed,parallelmanneracrossclustersofnodes,
+aswellasgloballyacrosstheentirecloudenvironment.
+4.1 SystemArchitecture
+This section presents the hierarchical, blockchain-integrated
+architecture highlighting our novel framework for cloud attack
+tolerance.Figure 1providesanoutlineofourapproach:
+The proposed system architecture is represented within a graph
+G =(V,E) modelling a cloud computing environment, whereV
+is the set of vertices (nodes), andE ⊆ V × V is the set of edges
+(communicationlinks).
+Eachnode 𝜈∈𝑉 ischaracterizedbyatuple( id𝜈,𝑇𝑣,A 𝜈, (A𝜈)),
+where:
+- id𝜈:istheuniqueidentifierofthenode.
+- 𝑇𝑣: Type of node v, which can be one of the following: user,
+server, miner, or cluster head. For nodes with multiple roles
+(e.g. a cluster head that is also a miner),𝑇𝑣 will include all
+applicabletypes.Forexample, 𝑇𝑣 ={clusterhead,miner}
+12of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 13 ---
+FIGURE 1 Proposedsystemarchitecture.
+- A𝜈 = {𝑎state,G Sdeg,GScent,C Qbw,N Hinc,T Pfreq,NTa,NRu,
+NRud,AUNR,𝑉S} is the set of attributes for node v,
+incorporating:
+∙ 𝑎state Theoperationalstateofthenode(active,idle,under-
+attacketc.),similarlyencoded.
+∙ GSdeg: Graph Structure attributes considering the node’s
+degree,centrality,andothertopologicalcharacteristics.
+∙ GScent:Acentralitymeasure(couldbebetweenness,close-
+ness, or eigenvector centrality) that captures the node’s
+importanceinthecloudnetwork’sflow.
+∙ CQbw: Bandwidth of the node’s connections, representing
+thequalityandcapacityofitscommunicationlinks.
+∙ NHinc: A count of security incidents involving the node,
+reflectingitshistoricalvulnerability.
+∙ TPfreq: Frequency of transactions, indicating the node’s
+activitylevelandpotentialexposuretorisk.
+∙ NTa:Nodetrafficanomalies,monitoringforsuddenspikes
+or unusual patterns in cloud traffic, serving as a direct
+indicatorofpotentialDDoSattacks.
+∙ NRu: Node resource usage, observing high or unusual
+usageofresourcessuchasCPUandmemory,whichmight
+indicateanodeisstrugglingunderaDDoSattack.
+∙ NRud: Analyse the distribution of resource usage across
+differenttasksandprocesses.
+∙ AUNR:Monitortheaverageresourceusageofthenode.
+∙ VS: Evaluate the node’s ability to dynamically scale
+resources.
+Each attribute is a ratio, providing a normalized measure of
+the specific risk aspect associated with nodeν. Integrating a
+broadspectrumofattributessuchasNR u,NRUD,A UNR,and VS,
+some of which are inspired by insights from [65], enhances the
+model’s efficiency and expands its capacity to handle diverse
+attack tolerances, particularly in resource utilization and scala-
+bility. This strategic enhancement equips the system to adeptly
+identify,manage,andmitigaterisks,fosteringacloudcomputing
+environment that is robust, resilient, and highly fault-tolerant
+againstvariousattackscenarios.
+- Theriskassessmentfunctionisdefinedas:
+ ∶A𝜈 →ℝ (3)
+Where (A𝜈) assigns a risk value𝑟𝜈 to nodev based on its
+attributes.
+- The formalized defence mechanisms are incorporated as
+follows:
+1) Locallayerdefence(layer1)
+∙ 𝐿∶ 𝑉→ ,where L(v)isactivatedif (A𝜈) >𝜃L (v),trigger-
+inglocaldefensemechanisms.
+∙
+𝐿(𝑣) =
+{
+{RL(𝑣,𝑝),TF(𝑣,𝑓),RA(𝑣,𝑟)} if (𝐴𝑣) >𝜃L(𝑣),
+∅ otherwise
+(4)
+13of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 14 ---
+L(ν) is a composite function that activates specific defence
+mechanismsbasedontheriskassessment (A𝜈)ofeachnode v.
+Iftherisksurpassesthethreshold 𝜃L(𝑣),thefunctionactivatesthe
+appropriatedefensemechanisms.RL( ν,p)rate-limitingfornode ν
+withparameter p.Thislimitstrafficcomingtoandfromthenode,
+which is crucial for mitigating DDoS attacks. The parameterp
+specifiesdetailsoftheprocessofratelimiting. TF(𝑣,𝑓) represents
+the traffic filtering function. f denotes the filtering criteria.
+This parameter defines how the traffic is analysed and filtered,
+determining which traffic is considered malicious and should
+be blocked to protect the node.RA(𝑣,𝑟) Resource Allocation
+functionfornode ν,r.representstheresourceallocationparam-
+eters. This parameter controls the reallocation and adjustment
+of the node’s resources, including bandwidth and computing
+power, particularlyi when the node is under attack. The aim is
+toensurethatthenodecanmaintainitsfunctionalityandservice
+availabilityevenwhenfacingresource-intensivethreats.
+Everynodewithinthecloudcomputingenvironmentisendowed
+withacustomizeddefencestrategy,meticulouslyalignedwithits
+uniqueriskprofile.Thisstrategicalignmentsignificantlybolsters
+the system’s overall security and fortifies its resilience against
+potentialthreats.
+2) Clusterlayerdefence(layer2)
+- 𝐶 ={𝐶1,𝐶2,𝐶3,...,𝐶 𝑘 }, a partition ofV into clusters with
+𝐶𝑖 ⊆Vandaclusterhead ℎ𝑖 ∈𝐶𝑖.
+- CR ∶ ℘(𝑉) → ℝ,where:
+CR𝐶𝑖𝑠𝑢𝑚𝑣∈𝐶𝑖 (A𝜈) (5)
+- CD ∶ ℘(𝑉) →, activated if CR(𝐶𝑖) >𝜃C(𝐶𝑖), triggering
+federatedclustermechanisms.
+∙C D ( 𝐶𝑖) =
+{
+CAC(𝐶𝑖,𝑠status,TR(𝐶𝑖,𝑡),NI(𝐶 𝑖,𝑁)DPA(𝐶𝑖,𝑃)ifCR(𝐶 𝑖) >𝜃C(𝐶𝑖)
+∅ otherwise
+(6)
+CAC(𝐶𝑖,𝑠status)∶ Cluster-wide alert and coordination acti-
+vatedwhenathreatisdetected.
+TR(𝐶𝑖,𝑡)∶ Traffic rerouting, adjusts traffic flow within the
+cluster.
+NI(𝐶𝑖,𝑁)∶ Node isolation (isolates affected or vulnerable
+nodes).
+DPA(𝐶𝑖,𝑃)∶ Defense protocol activation, activates relevant
+defencemechanismsacrossthecluster.
+CD(𝐶𝑖) is a composite function that activates specific cluster-
+wide defense mechanisms based on the collective risk
+assessment CR(𝐶𝑖) of the cluster. If the risk exceeds
+the threshold𝜃C(𝐶𝑖), the function activates a coordinated
+responseinvolvingalertsystems,trafficmanagement,node
+isolation,andtheactivationofpredefineddefenceprotocols.
+Thisapproachensuresarobustandadaptivedefencemech-
+anism at the cluster level, enhancing the overall security
+and resilience of the cloud environment against a range of
+threats.
+3) Globallayerdefence(layer3) :
+∙ GR ∶ ℘(𝑉) → ℝ,where:
+GR(𝐺) =
+∑
+𝐶𝑖∈𝐶
+CR(𝐶𝑖) (7)
+∙ 𝐺𝐷 ∶℘(𝑉)→ , activated ifGR(G) >𝜃G, triggering feder-
+atedclustermechanisms.
+- Smartcontractfunctions :
+∙ Dynamicrisksassessment :
+SCRA: 𝑃(𝐶) × →ℝ ×ℝ. This smart contract function assesses
+riskatboththeclusterandgloballevels,with 𝑃(𝐶) representing
+all possible cluster combinations and representing the global
+graph states. The smart contract records and updates the risk
+scores on the blockchain, ensuring a transparent and tamper-
+proofriskassessment.
+∙ Dynamicthresholdadjustment :
+SCDT: ℝ ×𝜃→𝜃 ′. This function adjusts the system threshold
+based on the current global risk scoreℝ. It takes two inputs
+(𝜃) as: the threshold and the aggregated risk level of the cloud,
+then, it optimizes the threshold set by adjusting thresholds𝜃′.
+Thisprocessensuressystemresponsivenesstorisklevelchanges
+and adaptive capabilities against emerging threats or system
+operationaspectsaswell.
+∙ Consensusnodesselectionfunction :
+SCCNS: ℝ ×𝑉→𝑉 selected. The function assigns priority to nodes
+with reduced risk scores when selecting them for consensus.V
+representsthesetofblockchainnodes,while Vselected denotesthe
+setofnodesthatareselectedforconsensus.
+∙ Proofofriskconsensusfunction
+SCPoR: 𝑉selected ×  → . This function implements a consensus
+mechanism that considers the risk profile of nodes. It uses
+transactions  and the consensus outcome is the consensus
+outcome.Nodesin 𝑉selected validatetransactions,withtheirvoting
+power inversely proportional to their risk scores. The smart
+contract governs the proof of risk (PoR) mechanism, ensuring
+a fair and secure validation process based on the risk-adjusted
+influenceofparticipatingnodes.
+∙ Attacksdetectionanddefences :
+SCD: 𝐴𝜈 ×𝜏→ ϝ. This function analyses node activities and
+triggers defence mechanisms when attacks are detected. It uses
+attributes A𝜈 of each node and transaction history𝜏 to identify
+unusualpatterns,improvingattackdetection.Theset ϝrepresents
+thedefencemechanismsthatwillbeactivated.
+- The hierarchical defence mechanism is represented by a
+decisionfunction,denotedas .Thisfunctiondeterminesthe
+levelofresponsebasedontheriskassessment.
+14of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 15 ---
+TABLE 2 Basicversusenhancedblockchain.
+Feature Basicblockchain Enhancedblockchain
+Structural
+aspect
+Datastorage Linearblockstoragewith
+transactiondata.
+Advancedstoragewithintegratedrisk
+assessmentdataanddynamicsecurity
+updates.
+Networktopology Typically,apeer-to-peer
+network.
+Advancednetworkdesignincorporating
+nodeclusterswithdifferentiatedrolesbased
+onriskassessment.
+Blockstructure Standardblockstructure
+containingtransactiondataand
+acryptographichash.
+Enhancedblockstructure,including
+detailedriskscoresandsecurityprotocol
+states,enablingdynamicresponsetothreats.
+Inter-block
+communication
+Limitedtotheverificationof
+transactions.
+Extendedtoincludecommunication
+protocolsforriskdatasharingandconsensus
+decision-makingbasedonsecuritymetrics.
+Scalability Oftenchallengedbythesizeand
+complexityofthenetwork.
+Structurallyoptimizedforscalability,
+facilitatingextensiveparallelprocessingfor
+riskassessmentanddefenceactivation.
+Integrationwithcloud
+infrastructure
+Notspecificallydesignedfor
+cloudintegration.
+Customizedintegrationwiththecloud,
+ensuringsmoothinteractionandenhanced
+security.
+Functional
+aspect
+Smartcontracts Automatedexecutionof
+agreements.
+Advancedalgorithmsforriskassessment
+anddynamicsecurityadjustments.
+Consensusmechanism PoWorPoS. Proofofriskprioritizingnodeswithlower
+riskscoresforenhancedsecurity.
+Riskassessment Limitedorabsent. Integratedmulti-layeredapproach(node,
+cluster,global)usingDSTforcomprehensive
+riskevaluation.
+Thresholdadjustment Staticsecurityparameters. Dynamicadjustmentusing
+Dempster–Shafertheory,responsiveto
+changingrisklevels.
+Defenceactivation Typically,predefinedconditions. Decentralized,parallel,andresponsiveto
+assessedrisklevels,enhancingcloudattack
+tolerance.
+Decentralization Fundamentalcharacteristic. Enhancedthroughdecentralizedrisk
+assessment,defencesactivateanddynamic
+consensusapproach.
+(𝑣, )
+⎧
+⎪
+⎨
+⎪⎩
+𝐿(𝑣),𝑖 𝑓 𝑅 (A𝜈) >𝜃L (𝑣)
+𝐶𝐷(𝐶𝑖),𝑖 𝑓 ∃ 𝐶𝑖 ∈𝐶∶ (𝑣∈𝐶 𝑖)Λ(𝐶𝑅(𝐶𝑖)
+𝐺𝐷(𝐺),𝑖 𝑓 𝐺 𝑅 (𝐺) >𝜃G
+𝜃C (8)
+4.2 EnhancedBlockchainforImprovedCloud
+AttackTolerance
+Our novel blockchain framework is introduced in this section.
+Table2highlightsthestructuralandfunctionaladvancementsof
+ourenhancedblockchainwithtraditionaldesign.
+According to comparative analysis in Table2,d a t as t o r a g e ,
+risk assessment, and security updates have been with enhanced
+blockchain, which make it more resilient to DDoS attacks from
+the cloud. The enhanced blockchain also uses a network topol-
+ogy with node clusters based on risk assessment to enhance
+defensive capabilities. The Proof of Risk consensus mechanism
+helps identify lower-risk nodes, resulting in a more secure
+network. Advanced SCs enable real-time risk assessment and
+security adjustments. These improvements enhance defence
+against cloud-based attacks while maintaining decentralization,
+transparency,andimmutability.
+4.2.1 SmartContractFunctions
+This sub-section describes the five smart contract cores (SCs)
+that form the backbone of our blockchain. The proposed sys-
+tem employs SCs and algorithms to estimate risk and adjust
+thresholds at each node, cluster, and global levels, as detailed
+in Figure2. This process precedes the selection of consensus
+nodes and the implementation of a Proof of Risk consensus
+mechanism.
+15of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 16 ---
+FIGURE 2 Workflowofsmartcontractfunctions.
+∙ Smartcontractriskassessment (SCRA)
+Algorithm 1 is a multi-layered approach used to assess risks in
+thecloud.ItusestheDSTtoevaluaterisksinadecentralizedand
+efficientway.Themethodcheckstheriskthroughthethreelevels:
+node-level,cluster-level,andglobal-level.
+The algorithm begins with a node-level risk assessment using
+basic probability assignments (BPAs) to assign belief values to
+the attributes A𝜈 of each node. These beliefs are combined
+usingDempster’sruletocalculateacomprehensiveriskscore Rν.
+Then,thescoresarefurthernormalizedto Rν-norm andstoredon
+the blockchain, ensuring immutability and transparency of the
+recordedrisklevelsforeachnode.
+Next, the algorithm launches parallel cluster-level risk assess-
+mentforthecluster.Itretrievesthenormalizednoderiskscores
+(Rν-norm) from the blockchain, and uses them to assign belief
+valuesbasedonDempster’srule.Thisproducesacomprehensive
+and dynamic cluster risk score (RCi), which is then normalized
+and stored on the blockchain. Furthermore, and by combining
+the normalized cluster risk scores (RCi-norm) using Dempster’s
+rule.thealgorithmperformsglobalriskassessmentandgenerates
+a global risk score (Rglobal) that represents the combined and
+interactive assessment of all clusters. This score is normalized
+and stored on the blockchain, providing a more detailed and
+comprehensive global risk assessment. The algorithm dynam-
+ically adjusts security protocols based on these detailed risk
+assessments and records all data on the blockchain. The use
+of DST in dynamic and interactive risk assessment further
+strengthensthesecuritymanagementsystem.
+∙ Smartcontractdynamicthresholdadjustment(SCDTA)
+Inasmartcontract,Algorithm 2adjuststhresholdsbasedonrisk
+scoresandscalingfactors.Thesystememploysdynamicthresh-
+oldsbasedonbeliefandplausibilityvalues.Thesethresholdsare
+continuously optimized through adaptive scaling factors (ξ,ζ,γ,
+δ, α, β) controlled by smart contracts, which adjust sensitivity
+based on real-time contextual data (node, cluster, global states),
+historicaltrends,andfeedbackfromdefenceresults,thus,ensures
+responsivenessindynamicenvironments.
+The algorithm first adjusts node-level thresholds (𝜃L)b yc a l c u -
+lating belief and plausibility scores for each node and applying
+scaling factorsξ and ζ. Then, it adjusts cluster-level thresholds
+(𝜃C) by calculating belief and plausibilityscores for each cluster
+andapplyingscalingfactors γandδ.Finally,itadjustsglobal-level
+thresholds(𝜃G)bycalculatingbeliefandplausibilityscoresforthe
+entiresystemandapplyingscalingfactors αandβ.Theblockchain
+aggregatesandstorestheadjustedthresholds.Whentherisklevel
+isconsideredhigh,adefenceactivationfunctionisactivated.
+Figure 3 shows how adjusted thresholds in the cloud can
+effectively enhance attack tolerance. This approach involves
+dynamicallyadjustingsecuritymeasuresbasedonriskprofilesto
+16of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 17 ---
+ALGORITHM 1 Smart contract risk assessment with parallel pro-
+cessing.
+Input:G =(V,E),A𝜈 foreach νinV,Clusterset C,Threshold
+sets𝜃L,𝜃C,𝜃G
+Output:Normalizedriskscoresfornodes,clusters,andglobal
+environment
+Begin
+Node-levelriskassessment
+Parallelforeach νinVdo
+Initializemν:2A𝜈→[0,1]
+Foreach a∈A 𝜈 do
+mν (a) =AssignBeliefValue(a)
+mν-combined =DempsterCombination(mν)
+Rν =CalculateRiskScore(mν-combined)
+Rν-norm =NormalizeRiskScore(Rν,V)
+StoreRiskScore(Rν-norm,ν,Blockchain)
+End
+Cluster-levelriskassessment
+Parallelforeach (Ci ∈C)do
+InitializemCi:2 ACi→[0,1]
+Foreach νinCi do
+Rν-norm =RetrieveNormalizedNodeRisk(ν,Blockchain)
+mCi(ν) =AssignNodeBeliefValue(Rν-norm,ν,C i)
+mCi-combined =DempsterCombination(mCi)
+RCi =CalculateClusterRiskScore(mCi-combined)
+RCi-norm =NormalizeRiskScore(RCi,C)
+StoreClusterRiskScore(RCi-norm,Ci,Blockchain)
+End
+Globalriskassessment
+InitializemGlobal:2A_Global→[0,1]
+Parallelforeach CiinCdo
+RCi-norm =RetrieveNormalizedClusterRisk(Ci,Blockchain)
+mGlobal(Ci) =AssignClusterBeliefValue(RCi-norm,Ci)
+mGlobal-combined =DempsterCombination(mGlobal)
+Rglobal =CalculateGlobalRiskScore(mGlobal-combined)
+Rglobal_norm =NormalizeGlobalRiskScore(Rglobal)
+StoreGlobalRiskScore(Rglobal_norm,Blockchain)
+End
+Thresholdadjustmentdecision
+Parallelforeach (νinV)do
+If(Rν-norm >Threshold(𝜃L,ν))then
+AdjustNodeSecurityProtocol(ν)
+Parallelforeach (Ci ∈C)do
+If(RCi >Threshold,(𝜃𝐶,Ci))then
+AdjustClusterSecurityProtocol(Ci)
+(Continues)
+If(Rglobal_norm >Threshold(𝜃G))then
+AdjustGlobalSecurityProtocol()
+End
+Return{Rν-norm |ν∈V},{RCi |Ci ∈C},Rglobal_norm
+End
+ALGORITHM 2 Smart contract dynamic threshold adjustment
+function.
+Input:Rglobal,Rcluster,Rlocal,𝜃L,𝜃C,𝜃G
+Output:Adjustedthresholds 𝜃′
+L,𝜃′
+C,𝜃′
+G
+Begin
+Adjustnode-levelthresholds
+Foreach (𝜃Li in𝜃L)do
+id𝜈 =GetNodeId(𝜃Li)
+If(NodeExists(id𝜈,blockchain) =false)then
+ReturnError(“Nodedoesnotexist”)
+Rlocal =GetLocalRiskScore(id𝜈)
+Belν(Rlocal) =CalculateBelief(Rlocal, A𝜈)
+Plν(Rlocal) =CalculatePlausibility(Rlocal, A𝜈)
+𝜉,𝜁 =GetScalingFactorsNode()
+𝜃′
+L=𝜃L×(𝜉*Belν(Rlocal) +𝜁*Plν(Rlocal))
+End
+Adjustcluster-levelthresholds
+Foreach (𝜃𝐶𝑖 in𝜃𝐶)do
+id𝑐 =GetClusterId(𝜃𝐶𝑖)
+If(ClusterExists(𝑖𝑑𝑐,blockchain) =false)then
+ReturnError(“Clusterdoesnotexist”)
+Rcluster =GetClusterRiskScore(id𝑐)
+BelCi(Rcluster) =CalculateBelief(Rcluster,C(Ci))
+PlCi(Rcluster) =CalculatePlausibility(Rcluster,C(Ci))
+𝛾,𝛿 =GetScalingFactorsCluster()
+𝜃′
+𝐶𝑖 =𝜃𝐶𝑖 ×(𝛾*BelCi(Rcluster) +𝛿*PlCi(Rcluster))
+End
+Adjustglobal-levelthresholds
+Bel(Rglobal) =CalculateGlobalBelief(Rglobal)
+Pl(Rglobal) =CalculateGlobalPlausibility(Rglobal)
+𝛼,𝛽 =GetScalingFactorsGlobal()
+Foreach (𝜃𝐺𝑖 𝑖𝑛𝜃 𝐺)do
+𝜃′
+𝐺𝑖 =𝜃𝐺𝑖 ×(𝛼*Bel(Rglobal) +𝛽*Pl(Rglobal))
+𝜃′ =AggregateThresholds(𝜃′
+L,𝜃′
+C,𝜃′
+G)
+StoreThresholds(𝜃′,blockchain)
+If(CheckRiskLevel(𝜃′))then
+Activatedefenceactivationfunction
+Return𝜃′
+End
+17of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 18 ---
+FIGURE 3 Enhancingcloudattacktolerancewithadjustedthresholds.
+enhancedefenceagainstpotentialattacksandoptimizeresource
+utilization.Byproactivelyadaptingresponsestospecificthreats,
+the system becomes more robust and responsive. It also aligns
+with regulatory standards and best practices to maintain trust
+andcompliance.Adjustingriskthresholdsalsohelpsreducefalse
+alarms.
+Threshold adjustments are crucial for dealing with current and
+futurethreatsinaproactiveandadaptivemanner.Thisapproach
+enhances the defence of cloud environments against evolving
+threatsandimprovestheirabilitytowithstandandrecoverfrom
+attacks.Bycontinuouslyaligningsecuritymeasureswithcurrent
+risk profiles, cloud environments can effectively prepare for
+potentialthreats.
+∙ Smartcontractdefencesactivationfunction(SCDA)
+Algorithm 3 employs many defence mechanisms at multiple
+levelstoguaranteecompleteandadaptablesecurity.Inthelocal
+layer,whennodesexceedtheriskthreshold 𝜃L,specificdefenses
+basedontheiruniqueattributes A𝜈 areactivated.Theseinclude
+rate-limiting, traffic filtering, and IP address filtering, ensuring
+effective responses while maintaining efficiency. This system
+dynamically applies defences, enhancing cloud resilience and
+security. In the cluster layer, if the risks of node clusters exceed
+threshold 𝜃C, cluster-wide defenses are activated. These include
+coordinationmechanisms(CAC),suchasalertdisseminationand
+response coordination, to address threats in a unified manner.
+Additionally, traffic rerouting (TR) and node isolation (NI)
+techniquesareusedtomanagetrafficflowandprotectvulnerable
+nodes.Atthegloballevel,exceedingtheriskthreshold 𝜃G initiates
+comprehensive defense actions (GA). These include TR and NI
+to manage data flow and protect the integrity of high-risk or
+compromisedclustersonaglobalscale.
+All defence actions across levels are securely recorded on the
+blockchain,ensuringtransparencyandenhancingcloudsecurity
+againstavarietyofthreats.
+∙ Smart contract algorithm: consensus nodes selection
+function(SCCNS)
+The SCCNS algorithm is vital to our system. The selection of
+nodesforconsensusisbasedontheirriskscores.Thisprioritizes
+nodes with lower scores, ensuring the selection of secure and
+stable nodes for transaction validation. This approach enhances
+theintegrityandreliabilityoftheconsensusmechanism.
+∙ Smart contract proof of risk consensus function
+(SCPoR)
+TheSCPoRisanewconsensusalgorithmdesignedforachieving
+consensus among selected nodes in cloud computing environ-
+ments. This algorithm involves a risk assessment and influence
+weighting step, where each node’s risk score is calculated and
+used to determine its influence weight. The SCPoR algorithm
+ensures stable and secure consensus by dynamically adjusting
+tonodes’securityprofiles,ensuringfairandsecureparticipation
+by assessing nodes on security, performance, and vulnerability.
+Additionally, SCPoR ensures impartiality in the consensus pro-
+cess, enabling every node to participate honestly according to
+their security criteria. SCPoR not only enhances cloud security
+butalsoenablesamorecomprehensiveblockchainecosystem.It
+enhancescloudsecurityandstabilitybygivingprioritytonodes
+with lower risk scores. This will enhance resilience against a
+range of attacks and will always ensure efficiency by choosing
+stablenodes,eveninthepresenceofsecuritythreats.
+5 SimulationsandPerformanceAnalysis
+In the next section, we evaluate how well our proposed system
+can resist attacks while enhancing reliability and availability in
+a massive 10,000-node cloud. We simulate several high-impact
+DDoS attacks, including ICMP, Slowloris, Smurf, HTTP Flood,
+SYNFlood,UDPFlood,andMalformedPacketscenarios,toeval-
+uate system performance under intense traffic-based threats. To
+demonstratebroaderapplicabilitybeyondDDoS,wealsoinclude
+Sybil attacks, insider threats, data poisoning, and advanced
+persistent threats (APTs), including zero-day attacks. We show
+the effectiveness of our system in comparison to other systems
+that are currently in use, including IDARP [11], SDMTA [14],
+HIDM[16],OCB[ 17],SaE-ELM[ 19],DMD-MTD[ 20],LRDADF
+[21], MAD-MLT [22], BaysCNN [26], AT-CWS [41]a n dF A C V O -
+DNFN[45],OpenStackDP[ 46],BFL-CIDS[ 49],DeepDefend[ 50],
+andRDAER[ 52].
+18of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 19 ---
+ALGORITHM3 Smartcontractdefencesactivationfunction.
+Input:G =(V,E),Rν foreachnode ν ∈V, RCi foreachcluster
+Ci,and Rglobal fortheglobalenvironment. 𝜃L,𝜃C,𝜃G
+Output:Activateasetofdefenceactionsforeachlayer
+Begin
+Parallellocallayerdefenceactivation(layer1) :
+Parallelforeach (ν ∈V)do
+IfRν >𝜃L then
+//Activatedefencesbasedonnodeattributes A𝜈
+L(ν) ={RL(ν,p),//rate-limitingscaledbasedon
+transactionfrequency( TPfreq)
+//andtrafficanomalies(NT a).
+TF(ν,f),//Blocksmaliciouspatternsusinghistorical
+incidents(NHinc)
+//andtrafficanomalysignatures((NT a).
+IPF(ν,ip //BanIPswithfrequentNT a spikes
+)}
+Else
+L(ν) = ∅
+End
+Parallelclusterlayerdefenceactivation(layer2) :
+Parallelforeach (Ci)do
+IfRCi >𝜃C then
+//Activatedefencesbasedonclusterattributes
+CD(Ci) ={CAC(Ci,s),//Alertnodeswithhigh
+centrality(GScent)
+TR(Ci,t),//Redirectstraffictopathswithhigh
+bandwidthquality( CQbw).
+NI(Ci,n).//Isolatenodeswithabnormalhistorical
+incidents(NHinc)
+}
+else
+CD(Ci) = ∅
+End
+Globallayerdefenceactivation(layer3) :
+IfRglobal >𝜃Gthen
+//Activatedefencesbasedonglobalattributes Α_Global
+GD(G) ={GA(G,a),//Broadcastsalertsfor
+network-widetrafficanomalies.
+TR(G,t),//Reroutetrafficfromlow- GSdeg regions
+NI(G,n).//Blacklistsnodeswithcriticalresourceusage
+}
+else
+GD(G) = ∅
+End
+Storedefenceactivation(blockchain)
+End
+5.1 SimulationSetup
+Our implementations and experiments were conducted on an
+Apple M1 chip computer with 8 GB of RAM. We used Python
+Jupyter Notebook as our primary development environment,
+integratingvariouslibrariesandtoolsforsystemconstructionand
+evaluation.
+We implemented Hyperledger Fabric for blockchain infrastruc-
+ture using the fabric SDK for Python (hfc-python). This setup
+involved configuring fabric peers and ordering nodes, defining
+smart contracts, and managing ledger changes through Python
+scripts,withDockermanagingfabriccomponentsinalocaldevel-
+opment environment for effective deployment and transaction
+execution.
+For cloud structure and scalability, we designed a large-scale
+cloud simulation using NetworkX to model hierarchical cloud
+topologiesandmanagecomplexnetwork,andSimPyfordiscrete-
+event simulation. Python’s socket library and ZeroMQ were
+employed to enable efficient communication between nodes.
+SciPyandSymPysupportedadvancednumericalforimplement-
+ingDST.Multiprocessingandconcurrentfutureswereemployed
+for parallel processing to enhance computational efficiency. We
+tested scalability by varying network size from 1000 to 10,000
+nodes including users, servers, and cluster heads to reflect real-
+isticcloudscenarios.Wealsovariedmaliciousnodeproportions
+from0%to80%toevaluatesystemperformanceunderincreasing
+attack levels. At each scale and stress level, key metrics were
+trackedtoassesssystemadaptabilityandrobustness.
+In order to mimic real cloud behaviour, the attack simulations
+were conducted using Python’s socket and Scapy libraries to
+generate synthetic traffic, including legitimate activities and
+various cyberattacks such as ICMP Flood, UDP Flood, SYN
+Flood,HTTPFlood,Slowloris,SmurfAttack,malformedpackets,
+Sybilattacks,insiderthreats,datapoisoning,replayattacks,and
+advanced persistent threats. The structure and timing of these
+attackswereguidedbypatternsobservedintheCIC-IDS2017and
+CERTInsiderThreatdatasets,whichincludesawidespectrumof
+relevant threats. Each simulation logged time-stamped network
+traffic, packet metadata, and behavioural events, producing a
+datasetcapturingnodestates,trafficattributes,resourcemetrics,
+and blockchain behaviour. These logs, which enable binary and
+multiclass classification, allow for a thorough assessment of
+systemresilienceinalarge-scalecloudenvironment.
+PandasandNumPywereusedfordatamanipulationandanaly-
+sis, and Matplotlib and Seaborn provided visualization tools for
+resultinterpretation.
+BesidesthosetoolsinPython,wealsoutilizedsomeexternaltools
+forblockchaindevelopmentandsecurity.WeutilizedRemixIDE,
+a Web-based Ethereum development environment, to develop
+and test solidity-based smart contracts, validate blockchain
+interactions, and ensure contract performance. A Haskell-based
+smart contract testing tool, Echidna, was employed to identify
+vulnerabilities and assess security through generating test cases
+that ensured the robustness of our contracts. The integration of
+various tools such as Hyperledger Fabric, Docker, and external
+19of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 20 ---
+TABLE 3 Summaryofevaluationmetrics.
+Metric Briefdescription formula
+Falsepositiverate(FPR) Percentageofwrongdetectedattacks. FPR =
+FP
+TN +FP
+(9)
+Falsenegativerate(FNR) Percentageofundetectedattacks. FNR =
+FN
+TP +FN
+(10)
+Attackdetectionrate(ADR) Percentageofcorrectlyidentifiedattacks. FPR =
+TP
+TP +FN
+(11)
+Packetlossrate(PLR) Percentageoflostpacketstoallsent
+packets
+PLR =
+Lost packets
+Total packets sent
+×100(12)
+Availability Percentageofaccessibleresourcesduring
+theattack(CPU,memory,storage,
+networkbandwidth).
+Availability =
+Accessible resources
+Total resources
+×100(13)
+Detectiontime(DT) Neededtimetodetectanattack. DT =Tdetect −Tattack (14)
+Mitigationlatency(ML) Timefromdetectiontodefenceaction
+completion
+ML =DT +decisiontime +actiontime(15)
+Gasconsumption Therequiredcomputationalresourcesto
+executesmartcontract.
+Gasconsumption = ∑𝑛opr
+𝑜=1 𝑔𝑜 (16)
+Transactioncost Requiredcostforprocessingeach
+transaction.
+Transactioncost = ∑𝑛trans
+𝑡=1 (gas price𝑡 ×gas used𝑡)(17)
+Executioncost Totalcostofrunningsmartcontracts,
+includinggasandotheroperational
+expenses
+Executioncost = ∑𝑝exe
+𝑒=1 (gas price𝑒 ×gas used𝑒) +
+additionalfees.(18)
+Energyconsumption(EC) Averageenergyusedpertransaction EC =power ×time(19)
+Decentralization(Gini) Ginicoefficientofnodeinfluenceacross
+threatscenarios
+𝐺 =
+∑𝑛
+𝑖=1
+∑𝑛
+𝑗=1 |𝑤𝑖 −𝑤𝑗 |
+2𝑛2 ̄𝑤
+(20)
+tools like Echidna required thorough setup and collaboration
+to ensure seamless interoperability and consistent performance,
+posingasignificantchallenge.
+5.2 PerformanceMetrics
+Theperformanceofthesystemwasevaluatedusingkeymetrics
+such as false positive rate, false negative rate, detection rate,
+availability, packet loss rate, and detection time. In the context
+ofblockchain,gasconsumption,transactioncost,andexecution
+cost were important metrics for assessing the practicality and
+efficiencyofsmartcontracts.
+Table 3 synthesized evaluation metrics with description and
+calculationformulas.
+Where:
+TP(truepositives):Thenumberofattacksclassifiedcorrectly.
+FN (false negatives): The number of attacks classified incor-
+rectlylegitimate.
+FP (false positives): The number of legitimate instances mis-
+classifiedasattacks.
+TN (true negatives): The number of legitimate instances
+correctlyclassified.
+𝑔𝑜 :The othoperation’sgascost.
+𝑛opr:Totaloperationsexecuted.
+Gas price𝑡 :The tthtransaction’sgasprice.
+Gas used𝑡 :Theconsumedgasby tthtransaction.
+𝑛trans:Totaltransactionsprocessed.
+Gas price𝑒 :Gaspriceforthe ethoperation/transaction.
+Gas used𝑒 :Gasconsumedbythe ethoperation/transaction.
+𝑝exe:Totaloperations/transactionsexecuted.
+5.3 ResultsandDiscussions
+Thissubsectionoutlinestheresultsofourextensiveassessment.
+Thefollowingresultsaretheaveragevaluesobtainedfromthese
+simulations.
+∙ Attack detection rate, false positive rate, and false
+negativerate
+First, we evaluated the attack detection rate, false positive rate,
+and false negative rate, then compared our results to those of
+othersystems.Figure 4illustratesthefindings.
+AccordingtoFigure 4,theproposesystemprovestrongdetection
+capabilities, achieving an impressive average detection rate of
+99.98%across11importantattacktypes.Thisperformanceoutper-
+formsmanycommonmethodsbyvaryingproportions,including
+SDMTA (95.78%), LRDADF (95.32%), FACVO-DNFN (88.92%),
+HIDM(93.33%),OCB(93.2%),MAD-MLT(97.6%),IDARP(96.8%),
+DMD-MTD (94.31%), BFL-CIDS (98.05%), BaysCNN (98.55%),
+and even the recent DeepDefend (99.97%). Our system detects
+volumetric attacks like UDP, ICMP, and SYN floods almost
+perfectly, with a 99.99% success rate, by spotting clear traffic
+20of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 21 ---
+FIGURE 4 Evaluationoftheproposedsystem:(a)Attacksdetectionrate;(b)falsenegativerate;(c)falsepositiverate.
+21of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 22 ---
+anomaliesusing NTa andCQbw metrics.Application-layerattacks
+such as HTTP Flood (99.98%) and Slowloris (99.92%) are also
+effectively identified by monitoring unusual request patterns
+(NRu)and abnormal attribute usage (AUNR). Beyond these, the
+systemexcelsatuncoveringstealthyandcomplexthreatslikePoi-
+soning (99.97%), Insider (99.86%), and zero-day attacks (99.95%)
+throughacomprehensive,multi-attributeriskprofilingapproach
+combinedwithdecentralizedanomalymodelling.Thisprocessis
+furtherstrengthenedbyDST,whichhelpscombineinformation
+from multiple sources to improve detection accuracy, especially
+whenuncertaintyisinvolved.
+Oursystemlimitstherateoffalsepositiveinlowvalues,averaging
+just0.01%,byrequiringmultipleindependentindicatorstotrigger
+alerts. This approach reduces false alarms across all categories,
+withfalsepositiveratesaslowas0.002forUDPFlood,0.004for
+ICMP, and 0.011 for SYN Flood volumetric attacks; about 0.004
+forHTTPFloodand0.002forSlowlorisapplication-layerthreats;
+andslightlyhigherbutstilllowratesof0.014forPoisoning,0.041
+forInsider,and0.021forSybilstealthattacks.
+On average, false negatives are kept under control at 0.03%.
+Effective baseline deviation techniques likeNTa and CQbw bw,
+which identify distinctive traffic surges, allow traditional DDoS
+attackstoexhibitalmostzeromisseddetections(0.005%FNR).By
+using cluster-level risk aggregation, which examines combined
+behaviours across nodes to identify subtle anomalies frequently
+overlooked by single-node analysis, more sophisticated threats
+likepoisoningandinsiderattacksareabletomaintainlowFNRs
+of0.025%and0.035%,respectively.Additionally,zero-dayattacks
+use distributed anomaly profiling, which uses decentralized
+analysis and aggregated risk indicators to find new threats,
+to achieve low FNR (∼0.035%). High accuracy and resilience
+against a variety of attack types are supported by this layered,
+attribute-drivenframework.
+The system takes a cautious, confidence-aware approach to
+prevent making snap decisions when alerts are unclear or
+contradictory.Itstartswithmeasuringuncertaintyanddelaying
+irreversibleactionsusingDST.Thesystemusescoordinatedclus-
+teranalysisandadaptivethresholdstoreevaluatealertsovertime
+if uncertainty persists. It uses graduated, mild responses, such
+as rate limiting, traffic rerouting, or micro-isolation, for alerts
+that are still unclearly resolved. Transparency and traceability
+are guaranteed since every action is safely documented on the
+blockchain. This methodical, well-balanced approach increases
+thesystem’soveralldependabilitybymaintainingaccuracywhile
+exercisingcaution.
+∙ Availability,andpacketlossrate
+Theproposedsystemaddressesthegapincloudcomputingsecu-
+rity by providing robust metrics for availability and packet loss
+rate,ensuringservicequalityeveninrealisticscenarios.Figure 5
+shows the results of evaluation experiments involving 10,000
+cloudnodesand20to80percentmaliciousnodes:
+The proposed system reveals enhanced performance in the
+context of availability and packet loss metrics compared to
+the existing models. As depicted in Figure5a, our technique
+consistently achieves higher availability than other systems,
+even under high-intensity attacks. This is due to its advanced
+architecture, which enables real-time threat assessments and
+dynamic resource scaling to minimize service disruptions. Fur-
+ther, Figure5b indicates that the system can still manage to
+holdaverylowpacketlossratioevenwithahighpercentageof
+attackers. This is achieved through strategic traffic filtering and
+rate-limiting defences, which efficiently control network traffic
+andretaindatapackets.
+∙ Detectiontime,messageoverhead,andlatency
+This subsection focuses on evaluating the responsiveness and
+communicationefficiencyofthesystemasthenetworkscales.
+First, we assessed the detection time of the proposed system to
+measuretheeffectivenessdefendingcloudenvironments.Atotal
+of 50 trials were conducted under various attack intensities that
+ranges between 0.1 and 1.0, involving 10,000 nodes. Figure6
+illustratestheoutputs.
+As depicted in Figure6, the proposed system achieves consis-
+tently low detection time (around 12 to 13 ms), indicating fast
+responsecapabilities.Theproposedsystemproveditssuperiority
+overexistingsystemsbyachievingthebestdetectiontime.When
+compared to the fastest existing methods, it outperformed AT-
+CWS and OpenStackDP by 40 ms and 95 ms respectively, while
+exhibiting a significantly faster detection time than SaF-FI M
+(2910ms),DeepDefend(5320ms),andRDAER(20,000ms).This
+substantialimprovementisattributedtoourefficientparallelpro-
+cessing architecture, adaptive thresholds, and optimized smart
+contract implementation, the system ensures rapid detection
+andresponsetoattackswhilemaintaininghighconsistencyand
+reliability.
+Supporting the detection results, we further inspect the break-
+down of total mitigation time by testing the average latency at
+eachstageundera10,000-nodedeployment.Figure 7illustrates
+the stage-wise latency scaling as the system expands from 1000
+to10,000nodes,pinpointingthecontributionofeachstagetothe
+overallmitigationtime.
+As illustrated in Figure 7,s c a l i n gt h es y s t e mf r o m1 0 0 0t o
+10,000 nodes reveals three distinct trends in the behaviour of
+the mitigation stages. First, detection time remains relatively
+stable, ranging between 12.0 and 12.7 ms, attributable to the
+implementation of parallel processing that enables nodes to
+perform anomaly scoring and risk assessment independently.
+Second, there is a steady rise in decision time, from 1.2 to 4.2
+ms,whichisindicativeoftheextracoordinationneededinlarger
+systemstoassessthresholdsandchoosethebestcourseofaction.
+Third,actiontimeshowsamorenoticeableincrease,risingfrom
+0.3 to 10.1 ms, mostly because of the extra overhead required
+to safely validate and carry out actions using blockchain smart
+contracts.Asaconclusion,thetotalresponsetimerisesfrom13.5
+to 27.0 msas thenumberof nodesincreases; however, owing to
+targetedoptimizationsacrosseachstage,thecompletemitigation
+processremainsbelow30msevenatmaximumscale,confirming
+thesystem’sefficiencyandscalability.
+In addition to the detection time results, our simulation studies
+demonstratethecommunicationefficiencyandscalabilityofthe
+22of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 23 ---
+FIGURE 5 Comparativeperformanceofsystems:(a)resourceavailabilityand(b)packetlossmetrics.
+system. With clusters of two to ten nodes, message volume and
+bandwidth usage rise linearly as the number of nodes increases
+from1000to10,000.Thebandwidthofthelargestconfiguration
+peaksat17.58MB.Thesystemmaintainslowaveragelatency,with
+onlyamodestincreaseasscaleexpands.Thisstrongperformance
+issupportedbyefficientcommunicationstrategiesthatminimize
+overheadandpreventbottlenecks,enablingthesystemtoremain
+both responsive and scalable even under substantial attack
+conditions.
+∙ Monitoringandmetriccollectionoverhead
+To enable timely detection and mitigation, each node runs a
+small,event-drivenmonitoringagentthattrackskeybehavioural
+metrics using lock-free buffers and local observation windows.
+This design avoids polling and large data transfers. Metric
+collectionisfullyparallelizedwithatriple-bufferedpipelinethat
+overlaps publishing, risk scoring, and collection, and with dedi-
+catedthreadsforreal-timeupdates.Asaresult,monitoringdoes
+notintroducelatencyandrunsentirelyinthebackground.With
+ameancollectionoverheadof0.412 ±0.101ms,100%compliance
+within a 5 ms detection window, and a 2.95× speedup over
+sequentialmethods,theempiricalevaluationshowslow-latency,
+scalablemonitoringatruntime.
+∙ Gasconsumption,transactioncost,andexecutioncost
+Wecarriedoutthecostanalysisofourproposedmodelimplemen-
+tationinRemixIDE.Thecostanalysisincludesgasconsumption,
+transaction costs, and execution costs. Such factors are very
+importanttounderstandthefeasibilityandperformanceofsmart
+contracts.ResultsareillustratedinFigure 8.
+23of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 24 ---
+FIGURE 6 Comparisonofdetectiontimeswithinmilliseconds(ms).
+FIGURE 7 Stage-wisemitigationlatencyacrossnodecounts.
+We can observe that the cost-effectiveness of the smart contract
+scaleswellwiththeincreaseinthenumberofnodes.Thegrowth
+ofaverageexecutioncostandgasconsumptionisevidencedina
+sub-linearway,whichreflectstheefficientprocessingcapability
+of the smart contract. The slight increase in transaction costs
+reflectstheeconomicfeasibilityoftheproposedsystemforlarge
+cloud-based systems. These outcomes confirm the capability of
+smart contracts for practical use in extensive cloud computing
+environments.
+Basically, in the light of constant development and evolution of
+cyberthreats,ourinnovativesystemofferssuchaneffectiveand
+reliable method for maintaining cloud environments; it effec-
+tivelydetectsandmitigatesattackswhileassuringthecontinuity
+ofservices.
+Additionally, we assessed the operational expenditures and eco-
+nomic of cloud service providers through Remix IDE, drawing
+comparisonswiththepricingmodelsofAWSandAzurein2024.
+24of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 25 ---
+FIGURE 8 Costanalysisforsmartcontractfunctions.
+Theanalysisshowsthatoursystem’spay-per-actionbillingmodel
+offers a cost-effective alternative to traditional cloud pricing,
+whichchargesforuptimeorreservedresources.Keycostsinclude
+$1.63fordeployingacontract,$0.39pernodeforregistration,and
+$0.10 to $0.11 per action for updating risks or event detection.
+making it a more efficient and cost-effective solution compared
+toconventionalbillingmethods.
+Beyond basic transaction fees, our smart contract setup signifi-
+cantlyreducesongoingoperationalcostscomparedtotraditional
+cloud systems. While traditional services can incur costs of
+$50 to $200/month for cloud databases, $30 to $100/month for
+identity and access tools, and $500 to $1000/month for manual
+adminsupport,oursolutionintegratesthesefunctionsinternally
+within the smart contracts. This automation on the blockchain
+eliminatestheneedforadditionalinfrastructure,simplifyingthe
+systemandmakingmaintenancemoreaffordable.
+Beyond its cost advantages, the smart contract architecture also
+promotes impressive computational efficiency and scalability.
+Corefunctionsworkwitheitherconstant( O(1))orlinear( O(n))
+time complexity, ensuring reliable performance as they scale.
+In our stress-tested simulations that reflected the most chal-
+lenging attack scenarios, we found that the average execution
+time for each contract stayed under 30 ms. Even when tested
+under simulated high-load conditions, the contract consistently
+demonstratedstablegasusage,remainedwithinblocklimits,and
+exhibitednosignsofperformancedegradation.
+∙ Decentralizationanalysis
+By examining the Gini coefficient of node influence within the
+consensusnodesselection(SCCNS,Algorithm 4)PoRconsensus
+(SCPoR,Algorithm 5)mechanisms,thissubsectionevaluatesthe
+decentralization of our blockchain-based cloud security system.
+Amoreequitableanddecentralizedsystemisindicatedbylower
+valuesoftheGinicoefficient,whichmeasuresthedistributionof
+influenceamongconsensus-takingnodes.
+ALGORITHM 4 Smart contract algorithm: consensus nodes selec-
+tion.
+Input:V,Rν foreach ν ∈V.
+Output:selectednodes Vselected forconsensus
+Begin
+SCCNS:R ×V→Vselected
+InitializeVselected =∅.
+Foreach nodeν ∈Vdo
+Calculatetheriskscore Rν.
+Selectasubsetofnodes Vselected fromVbasedonthelowest
+riskscores.
+End
+The SCCNS process selects a subset of nodesVselected with low
+normalized risk scores derived from factors using SCRA’s risk
+assessment(Algorithm 1).InSCPoR,eachselectednodereceives
+aninfluenceweight WV =1/Rν-norm,whichaffectsitsvotingpower
+during transaction validation. The Gini coefficient is computed
+as:
+𝐺 =
+∑𝑛
+𝑖=1
+∑𝑛
+𝑗=1
+|||𝑤𝑖 −𝑤𝑗
+|||
+2𝑛2 ̄𝑤 (21)
+Where𝑤𝑖 representstheinfluenceweightofnode i,n isthenum-
+b e ro fc h o s e nn o d e s ,a n d̄𝑤 is the average weight. We executed
+simulations with 10,000 nodes with four different conditions:
+normal operation, advanced threats, DDoS attacks, and mixed
+scenarios.Nodeswereselectedforconsensusrespectingtheirrisk
+scores, and the Gini coefficient was calculated over 100 trials.
+ResultsareshowninFigure 9.
+The average Gini coefficient of 0.0628 affirms that SCPoR
+and SCCNS distribute the influence among all nodes, ensur-
+ing strong decentralization. This complements other system
+strengths, including high attack detection (99.98%), low false
+25of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 26 ---
+FIGURE 9 Ginicoefficientofnodeinfluenceacrossthreatscenarios.
+ALGORITHM5 Smartcontractproofofriskconsensus.
+Input:Setofselectednodesforconsensus Vselected.
+Transactionsoroperationstobevalidated T.
+Output:Consensusoutcome C.
+Begin
+SCPoR:Vselected ×T→C
+Riskassessmentandinfluenceweighting
+Foreach v ∈Vselected do
+Calculateriskscore Rν
+Determinetheinfluenceweight WV ofeachblockchain
+nodevbasedonitsrisk: WV =
+1
+𝑅𝜈
+Consensusdecision
+Foreach transactiont ∈Tdo
+Eachnode v ∈Vselected participatesinvalidating t
+Thedecisionofeachnodeisweightedbyitsinfluence WV
+Aggregatetheweighteddecisionstoreachaconsensus
+outcome
+Ct =Aggregate_Function(
+1
+𝑅𝜈1
++
+1
+𝑅𝜈2
++... +
+1
+𝑅𝜈𝑛
+)
+End
+positive/negative rates (0.01%/0.03%), low latency (38± 4m s ) ,
+andhighresilience(upto99%compromisednodes).
+∙ Assessingtheproposedhierarchicalrisk-basedconsen-
+susmechanism’sefficacyincloudsecurity
+In this subsection, we provide a performance comparison of
+our hierarchical risk-based cloud attack tolerance consensus
+mechanismtofourestablishedconsensusmethods,namelyPoS,
+PBFTalgorithms,andPoW.Themultivariatecomparisonwillbe
+analysed based on attack tolerance, scalability, communication
+overhead,andcomputationalcomplexity.
+As outlined in Table4, The comparative analysis shows that
+the proposed consensus mechanism offers distinct advantages
+for cloud computing. It achieves computational efficiency by
+using parallel processing, making it more efficient than PoW
+and PBFT. The consensus mechanism also decreases commu-
+nication overhead through reliable approach, in contrast to
+PBFT’s all-to-all communication model. Scalability is another
+area where the proposed consensus mechanism excels, since
+it scales linearly, which is a significant improvement over the
+limitations of PoW and the quadratic increase in messaging
+associated with PBFT. Despite of similar scalability offered by
+PoS, its security is highly related to the distribution and size
+of stakes, which may not be ideal for all cloud scenarios. The
+proposed consensus mechanism also demonstrates resilience. It
+can tolerate up to 99% of compromised nodes without losing
+integrity, exceeding the thresholds of PoW and PBFT. Hence,
+the proposed mechanism ensures operational continuity under
+severethreatconditionswhichmakeitaresilientchoiceforcloud
+security.
+Furthermore,ourcomparativeanalysisshowsthatPoRachieves
+breakthrough efficiency in every aspect that is important for
+cloudsystems.With0.00011kWh/transaction(15.6 ×betterthan
+PoS) and 38 ms finality time (328× faster than PoW), PoR
+overcomes the limitations of blockchain’s conventional scala-
+bility while bringing about an unprecedented energy economy.
+Our Remix IDE-validated cost model is made possible by
+this efficiency, where risk updates cost $0.11 instead of the
+$10,000+/monthmonitoringfeeschargedbycloudproviders.
+Crucially,theseadvantagesdon’tdegradesecurity:PoRmaintains
+of 99% Byzantine tolerance through dynamic risk adaptation,
+surpassingPBFT’s33%threshold.PoRhas <5%latencyvariance
+andlinearscalabilitywhileneeds88%lesspower/nodethanPoW
+in10,000-nodesimulationsunderattack.ThismakesPoRasthe
+26of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 27 ---
+TABLE 4 Comparativeanalysisoftheproposedconsensuswithconventionalconsensusmechanisms.
+Criteria Proposedconsensus PoW PBFT PoS
+Computational
+complexity
+O(m)pernode(parallelized
+riskassessments),O( n)for
+consensus
+O(2k)(sequential
+cryptographicpuzzles)
+O(n2)(multi-round
+messaging,reducedif
+parallelized)
+O(1)fornode
+selection,
+O(n)forvalidation(if
+parallelized)
+Communication
+overhead
+O(n)(optimizedthrough
+parallelprocessing)
+O(n)(broadcasting
+blocks)
+O(n2)(all-to-all
+communication,even
+ifparallelized)
+O(n)(mainlyfor
+validators)
+Scalability PotentiallyO(n)(efficient
+scalingwithcloudsize)
+Limitedby
+computationalpower
+andenergycost
+Quadraticincreasein
+messageswithmore
+nodes
+Morescalable,not
+requiringallnodesin
+consensus
+Attacktolerance Upto99%ofnodes
+compromised(dynamicrisk
+assessmentandmitigation)
+Maintainedbelow51%
+networkhashrate
+control
+Upto33%oftotal
+nodesbeingmalicious
+upto98%stake
+compromise(insome
+implementations)
+Energy/transaction 0.00011 ±0.00001kWh 950 ±105kWh 0.1 ±0.02kWh 0.00172 ±0.00018
+kWh
+Resource
+consumption
+0.15kW/node 1.30kW/node 0.35kW/node 0.25kW/node
+Finalitytime 38 ±4ms 12,500 ±1200ms 200–500ms 480 ±45ms
+Latencyconsistency <5%variance 15–40%variance 10–25%variance 8–20%variance
+first consensus mechanism to satisfy cloud infrastructure needs
+foreconomy,speed,andresilience.
+5.4 PracticalIntegrationandUserImpact
+Our system seamlessly integrates into real cloud infrastructures
+using containerized smart contracts (like Docker) and cloud-
+native deployment techniques (like Kubernetes). It interacts
+with popular monitoring and logging interfaces such as AWS
+CloudWatch,AzureMonitor,andGCPOperationsSuitetoextract
+the necessary risk-related metrics without affecting critical ser-
+vices. Compatibility is made possible by RESTful APIs and
+cloud-agnostic elements, allowing deployment across popular
+providers like AWS, Azure, and GCP. The technology does not
+interferewithongoingtasksbecauseitoperatesasalightweight
+overlay.
+After careful analysis, the impact on end users was found to be
+minimal. Simulations confirm minimal service delay (less than
+2%increase),packetlossbelow0.5%,and99.9%availabilityunder
+assault scenarios. Security enhancements are constantly visible
+since risk-based decision making responds very fast. Dynamic
+protectionsincreaseusabilitywithoutcompromisingrobustness.
+5.5 SecurityProofsandMathematicalAnalysis
+In this section, the proposed system is analysed mathemati-
+cally, we first initiate formal proofs of core security properties
+under well-defined adversarial models, then, we make heuris-
+tic validation through automated property-based testing. This
+dual approach ensures both theoretical soundness and practical
+resilience.
+5.5.1 FormalSecurityProofs
+For the security proofs, we used the standard simulation-based
+frameworkoperatingunderthefollowingadversarialmodel:
+∙ Adversarialcapabilitiesandassumptions
+We assume an adversary running as a probabilistic polynomial-
+time(PPT)entitywithpredefinedcapabilitiesasfollowing:
+- Byzantinenodecontrol :Controlsupto f <1/3nodesinthe
+network.
+- Risk score manipulation: Altering local risk scores Rν
+withinaboundedrange[0 ,Rmax].
+Observationpowers:Observingpublicblockchaintransactions
+withoutmodifyingfinalizedblocks.
+Table 5 below provides an overview of the security properties
+including corresponding theorems, proofs, and conclusions for
+the smart contract functions implemented in Algorithms1–5.
+Eachentryformallyaffirmstheresilienceoftheproposedsystem
+versusadversarialattacksandtheabilitytomeetcriticalsecurity
+goals.
+5.5.2 HeuristicSecurityValidation
+We conducted a comprehensive security analysis using a
+property-based testing tool named Echidna to complement for-
+mal proofs. The analysis validated critical functionalities across
+allsmartcontracts.
+27of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 28 ---
+TABLE 5 SecuritypropertiesandproofsofSCfunctions.
+Property Theorem Proof Conclusion
+Riskassessment
+integrity
+(Algorithm1)
+Foranynode ν,thecombined
+riskscore Rν computedvia
+Dempster’sruleisconsistent
+andboundedunderadversarial
+controlof 𝑓 nodes
+Let𝑚1,𝑚2 bebeliefassignmentsfromtwouncorruptedsources.
+Dempster’srulecombinesevidence: 𝑚combined(𝐴) =∑
+𝐵∩𝐶=𝐴 𝑚1(𝐵).𝑚2(𝐶)
+1−𝐾
+,K = ∑
+𝐵∩𝐶=∅ 𝑚1(𝐵).𝑚2(𝐶) (22)
+Where:K<1guaranteesavalidbelieffunction.
+ForK =0,evidenceisfullyconsistent.
+Adversarialimpact:
+Anadversarycontrolling 𝑓nodescanonlyinfluence 𝑅𝑣 by:
+ΔR ≤ 𝑓⋅𝑅 max (23)
+𝑅max:themaximumper-noderiskscore.Thisfollowsfromthe
+linearityofevidenceaggregationinAlgorithm 1.
+Algorithm1guarantiesrisk
+scoresremainconsistentand
+manipulation-bounded,
+provided
+𝑓 <
+1−𝐾
+𝑅max
+Threshold
+convergence
+(Algorithm2)
+Thresholdstability:The
+dynamicthreshold θ(t)
+convergesexponentiallytoa
+stableequilibrium θ*,even
+underadversarial
+manipulationofriskscores.
+DefinetheLyapunovfunction:
+V(θ) =(θ −θ*)2 (24)
+Theupdaterule: θ(t+1) =θ(t)∙(𝜉⋅Bel+𝜁⋅Pl),satisfies:
+(θ(t+1))−V(θ(t)) =−2(θ(t)−θ*)2 ⋅(𝜉⋅Bel+𝜁⋅Pl−1)+O((θ(t)−θ*)3).
+(25)
+For𝜉⋅Bel+𝜁⋅Pl<1,V(θ(t+1)) <V(θ(t)),ensuringconvergence.
+Adversarialimpact:
+IfBeladv =Bel +𝛿,theequilibriumshiftsby:
+𝜃∗
+adv ≈
+𝜃∗
+1−𝜉𝛿
+(26)
+Theshiftisboundedif: 𝛿 ≤𝑓.𝑅max,andthesystemremainsstable
+for:𝛿 ≤
+𝜉𝑅max
+1−𝜉
+Thedynamicthresholdadapts
+robustlyandresists
+destabilizationunderbounded
+adversarialmanipulation.
+Defenceactivation
+integrity
+(Algorithm3)
+Algorithm3ensuresdefence
+mechanismsactivatecorrectly
+ifthefollowinghold:
+Riskscores: Rν,RCi andRglobal
+arecomputedasperAlgorithm
+1.
+Thresholds:𝜃L,𝜃C,𝜃G satisfy𝜃
+>𝑓⋅𝑅 max
+Parallelchecksatlocal/cluster/globallayersuseasnapshotofrisk
+scores(immutableoncewrittentotheblockchain).Thisprevents
+raceconditionsduringactivation.
+Foranode v,if 𝑅vt r u e>𝜃L,theadversarycannotreduce 𝑅𝑣 below
+𝜃L sinceΔR≤𝑓⋅𝑅 max (Theorem1).Thus, L(ν)activate.
+Conversely,if 𝑅𝑣t r u e≤𝜃L −𝑓⋅𝑅 max (27)adversarialmanipulation
+cannottrigger 𝑅v >𝜃L.
+Multi-layerdefencesactivate
+correctlyunderbounded
+adversarialinfluence.
+Sybilattacks
+resistance
+(Algorithm4)
+ThesystemresistsSybilattacks
+ifthecostofcreatinganode
+exceedstherewardforhonest
+participation.
+LetCbethecosttocreateanodeand Rtherewardforhonest
+participation.Sybilattacksareinfeasibleif:
+𝐶 >𝑅.
+𝑓
+1− 𝑓
+(28)
+Algorithm4enforcesthisconditionbyrequiringastake
+𝐶 ≥𝑅.
+𝑓
+1− 𝑓
+.
+Sybilattacksareeconomically
+infeasibleunderanhonest
+majority
+(f <
+1
+3
+)
+(Continues)
+28of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 29 ---
+TABLE 5 (Continued)
+Property Theorem Proof Conclusion
+Byzantine
+agreementin
+consensus
+(Algorithm5)
+Theproof-of-risk(PoR)
+consensusmechanismachieves
+Byzantineagreementunder
+asynchronyiff <
+1
+3
+Weightedvoting
+Eachnode’svoteisweightedby 𝑊𝑣 =
+1
+𝑅𝜈
+(29)
+Honestnodes: Rν ≤𝜃L ⇒𝑊𝑣 ≥
+1
+𝜃L
+Byzantinenodes: Rν>𝜃L ⇒𝑊𝑣 <
+1
+𝜃L
+Safety
+Foragreement,honestnodesmustcontrol >
+2
+3
+ofthetotalweight:∑
+𝑣h o n e s t𝑊𝑣 >2 ∑
+𝑣B yz a n t i n e𝑊𝑣 (30)
+Substitutingweights:
+(1 −𝑓).
+1
+𝜃L
+>2𝑓.
+1
+𝜃L
+⇒𝑓 <
+1
+3
+∙Liveness
+Followsfrompartialsynchronyandeventualmessagedelivery.
+Theconsensusmechanismis
+robustagainstadversarial
+behaviour,ensuringbothsafety
+andliveness.
+Starting with the risk assessment SCRA, normalized risk scores
+at node, cluster, and global levels were rigorously checked to
+adaptwithpredefinedbounds[0,1],withcalculationsgrounded
+inDST;invarianttestingconfirmedscoreintegrityunderextreme
+inputs, while functional tests validated evidence aggregation
+and edge-case resilience. For the threshold adjustment SCDTA,
+adjusted thresholds (𝜃L, 𝜃C, 𝜃G) were systematically evaluated
+to ensure adherence to valid ranges, leveraging belief and plau-
+sibility values with dynamic scaling factors. Echidna’s fuzzing
+demonstrated that threshold adaptations aligned with real-time
+riskprofiles,minimizingfalsepositives/negativesandenhancing
+system adaptability. This adaptive mechanism was formalized
+through property rules, ensuring thresholds remain within safe
+bounds.Thedefenceactivation(SCDA)wasassessedtoconfirm
+defence mechanisms activate exclusively when risk surpasses
+validated thresholds, with no unintended triggers under nom-
+inal conditions, while blockchain-immutable logging ensured
+full transparency and auditability across all layers. Consensus
+protocols (SCCNS and SCPoR) were further analysed to verify
+fairness in node selection and integrity in weighted voting,
+ensuringresistancetoadversarialmanipulation.Finally,Echidna
+tested foundational vulnerabilities: reentrancy was mitigated
+through strict adherence to the checks-effects-interactions pat-
+tern;integeroverflows/underflowswereprecludedviaarithmetic
+boundarytesting;andstatetransitionvaliditywasenforcedacross
+adversarialscenarios.
+Sample of checking methods and property violation highlights
+aresummarizedinFigure 10,showingexecutableconstraintsand
+relatedresolutionstrategies.Forexample,clampingriskScoreata
+MAX_THRESHOLDresolvedoverflowviolationsinSCRA,while
+inputnormalizationinSCDTAcorrectedthresholdexceedances.
+Modifications to non-strict inequality logic in SCDA reduced
+false positives, and fixed-point arithmetic in SCPoR addressed
+rounding-inducedconsensusfaults.
+Across core contract modules, these corrective actions resulted
+in significant gas savings of approximately 38%. This bal-
+ance between efficiency optimization and security hardening
+enhances the feasibility of deploying the contracts in real-
+world environments. As evidenced in Figure11, all contracts
+showrobustresiliencetooverflowattacks,unauthorizedaccess,
+and invalid state transitions, thereby affirming the system’s
+operationalandsecuritycoherence.
+6 ConclusionandFutureWork
+This paper addressed the increasing vulnerability of cloud
+environments to sophisticated and large-scale attacks. As these
+environments grow in scale and complexity, traditional miti-
+gation strategies often fail due to their limited scalability and
+adaptability. To overcome these challenges, we proposed a
+novel blockchain-based framework aimed at enhancing attack
+toleranceinlarge-scalecloudsystems.
+The proposed framework integrates a hierarchical, risk-based
+mechanismthatdynamicallydetectsthreatsandadaptssecurity
+protocolsinrealtimeusingsmartcontracts.Itintroducesseveral
+key innovations: (i) a novel risk assessment method based on
+DSTthatenhancessystemefficiencyandhandlesvariousattack
+29of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 30 ---
+FIGURE 10 Exampleofechidnatestpropertiesforverificationrulesandpropertyviolations.
+tolerances; (ii) a dynamic threshold adjustment mechanism
+to recalibrate security protocols in real-time, boosting defence
+against potential attacks; (iii) a smart contract-driven defence
+activation function that customizes countermeasures based on
+riskscores;and(iv)anewconsensusalgorithmthatstrengthens
+cloud security while supporting blockchain integrity through
+decentralization,transparency,andimmutability.
+Oursystemhasbeentestedinwidescalesupto10,000nodesand
+a range of attack intensities (20–80%). Evaluations demonstrate
+robustperformanceacrossawidearrayofattacktypesincluding
+SYN Flood, HTTP Flood, Slowloris, Smurf, UDP Flood, ICMP,
+and others. It also showed resilience against complex threats
+such as Sybil attacks, insider threats, data poisoning, replay
+attacks, and advanced persistent threats. Results revealed high
+30of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 31 ---
+FIGURE 11 Echidnasecurityanalysisresultsofsmartcontract.
+detectionaccuracy,minimalfalsepositives/negatives,andstrong
+availabilityevenunderhigh-intensityscenarios.Thesolutionalso
+provedcost-effectiveintermsofgasusage,transactioncosts,and
+executionoverhead,andwasvalidatedforsecurityusingEchidna
+tools.
+Despite these strengths, several limitations remain. The current
+risk analysis algorithm requires further testing to evaluate its
+adaptability to attack variability and temporal risk fluctuations.
+While our current design achieves low real-time overheads,
+we recognize that adaptive, ML-based monitoring could further
+improveefficiencyandprecision.Thisrepresentsakeydirection
+forfuturedevelopment.
+Futureresearchwillfocusonenhancingthesystem’sintelligence
+and adaptability. Integrating machine learning techniques can
+improve the accuracy and responsiveness of risk analysis by
+enablingthesystemtolearnfromlarge-scalehistoricalandreal-
+time data, identify subtle attack patterns, and predict emerging
+threats.
+AuthorContributions
+Faiza Benmenzer:formal analysis, investigation, methodology, soft-
+ware, validation, visualization, writing – original draft, writing - review
+and editing. Rachid Beghdad: project administration, supervision,
+writing – original draft, writing – review and editing.Alaa Eddine
+Khalfoune:writing–reviewandediting.
+ConflictsofInterest
+Theauthorsdeclarenoconflictsofinterest.
+DataAvailabilityStatement
+The data that support the findings of this study are available from the
+correspondingauthoruponreasonablerequest.
+References
+1.A. Kumar and G. Somani, “DDoS at a Glance: Attack Launch to
+Solutions,”ITProfessional 25,no.3(2023):36–42.
+2.T. Welsh and E. Benkhelifa, “On Resilience in Cloud Computing:
+A Survey of Techniques Across the Cloud Domain,”ACM Computing
+Surveys(CSUR) 53,no.3(2020):1–36.
+3.M. Sarhan, S. Layeghy, M. Gallagher, and M. Portmann, “From
+Zero-Shot Machine Learning to Zero-Day Attack Detection,”Portman-
+nInternationalJournalofInformationSecurity 22,no.4(2023):947–959.
+4.Y. Gu, Y. Yang, Y. Yan, F. Shen, and M. Gao, “Learning-Based Intru-
+sion Detection for High-Dimensional Imbalanced Traffic,”Computer
+Communications212(2023):366–376.
+5.B. A. Malar and J. Prabhu, “Data Storage Security in the Cloud
+Environment Using the Honey Pot System,”International Journal of
+e-Collaboration(IJeC) 16,no.4(2020):1–14.
+6.R. Chaganti, B. Bhushan, and V. Ravi, “A Survey on Blockchain
+SolutionsinDDoSAttacksMitigation:Techniques,OpenChallengesand
+FutureDirections,” ComputerCommunications 197(2023):96–112.
+7.T.Khoa,D.Son,D.Hoangetal.,“CollaborativeLearningforCyberat-
+tackDetectioninBlockchainNetworks,” IEEETransactionsonSystems,
+Man,andCybernetics:Systems 54,no.7(2024):3920–3933.
+8.A. Jawahar, P. Kaythry, K. C. Vinoth et al., “DDoS Mitigation Using
+Blockchain and Machine Learning Techniques,”Multimedia Tools and
+Applications83,no.21(2024):60265–60278.
+9.Y. Lamriji, M. Kasri, K. El Makkaoui, and A. Beni-Hssane, “A
+Comparative Study of Consensus Algorithms for Blockchain,” in2023
+3rd International Conference on Innovative Research in Applied Science,
+EngineeringandTechnology(IRASET) (IEEE,2023),1–8.
+10.S. Sayeed and H. Marco-Gisbert, “Assessing Blockchain Consensus
+andSecurityMechanismsAgainstthe51%Attack,” AppliedSciences 9,no.
+9(2019):1788.
+11.S. M. Hezavehi and R. Rahmani, “Interactive Anomaly-Based DDoS
+Attack Detection Method in Cloud Computing Environments Using a
+Third Party Auditor,”Journal of Parallel and Distributed Computing178
+(2023):82–99.
+12.J. David and C. Thomas, “Discriminating Flash Crowds From DDoS
+AttacksUsingEfficientThresholdingAlgorithm,” JournalofParalleland
+DistributedComputing 152(2021):79–87.
+13.L.D.Tsobdjou,S.Pierre,andA.Quintero,“AnOnlineEntropy-Based
+DDoSFloodingAttackDetectionSystemWithDynamicThreshold,” IEEE
+TransactionsonNetworkandServiceManagement 19,no.2(2022):1679–
+1689.
+14.S. Kautish, A. Reyana, and A. Vidyarthi, “SDMTA: Attack Detection
+and Mitigation Mechanism for DDoS Vulnerabilities in Hybrid Cloud
+Environment,”IEEETransIndustrInform 18,no.9(2022):6455–6463.
+15.W. Elmasry, A. Akbulut, and A. H. Zaim, “A Design of an Inte-
+gratedCloud-BasedIntrusionDetectionSystemWithThirdPartyCloud
+Service,”OpenComputerScience 11,no.1(2021):365–379.
+16.L. K. Vashishtha, A. P. Singh, and K. Chatterjee, “HIDM: A Hybrid
+Intrusion Detection Model for Cloud Based Systems,”Wireless Personal
+Communications128,no.4(2023):2637–2666.
+31of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 32 ---
+17.K.G.Maheswari,C.Siva,andG.N.Priya,“AnOptimalClusterBased
+IntrusionDetectionSystemforDefenceagainstAttackinWebandCloud
+Computing Environments,”Wirel Pers Commun128, no. 3 (2023): 2011–
+2037.
+1 8 .W .E l b a k r i ,M .M .S i r a j ,B .A .S .A l - r i m y ,S .N .Q a s e m ,a n dT .A l -
+Hadhrami,“AdaptiveCloudIntrusionDetectionSystemBasedonPruned
+Exact Linear Time Technique,”Computers, Materials and Continua79,
+no.3(2024):3725–3756.
+19.G.S.KushwahandV.Ranga,“OptimizedExtremeLearningMachine
+for Detecting DDoS Attacks in Cloud Computing,” Computers and
+Security105(2021):102260.
+20.M. A. Ribeiro, M. S. P. Fonseca, and J. de Santi, “Detecting and
+Mitigating DDoS Attacks With Moving Target Defense Approach Based
+on Automated Flow Classification in SDN Networks,”Computers and
+Security134(2023):103462.
+21.M. J. Pasha, K. P. Rao, A. MallaReddy, and V. Bande, “LRDADF: An
+AI Enabled Framework for Detecting Low-Rate DDoS Attacks in Cloud
+ComputingEnvironments,” Measurement:Sensors 28(2023):100828.
+22.M. Arunkumar and K. A. Kumar, “Malicious Attack Detection
+Approach in Cloud Computing Using Machine Learning Techniques,”
+SoftComputing 26,no.23(2022):13097–13107.
+23.M. Suguna, M. Mohan, J. Srikanth, M. Suresh, P. G. Banupriya,
+and L. Dhavamani, “Detection of EDoS Attacks in SDN-Based Cloud
+Model Using Deep Learning Based SDPN Technique,” in2022 Third
+International Conference on Smart Technologies in Computing, Electrical
+andElectronics(ICSTCEE) (IEEE,2022),1–7.
+24.A. K. Shukla and A. Sharma, “Distributed Attacks Classification
+Based on Radical Basis Function and Particle Swarm Optimization in
+Hypervisor Layer,” in2023 6th International Conference on Information
+SystemsandComputerNetworks(ISCON) (IEEE,2023),1–4.
+25.H. Nandanwar and R. Katarya, “Deep Learning Enabled Intrusion
+DetectionSystemforIndustrialIOTEnvironment,” ExpertSystemsWith
+Applications249(2024):123808.
+26.I. AlSaleh, A. Al-Samawi, and L. Nissirat, “Novel Machine Learning
+Approach for DDoS Cloud Detection: Bayesian-Based CNN and Data
+FusionEnhancements,” Sensors24,no.5(2024):1418.
+27.X. Yin, W. Fang, Z. Liu, and D. Liu, “A Novel Multi-Scale CNN and
+Bi-LSTM Arbitration Dense Network Model for Low-Rate DDoS Attack
+Detection,”ScientificReports 14,no.1(2024):5111.
+28.B. Kauhsik, H. Nandanwar, and R. Katarya, “IoT Security: A Deep
+Learning-Based Approach for Intrusion Detection and Prevention,”
+in 2023 International Conference on Evolutionary Algorithms and Soft
+ComputingTechniques,EASCT2023 ,(IEEE,2023),1–7.
+29.H. Nandanwar and R. Katarya, “TL-BILSTM IoT: Transfer Learning
+ModelforPredictionofIntrusionDetectionSysteminIoTEnvironment,”
+International Journal of Information Security23, no. 2 (2024): 1251–1277,
+https://link.springer.com/article/10.1007/s10207-023-00787-8.
+30.H. Nandanwar and R. Katarya, “Deep Learning Enabled Intrusion
+Detection System for Industrial IOT Environment,”ExpertSystemswith
+Applications249(2024):123808.
+31.A.KumarandG.Somani,“ServiceSeparationAssistedDDoSAttack
+Mitigation in Cloud Targets,” Journal of Information Security and
+Applications73(2023):103435.
+32.H. S. Gurjar and G. Somani, “Amplification/Reflection Attack Sup-
+pression Using Victim Separation,”IEEE Networking Letters5 (2023):
+140–143.
+33.F. Akbarian, W. Tärneberg, E. Fitzgerald, and M. Kihl, “Attack
+ResilientCloud-BasedControlSystemsforIndustry4.0,” IEEEAccess 11
+(2023):27865–27882.
+34.A. Kumar and G. Somani, “On the Timing of Applying Resource
+Separation During DDoS Attacks,” in2023 IEEE/ACM 23rd Interna-
+tional Symposium on Cluster, Cloud and Internet Computing Workshops
+(CCGridW),IEEE,2023,pp.147–152.
+35.A.KumarandG.Somani,“DDoSAttackMitigationinCloudTargets
+Using Scale-Inside Out Assisted Container Separation,” inIEEE INFO-
+COM 2022-IEEE Conference on Computer Communications Workshops
+(INFOCOMWKSHPS) (IEEE,2022),1–6.
+36.A. Patidar and G. Somani, “Serving While Attacked: DDoS Attack
+Effect Minimization Using Page Separation and Container Allocation
+Strategy,” Journal of Information Security and Applications59 (2021):
+102818.
+37.A.KumarandM.Agarwal,“QuickServiceDuringDDoSAttacksinthe
+Container-BasedCloudEnvironment,” JournalofNetworkandComputer
+Applications229(2024):103946.
+38.M.G.M.M.HasanandM.A.Rahman,“ASignalingGameApproach
+toMitigateCo-ResidentAttacksinanIaaSCloudEnvironment,” Journal
+ofInformationSecurityandApplications 50(2020):102397.
+39.Q.LiuandL.Xing,“SurvivabilityandVulnerabilityAnalysisofCloud
+RAIDSystemsUnderDiskFaultsandAttacks,” InternationalJournalof
+Mathematical,EngineeringandManagementSciences 6, no. 1 (2021): 15–
+29.
+40.W. Zhou, P. Dague, L. Liu, L. Ye, and F. Zaïdi, “A Coloured
+Petri Nets Based Attack Tolerance Framework,” in2020 27th Asia-
+Pacific Software Engineering Conference (APSEC)(IEEE, 2020), 159–
+168.
+41.G.Ouffoué,F.Zaïdi,A.R.Cavalli,andH.N.Nguyen,“AFramework
+fortheAttackToleranceofCloudApplicationsBasedonWebServices,”
+Electronics10(2020):6.
+42.J. Tavori and H. Levy, “How to Attack and Congest Delay-Sensitive
+ApplicationsontheCloud,”in IEEEINFOCOM2023-IEEEConferenceon
+ComputerCommunications (IEEE,2023),1–10.
+43.T. Welsh and E. Benkhelifa, “The Resilient Edge: Evaluating Graph-
+Based Metrics for Decentralised Service Delivery,” in2021 Sixth Inter-
+national Conference on Fog and Mobile Edge Computing (FMEC)(IEEE,
+2021),1–7.
+44.V. Kumar, D. R. Shaheen, and N. R. Medikondu, “Secure Deep
+Learning Framework for Cloud to Protect the Virtual Machine From
+Malicious Events,”Wireless Personal Communications131 (2023): 1859–
+1879.
+45.E. S. GSR, R. Ganeshan, I. D. J. Jingle, and J. P. Ananth, “FACVO-
+DNFN: Deep Learning-Based Feature Fusion and Distributed Denial of
+ServiceAttackDetectioninCloudComputing,” KnowledgeBasedSystems
+261(2023):110132.
+46.P. Krishnan, K. Jain, A. Aldweesh, P. Prabu, and R. Buyya, “Open-
+StackDP: A Scalable Network Security Framework for SDN-Based
+OpenStack Cloud Infrastructure,”Journal of Cloud Computing12, no. 1
+(2023):26.
+47.S. Q. A. Shah, F. Z. Khan, and M. Ahmad, “Mitigating TCP SYN
+Flooding Based EDOS Attack in Cloud Computing Environment Using
+Binomial Distribution in SDN,”Computer Communications182 (2022):
+198–211.
+48.K. S. Manoj, “DDOS Attack Detection and Prevention Using the
+Bat Optimized Load Distribution Algorithm in Cloud,” in2022Interna-
+tionalInterdisciplinaryHumanitarianConferenceforSustainability(IIHC)
+(IEEE,2022),633–642.
+49.X.Hei,X.Yin,Y.Wang,J.Ren,andL.Zhu,“ATrustedFeatureAggre-
+gator Federated Learning for Distributed Malicious Attack Detection,”
+ComputersandSecurity 99(2020):102033.
+50.M. Ouhssini, K. Afdel, E. Agherrabi, M. Akouhar, and A. Abarda,
+“DeepDefend:AComprehensiveFrameworkforDDoSAttackDetection
+and Prevention in Cloud Computing,”Journal of King Saud University-
+ComputerandInformationSciences 36,no.2(2024):101938.
+51.O. Pandithurai, C. Venkataiah, S. Tiwari, and N. Ramanjaneyulu,
+“DDoSAttackPredictionUsingaHoneyBadgerOptimizationAlgorithm
+Based Feature Selection and Bi-LSTM in Cloud Environment,”Expert
+SystemswithApplications 241(2024):122544.
+32of33 IETBlockchain,2025
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+
+--- PAGE 33 ---
+52.A. V. Songa and G. R. Karri, “An Integrated SDN Framework for
+EarlyDetectionofDDoSAttacksinCloudComputing,” JournalofCloud
+Computing13,no.1(2024):64.
+53.H. Nandanwar and R. Katarya, “A Systematic Literature Review:
+ApproachTowardBlockchainFutureResearchTrends,”in Proceedings—
+IEEE International Conference on Device Intelligence, Computing and
+CommunicationTechnologies,DICCT2023 (IEEE,2023),259–264.
+54.H.NandanwarandR.Katarya,“SecuringIndustry5.0:AnExplainable
+DeepLearningModelforIntrusionDetectioninCyber-PhysicalSystems,”
+Computers and Electrical Engineering123 (2025): 110161,https://doi.org/
+10.1016/J.COMPELECENG.2025.110161.
+55.Y. Shang, “Prevention and Detection of DDOS Attack in Virtual
+CloudComputingEnvironmentUsingNaiveBayesAlgorithmofMachine
+Learning,”Measurement:Sensors 31(2023):100991.
+56.M. Ouhssini, K. Afdel, M. Akouhar, E. Agherrabi, and A. Abarda,
+“Advancements in Detecting, Preventing, and Mitigating DDoS Attacks
+in Cloud Environments: A Comprehensive Systematic Review of State-
+of-the-ArtApproaches,” EgyptianInformaticsJournal 27(2024):100517.
+57.B. Bhushan, P. Sinha, K. M. Sagayam, and J. Andrew, “Untangling
+Blockchain Technology: A Survey on State of the Art, Security Threats,
+PrivacyServices,ApplicationsandFutureResearchDirections,” Comput-
+ers&ElectricalEngineering 90(2021):106897, https://www.sciencedirect.
+com/science/article/abs/pii/S0045790620307497.
+58.B. Bhushan, A. Khamparia, K. M. Sagayam, S. K. Sharma, M. A.
+Ahad, and N. C. Debnath, “Blockchain for Smart Cities: A Review of
+Architectures,IntegrationTrendsandFutureResearchDirections,” Sus-
+tainablr Cities and Society61 (2020): 102360,https://www.sciencedirect.
+com/science/article/abs/pii/S2210670720305813.
+59.X. Zhu, J. Shi, S. Huang, and B. Zhang, “Consensus-Oriented Cloud
+ManufacturingBasedonBlockchainTechnology:AnExploratoryStudy,”
+PervasiveandMobileComputing 62(2020):101113.
+60.J. Wang, W. Yi, M. Yang, J. Ma, S. Zhang, and S. Hao, “Enhance
+the Trust Between IoT Devices, Mobile Apps, and the Cloud Based on
+Blockchain,” Journal of Network and Computer Applications218 (2023):
+103718.
+61.L.Ouyang,W.Zhang,andF.-Y.Wang,“IntelligentContracts:Making
+Smart Contracts Smart for Blockchain Intelligence,”Computers and
+ElectricalEngineering 104(2022):108421.
+62.F.Xiao,“GeneralizationofDempster–ShaferTheory:AComplexMass
+Function,”AppliedIntelligence 50(2020):3266–3275.
+63.K.Zhaoa,L.Lia,Z.Chena,R.Suna,G.Yuana,andJ.Lia,“ASurvey:
+Optimization and Applications of Evidence Fusion Algorithm Based on
+Dempster-ShaferTheory,” AppliedSoftComputing 124(2022):109075.
+64.E.Uflaz,S.I.Sezer,A.L.Tunçel,M.Aydin,E.Akyuz,andO.Arslan,
+“Quantifying Potential Cyber-Attack Risks in Maritime Transportation
+Under Dempster–Shafer Theory FMECA and Rule-Based Bayesian Net-
+work Modelling,” Reliability Engineering & System Safety243 (2024):
+109825.
+65.C.KalaskarandS.Thangam,“FaultToleranceofCloudInfrastructure
+With Machine Learning,”Cybernetics and Information Technologies23,
+no.4(2023):26–50.
+AppendixA
+TableA1Outlinesthenotationsusedintheproposedapproach.
+TABLE A1 Notations.
+G Cloudgraph
+V Setofvertices
+E ⊆V×V Setofedges
+id𝜈 Identifierofthenode v
+𝑇𝑣 Typeofnode v
+A𝜈 Setofattributesfornode v
+𝑎state Theoperationalstateofthenode
+GSdeg Graphstructureattributesofthe
+node
+GScent Acentralitymeasurethatcaptures
+thenode’simportance
+𝐶𝑄bw Bandwidthofthenode’sconnections
+NHinc Thenode’shistoricalvulnerability
+TPfreq Frequencyoftransactions
+NTa Nodetrafficanomalies
+NRu Noderesourceusage
+NRud Thedistributionofresourcesusage
+AUNR Theaverageresourceusageofthe
+node
+VS Thenode’sabilitytodynamically
+scaleresources
+ Theriskassessmentfunction
+𝑟𝜈 Theriskvalueofthenode v
+𝜃L,𝜃C,𝜃G Local,cluster,andglobalthresholds
+RL(ν,p) Rate-limitingfornode νwith
+parameterp
+TF(𝑣,𝑓) Trafficfilteringfunction, fdenotes
+thefilteringcriteria
+RA(𝑣,𝑟) Resourceallocationfunctionfor
+nodeν,r theresourceparameters
+𝐶 ={𝐶1,𝐶2,𝐶3,...,𝐶 𝑘 } Clusterswith 𝐶𝑖 ⊆Vandacluster
+headℎ𝑖 ∈𝐶𝑖
+DPA Defenceprotocolactivation
+CAC Cluster-widealertandcoordination
+TR Trafficrerouting
+NI Nodeisolation
+L Functionthatactivatesspecificlocal
+defencemechanisms
+CD Functionthatactivatesspecific
+clusterdefencemechanisms
+GD Functionthatactivatesspecific
+globaldefencemechanisms
+T Transactionhistory
+ Theconsensusoutcome
+PoR Proofofrisk
+BPAs Basicprobabilityassignments
+33of33
+ 26341573, 2025, 1, Downloaded from https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/blc2.70023, Wiley Online Library on [13/08/2026]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+

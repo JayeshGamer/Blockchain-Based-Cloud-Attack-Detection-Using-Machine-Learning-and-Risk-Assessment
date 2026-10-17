@@ -1,0 +1,127 @@
+mode: "full"
+label: "full-dataset results"
+
+project:
+  name: "Adaptive ML-DST"
+  version: "1.0.0"
+  description: "Online Machine Learning and Uncertainty-Aware Temporal Risk Assessment for Cloud Attack Tolerance"
+  random_seed: 42
+  seeds: [42, 123, 456, 789, 1024]
+
+data:
+  raw_dir: "dataset"
+  processed_dir: "data/processed"
+  chunk_size: 50000
+  sample_mode: false
+  sample_size: null
+  preserve_minority: true
+  test_size: 0.2
+  val_size: 0.1
+  drop_constant_columns: true
+  constant_columns:
+    - "Bwd Avg Bulk Rate"
+    - "Bwd Avg Bytes/Bulk"
+    - "Bwd Avg Packets/Bulk"
+    - "Bwd PSH Flags"
+    - "Bwd URG Flags"
+    - "Fwd Avg Bulk Rate"
+    - "Fwd Avg Bytes/Bulk"
+    - "Fwd Avg Packets/Bulk"
+  duplicate_handling: "report_and_drop_exact"
+  imputer_strategy: "median"
+  scaler: "robust" # robust / standard / minmax
+
+stream:
+  batch_size: 1000
+  stream_delay_ms: 0 # delay between batches in simulated live stream
+  prequential_evaluation: true # predict then update
+
+online_model:
+  algorithm: "sgd_classifier" # sgd_classifier / hoeffding_tree / river_arf
+  loss: "log_loss"
+  penalty: "l2"
+  alpha: 0.0001
+  learning_rate: "optimal"
+  calibrated: true
+
+anomaly_detector:
+  algorithm: "isolation_forest"
+  contamination: 0.05
+  n_estimators: 100
+  max_samples: 10000
+  train_on_benign_only: true
+  score_normalization: "minmax"
+
+drift_detector:
+  algorithm: "adwin"
+  delta: 0.002
+  clock: 32
+  min_window_length: 10
+  grace_period: 200
+
+temporal_window:
+  window_size: 200
+  feature_weights:
+    flow_duration: 0.25
+    flow_bytes_per_s: 0.35
+    flow_packets_per_s: 0.40
+  deviation_metric: "zscore_norm"
+
+dst:
+  frame_of_discernment: ["Benign", "Attack"]
+  uncertainty_budget: 0.15 # Mass allocated to Theta {Benign, Attack}
+  source_weights:
+    ml_probability: 0.45
+    anomaly_score: 0.30
+    temporal_deviation: 0.25
+  conflict_threshold: 0.95 # Trigger safe stabilization if k >= threshold
+
+adaptive_threshold:
+  initial_threshold: 0.50
+  target_fpr: 0.01 # 1% target FPR
+  rolling_window_size: 500
+  min_threshold: 0.20
+  max_threshold: 0.85
+  drift_relaxation_factor: 0.85
+
+hierarchical_simulation:
+  num_nodes: 50
+  num_clusters: 5
+  seed: 42
+  node_risk_window: 50
+  aggregation_method: "dst_weighted" # dst_weighted / max / average
+
+defense_activation:
+  levels:
+    low:
+      threshold: 0.35
+      action: "LOG_MONITOR"
+      description: "Log telemetric event and maintain baseline monitoring"
+    medium:
+      threshold: 0.55
+      action: "RATE_LIMIT"
+      description: "Simulate bandwidth throttling and token-bucket rate limiting"
+    high:
+      threshold: 0.75
+      action: "TRAFFIC_FILTER_ISOLATE"
+      description: "Filter malicious traffic signatures and temporarily isolate node"
+    critical_global:
+      threshold: 0.80
+      action: "GLOBAL_REROUTE_ALERT"
+      description: "Trigger cluster traffic rerouting and global security alert"
+
+blockchain:
+  enabled: true
+  mock_ledger: true
+  contract_address: null
+  rpc_url: "http://127.0.0.1:8545"
+  chain_id: 31337
+
+api:
+  host: "127.0.0.1"
+  port: 8000
+  reload: false
+
+dashboard:
+  host: "127.0.0.1"
+  port: 8501

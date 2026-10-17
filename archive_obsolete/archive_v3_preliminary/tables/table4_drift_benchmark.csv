@@ -1,0 +1,2 @@
+Total_True_Change_Points,Total_Detected_Alarms,True_Alarms_Matched,Detection_Rate,Missed_Events,False_Alarms,Duplicate_Alarms,Mean_Detection_Delay_Flows,Median_Detection_Delay_Flows
+5,11,4,0.8,1,6,1,62.5,75.0

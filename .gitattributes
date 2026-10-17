@@ -1,0 +1,25 @@
+# ============================================================
+# Adaptive ML-DST V6 — Git Attributes
+# ============================================================
+# This repository publishes SHA-256 integrity hashes of its source
+# files (reports/final/manifests/source_hashes.json). To keep those
+# hashes valid on every platform, Git performs NO line-ending
+# normalisation here: files are stored and checked out byte-for-byte
+# as committed. Do not add `text=auto` or `eol=` rules.
+
+* -text
+
+# ------------------------------------------------------------
+# Explicitly binary artifacts
+# ------------------------------------------------------------
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.gz    binary
+*.zip   binary
+*.joblib binary
+*.pkl   binary
+*.db    binary

@@ -1,0 +1,39 @@
+======================================================================
+STARTING V6 RELEASE VERIFICATION AUDIT
+======================================================================
+
+--- STEP 1: VERIFYING MODEL CHECKPOINT FILES ---
+FOUND: models/online_sgd_initial.joblib (4.08 KB)
+FOUND: models/online_sgd_final_online.joblib (4.09 KB)
+FOUND: models/model_metadata.json (3.43 KB)
+Default demo checkpoint: models/online_sgd_final_online.joblib
+Feature count in schema: 69
+
+--- STEP 2: FRESH-PROCESS SAVE/LOAD PREDICTION EQUALITY ---
+Loaded test batch of 50 flows from data/example_input.csv
+Maximum continuous score discrepancy between fresh processes: 0.00e+00
+Binary prediction mismatches: 0 / 50
+PASSED: Save/Load numerical consistency verified bit-for-bit!
+
+--- STEP 3: TESTING CLI PREDICTION COMMAND (scripts/predict.py) ---
+CLI output generated successfully with 50 rows and columns: ['flow_id', 'attack_score', 'threshold', 'prediction', 'predicted_label']
+PASSED: CLI prediction command verified!
+
+--- STEP 4: TESTING FASTAPI BACKEND (src/api/main.py) ---
+API /health: OK (is_trained=True)
+API /model/info: OK (stage=final_online_streamed)
+API /predict: OK (prediction=BENIGN, attack_score=0.126228)
+API Schema rejection: OK (correctly rejected 3-feature payload with HTTP 400)
+PASSED: REST API endpoints verified!
+
+--- STEP 5: VERIFYING FINAL REPORT ARTIFACTS ---
+FOUND: reports/final/metrics/table1_comparative_models.csv
+FOUND: reports/final/metrics/table1b_tradeoff_comparisons.csv
+FOUND: reports/final/metrics/protocol_b_results.json
+FOUND: reports/final/manifests/source_hashes.json
+FOUND: docs/RESULTS.md
+FOUND: docs/CLEANUP_MANIFEST.md
+
+======================================================================
+ALL RELEASE VERIFICATION CHECKS PASSED PERFECTLY!
+======================================================================

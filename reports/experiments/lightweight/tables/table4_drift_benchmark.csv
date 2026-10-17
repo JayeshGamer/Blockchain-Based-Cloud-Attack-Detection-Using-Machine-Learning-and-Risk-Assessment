@@ -1,0 +1,2 @@
+Total_True_Change_Points,Total_Detected_Alarms,True_Alarms_Matched,Detection_Rate,Missed_Events,False_Alarms,Duplicate_Alarms,Tolerance_Window_Flows,Mean_Operational_Delay_Flows,Median_Operational_Delay_Flows,Mean_Detector_Only_Delay_Flows,Median_Detector_Only_Delay_Flows
+5,11,4,0.8,1,3,4,250,87.5,100.0,37.5,50.0

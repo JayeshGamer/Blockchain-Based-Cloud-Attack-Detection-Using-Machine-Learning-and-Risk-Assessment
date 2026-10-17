@@ -1,0 +1,441 @@
+{
+  "protocol": "Protocol C: Controlled Concept-Drift Benchmark",
+  "timestamp": "2026-09-19T21:27:28.151214",
+  "warmup_flows_excluded": 500,
+  "evaluated_stream_flows": 5500,
+  "true_change_points": [
+    {
+      "change_point_idx": 1000,
+      "drift_type": "Sudden Attack Prevalence",
+      "description": "Sudden surge of DoS Hulk attack traffic (40% prevalence)"
+    },
+    {
+      "change_point_idx": 2000,
+      "drift_type": "Gradual Attack Prevalence",
+      "description": "Gradual ramp of Brute Force attempts over 1000 flows"
+    },
+    {
+      "change_point_idx": 3000,
+      "drift_type": "Return to Normal",
+      "description": "Cessation of attack traffic; return to pure benign telemetry"
+    },
+    {
+      "change_point_idx": 4000,
+      "drift_type": "Sudden Feature Covariate Shift",
+      "description": "Sudden change in traffic volume characteristics (packet size & rates doubled)"
+    },
+    {
+      "change_point_idx": 5000,
+      "drift_type": "Unseen Attack Emergence",
+      "description": "Appearance of completely unseen PortScan reconnaissance attacks (50% prevalence)"
+    }
+  ],
+  "operational_alarms": [
+    1100,
+    1150,
+    2100,
+    2250,
+    2900,
+    3100,
+    3250,
+    4350,
+    5050,
+    5200,
+    5300
+  ],
+  "detector_only_alarms": [
+    1050,
+    1100,
+    2050,
+    2200,
+    2850,
+    3050,
+    3200,
+    4300,
+    5000,
+    5150,
+    5250
+  ],
+  "alarm_records": [
+    {
+      "operational_alarm_idx": 1100,
+      "originating_flow_idx": 1050,
+      "label_delay_flows": 50,
+      "signals": {
+        "delayed_loss": true,
+        "attack_score": false
+      },
+      "action": "plasticity_boost"
+    },
+    {
+      "operational_alarm_idx": 1150,
+      "originating_flow_idx": 1100,
+      "label_delay_flows": 50,
+      "signals": {
+        "delayed_loss": false,
+        "attack_score": true
+      },
+      "action": "none"
+    },
+    {
+      "operational_alarm_idx": 2100,
+      "originating_flow_idx": 2050,
+      "label_delay_flows": 50,
+      "signals": {
+        "delayed_loss": false,
+        "attack_score": true
+      },
+      "action": "none"
+    },
+    {
+      "operational_alarm_idx": 2250,
+      "originating_flow_idx": 2200,
+      "label_delay_flows": 50,
+      "signals": {
+        "delayed_loss": true,
+        "attack_score": false
+      },
+      "action": "plasticity_boost"
+    },
+    {
+      "operational_alarm_idx": 2900,
+      "originating_flow_idx": 2850,
+      "label_delay_flows": 50,
+      "signals": {
+        "delayed_loss": false,
+        "attack_score": true
+      },
+      "action": "none"
+    },
+    {
+      "operational_alarm_idx": 3100,
+      "originating_flow_idx": 3050,
+      "label_delay_flows": 50,
+      "signals": {
+        "delayed_loss": false,
+        "attack_score": true
+      },
+      "action": "none"
+    },
+    {
+      "operational_alarm_idx": 3250,
+      "originating_flow_idx": 3200,
+      "label_delay_flows": 50,
+      "signals": {
+        "delayed_loss": true,
+        "attack_score": false
+      },
+      "action": "none"
+    },
+    {
+      "operational_alarm_idx": 4350,
+      "originating_flow_idx": 4300,
+      "label_delay_flows": 50,
+      "signals": {
+        "delayed_loss": false,
+        "attack_score": true
+      },
+      "action": "plasticity_boost"
+    },
+    {
+      "operational_alarm_idx": 5050,
+      "originating_flow_idx": 5000,
+      "label_delay_flows": 50,
+      "signals": {
+        "delayed_loss": true,
+        "attack_score": false
+      },
+      "action": "none"
+    },
+    {
+      "operational_alarm_idx": 5200,
+      "originating_flow_idx": 5150,
+      "label_delay_flows": 50,
+      "signals": {
+        "delayed_loss": false,
+        "attack_score": true
+      },
+      "action": "none"
+    },
+    {
+      "operational_alarm_idx": 5300,
+      "originating_flow_idx": 5250,
+      "label_delay_flows": 50,
+      "signals": {
+        "delayed_loss": true,
+        "attack_score": false
+      },
+      "action": "none"
+    }
+  ],
+  "drift_detection_performance": {
+    "true_drift_events": 5,
+    "detected_alarms_total": 11,
+    "true_alarms_matched": 4,
+    "detection_rate": 0.8,
+    "missed_events": 1,
+    "missed_drifts": 1,
+    "false_alarms": 3,
+    "duplicate_alarms": 4,
+    "tolerance_window_flows": 250,
+    "mean_detection_delay_flows": 87.5,
+    "median_detection_delay_flows": 100.0,
+    "mean_detector_only_delay_flows": 37.5,
+    "median_detector_only_delay_flows": 50.0,
+    "detection_delays": [
+      100,
+      100,
+      100,
+      50
+    ],
+    "matched_details": [
+      {
+        "change_point": 1000,
+        "operational_alarm": 1100,
+        "operational_delay": 100,
+        "detector_only_delay": 50
+      },
+      {
+        "change_point": 2000,
+        "operational_alarm": 2100,
+        "operational_delay": 100,
+        "detector_only_delay": 50
+      },
+      {
+        "change_point": 3000,
+        "operational_alarm": 3100,
+        "operational_delay": 100,
+        "detector_only_delay": 50
+      },
+      {
+        "change_point": 5000,
+        "operational_alarm": 5050,
+        "operational_delay": 50,
+        "detector_only_delay": 0
+      }
+    ],
+    "duplicate_alarm_steps": [
+      1150,
+      2250,
+      3250,
+      5200
+    ],
+    "false_alarm_steps": [
+      2900,
+      4350,
+      5300
+    ]
+  },
+  "segment_metrics": {
+    "Segment 1: Normal Baseline": {
+      "accuracy": 0.996,
+      "balanced_accuracy": 0.996,
+      "precision": 0.0,
+      "recall": 0.0,
+      "detection_rate": 0.0,
+      "specificity": 0.996,
+      "false_positive_rate": 0.004,
+      "false_negative_rate": 0.0,
+      "attack_f1": 0.0,
+      "macro_f1": 0.49899799599198397,
+      "weighted_f1": 0.9979959919839679,
+      "f2": 0.0,
+      "f1": 0.0,
+      "f1_score": 0.49899799599198397,
+      "f2_score": 0.0,
+      "matthews_corrcoef": 0.0,
+      "true_positives": 0,
+      "false_positives": 2,
+      "true_negatives": 498,
+      "false_negatives": 0,
+      "confusion_matrix": [
+        [
+          498,
+          2
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "brier_score": 0.019434187325042714
+    },
+    "Segment 2: Sudden DoS Surge": {
+      "accuracy": 0.883,
+      "balanced_accuracy": 0.87625,
+      "precision": 0.8618925831202046,
+      "recall": 0.8425,
+      "detection_rate": 0.8425,
+      "specificity": 0.91,
+      "false_positive_rate": 0.09,
+      "false_negative_rate": 0.1575,
+      "attack_f1": 0.8520859671302149,
+      "macro_f1": 0.8776558867909139,
+      "weighted_f1": 0.8827698707230536,
+      "f2": 0.8463083877448518,
+      "f1": 0.8520859671302149,
+      "f1_score": 0.8776558867909139,
+      "f2_score": 0.8463083877448518,
+      "matthews_corrcoef": 0.7554663071320566,
+      "true_positives": 337,
+      "false_positives": 54,
+      "true_negatives": 546,
+      "false_negatives": 63,
+      "confusion_matrix": [
+        [
+          546,
+          54
+        ],
+        [
+          63,
+          337
+        ]
+      ],
+      "roc_auc": 0.912075,
+      "pr_auc": 0.9110531064287416,
+      "brier_score": 0.09124218471145389
+    },
+    "Segment 3: Gradual Brute Force": {
+      "accuracy": 0.837,
+      "balanced_accuracy": 0.8158614297300428,
+      "precision": 0.7331288343558282,
+      "recall": 0.7587301587301587,
+      "detection_rate": 0.7587301587301587,
+      "specificity": 0.872992700729927,
+      "false_positive_rate": 0.12700729927007298,
+      "false_negative_rate": 0.24126984126984127,
+      "attack_f1": 0.7457098283931357,
+      "macro_f1": 0.8128843476034847,
+      "weighted_f1": 0.8377389197113139,
+      "f2": 0.7534678436317781,
+      "f1": 0.7457098283931357,
+      "f1_score": 0.8128843476034847,
+      "f2_score": 0.7534678436317781,
+      "matthews_corrcoef": 0.6260202863366405,
+      "true_positives": 239,
+      "false_positives": 87,
+      "true_negatives": 598,
+      "false_negatives": 76,
+      "confusion_matrix": [
+        [
+          598,
+          87
+        ],
+        [
+          76,
+          239
+        ]
+      ],
+      "roc_auc": 0.8549646622639323,
+      "pr_auc": 0.672059722213131,
+      "brier_score": 0.14317033506880464
+    },
+    "Segment 4: Return to Normal": {
+      "accuracy": 0.947,
+      "balanced_accuracy": 0.947,
+      "precision": 0.0,
+      "recall": 0.0,
+      "detection_rate": 0.0,
+      "specificity": 0.947,
+      "false_positive_rate": 0.053,
+      "false_negative_rate": 0.0,
+      "attack_f1": 0.0,
+      "macro_f1": 0.48638931689779147,
+      "weighted_f1": 0.9727786337955829,
+      "f2": 0.0,
+      "f1": 0.0,
+      "f1_score": 0.48638931689779147,
+      "f2_score": 0.0,
+      "matthews_corrcoef": 0.0,
+      "true_positives": 0,
+      "false_positives": 53,
+      "true_negatives": 947,
+      "false_negatives": 0,
+      "confusion_matrix": [
+        [
+          947,
+          53
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "brier_score": 0.03729680036405989
+    },
+    "Segment 5: Covariate Shift": {
+      "accuracy": 0.933,
+      "balanced_accuracy": 0.933,
+      "precision": 0.0,
+      "recall": 0.0,
+      "detection_rate": 0.0,
+      "specificity": 0.933,
+      "false_positive_rate": 0.067,
+      "false_negative_rate": 0.0,
+      "attack_f1": 0.0,
+      "macro_f1": 0.4826694257630626,
+      "weighted_f1": 0.9653388515261252,
+      "f2": 0.0,
+      "f1": 0.0,
+      "f1_score": 0.4826694257630626,
+      "f2_score": 0.0,
+      "matthews_corrcoef": 0.0,
+      "true_positives": 0,
+      "false_positives": 67,
+      "true_negatives": 933,
+      "false_negatives": 0,
+      "confusion_matrix": [
+        [
+          933,
+          67
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "roc_auc": NaN,
+      "pr_auc": 0.0,
+      "brier_score": 0.05830885767710716
+    },
+    "Segment 6: Unseen PortScan Emergence": {
+      "accuracy": 0.883,
+      "balanced_accuracy": 0.883,
+      "precision": 0.8807157057654076,
+      "recall": 0.886,
+      "detection_rate": 0.886,
+      "specificity": 0.88,
+      "false_positive_rate": 0.12,
+      "false_negative_rate": 0.114,
+      "attack_f1": 0.8833499501495513,
+      "macro_f1": 0.8829989469905228,
+      "weighted_f1": 0.8829989469905228,
+      "f2": 0.8849380743108269,
+      "f1": 0.8833499501495513,
+      "f1_score": 0.8829989469905228,
+      "f2_score": 0.8849380743108269,
+      "matthews_corrcoef": 0.7660137883722872,
+      "true_positives": 443,
+      "false_positives": 60,
+      "true_negatives": 440,
+      "false_negatives": 57,
+      "confusion_matrix": [
+        [
+          440,
+          60
+        ],
+        [
+          57,
+          443
+        ]
+      ],
+      "roc_auc": 0.8968320000000001,
+      "pr_auc": 0.849012540978861,
+      "brier_score": 0.15730029671315396
+    }
+  }
+}
