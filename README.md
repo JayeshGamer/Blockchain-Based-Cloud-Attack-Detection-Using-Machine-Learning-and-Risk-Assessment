@@ -4,7 +4,7 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688.svg)](https://fastapi.tiangolo.com/)
-[![Tests](https://img.shields.io/badge/tests-87%20passing-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-87-brightgreen.svg)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A reproducible, research-grade evaluation and deployment package for **continuous, streaming network
@@ -33,10 +33,12 @@ positive ones.
   thresholding, Dempster-Shafer Theory (DST) achieves 42.69%–47.25% recall, underperforming standalone
   SGD (86.88%). **No claim is made that DST improves performance over the primary SGD detector.**
 
-> **Reproducibility note:** this repository publishes SHA-256 hashes of all source files in
-> [`reports/final/manifests/source_hashes.json`](reports/final/manifests/source_hashes.json).
-> Line-ending normalisation is deliberately disabled in [`.gitattributes`](.gitattributes) so those
-> hashes verify on any platform.
+> **Reproducibility note:** [`reports/final/manifests/source_hashes.json`](reports/final/manifests/source_hashes.json)
+> records the SHA-256 hash of every source file **as it existed during the evaluation run** that
+> produced these results. It is a generated snapshot, not a guarantee about files edited afterwards —
+> re-run `python scripts/evaluate.py` to regenerate it for the current tree. Line-ending normalisation
+> is deliberately disabled in [`.gitattributes`](.gitattributes) so the committed bytes match the
+> evaluated bytes on every platform.
 
 ---
 
